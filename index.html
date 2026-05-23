@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Estratégica - Plataforma de Estudio Becas 2026</title>
+    <!-- Tailwind CSS para el diseño -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts para tipografía premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        /* Card Flip Animation */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col md:flex-row">
+
+    <!-- SIDEBAR DE NAVEGACIÓN -->
+    <aside class="w-full md:w-64 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col justify-between shrink-0">
+        <div class="p-6">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-100 leading-tight">CRECÉ 2026</h1>
+                    <span class="text-xs text-indigo-400 font-medium uppercase tracking-widest">Gestión Estratégica</span>
+                </div>
+            </div>
+
+            <nav class="space-y-1">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all bg-indigo-600/10 text-indigo-400 border border-indigo-500/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"/></svg>
+                    Panel de Control
+                </button>
+                <button onclick="switchTab('study')" id="btn-study" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    Contenido Teórico
+                </button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                    Banco de Preguntas
+                </button>
+                <button onclick="switchTab('simulator')" id="btn-simulator" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Simulador Examen
+                </button>
+                <button onclick="switchTab('flashcards')" id="btn-flashcards" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    Tarjetas de Estudio
+                </button>
+            </nav>
+        </div>
+
+        <!-- PROGRESS MINI CARD -->
+        <div class="p-4 m-4 bg-slate-950/60 rounded-2xl border border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-slate-400 font-medium">Progreso General</span>
+                <span id="progreso-porcentaje" class="text-xs font-bold text-indigo-400">0%</span>
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div id="progreso-barra" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between items-center mt-3 text-[10px] text-slate-500 font-semibold uppercase">
+                <span>Resueltas: <span id="resueltas-contador" class="text-slate-300">0</span>/42</span>
+                <button onclick="resetAllProgress()" class="hover:text-red-400 transition-colors">Reiniciar</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ÁREA DE CONTENIDO PRINCIPAL -->
+    <main class="flex-1 flex flex-col min-h-0 overflow-y-auto">
+        <!-- HEADER DE LA APP -->
+        <header class="h-16 border-b border-slate-900 bg-slate-900/40 backdrop-blur px-6 flex items-center justify-between shrink-0 sticky top-0 z-10">
+            <h2 id="current-section-title" class="text-lg font-bold text-slate-200">Panel de Control</h2>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Postulación 2026
+                </div>
+            </div>
+        </header>
+
+        <!-- SECCIONES DE LA APLICACIÓN -->
+        <div class="p-6 md:p-8 flex-1 max-w-6xl mx-auto w-full space-y-8">
+
+            <!-- 1. SECCIÓN: PANEL DE CONTROL -->
+            <section id="section-dashboard" class="space-y-6">
+                <div class="bg-gradient-to-r from-indigo-900 via-indigo-950 to-slate-900 p-8 rounded-3xl border border-indigo-500/20 relative overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="relative z-10 max-w-xl space-y-3">
+                        <span class="px-2.5 py-1 text-[11px] font-bold tracking-wider uppercase bg-indigo-500 text-white rounded-md">PREPARACIÓN ELITE</span>
+                        <h3 class="text-3xl font-extrabold text-white">Domina la Gestión Estratégica</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed">Bienvenido a tu plataforma interactiva de entrenamiento para la beca CREcé con Nosotros. Aquí podrás ensayar con el banco oficial de preguntas, analizar la teoría de fondo y evaluar tu desempeño para asegurar tu ingreso al diplomado.</p>
+                        <div class="pt-2 flex gap-3">
+                            <button onclick="switchTab('quiz')" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">Comenzar Práctica</button>
+                            <button onclick="switchTab('simulator')" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition-all">Iniciar Simulacro</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARDS DE ESTADÍSTICAS -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-slate-900/50 border border-slate-800 p-5 rounded-2xl flex items-center gap-4 shadow-sm">
+                        <div class="p-3 rounded-xl bg-indigo-500/10 text-indigo-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-slate-400">Preguntas Correctas</span>
+                            <span id="stats-correctas" class="text-2xl font-bold text-slate-100">0</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/50 border border-slate-800 p-5 rounded-2xl flex items-center gap-4 shadow-sm">
+                        <div class="p-3 rounded-xl bg-red-500/10 text-red-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-slate-400">Preguntas Incorrectas</span>
+                            <span id="stats-incorrectas" class="text-2xl font-bold text-slate-100">0</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/50 border border-slate-800 p-5 rounded-2xl flex items-center gap-4 shadow-sm">
+                        <div class="p-3 rounded-xl bg-amber-500/10 text-amber-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-slate-400">Porcentaje de Precisión</span>
+                            <span id="stats-precision" class="text-2xl font-bold text-slate-100">0%</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/50 border border-slate-800 p-5 rounded-2xl flex items-center gap-4 shadow-sm">
+                        <div class="p-3 rounded-xl bg-purple-500/10 text-purple-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-slate-400">Simulacros Rendidos</span>
+                            <span id="stats-simulacros" class="text-2xl font-bold text-slate-100">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIAGNÓSTICO POR MÓDULO -->
+                <div class="bg-slate-900/30 border border-slate-800/80 rounded-2xl p-6">
+                    <h4 class="text-base font-bold text-slate-200 mb-5 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        Nivel de Preparación por Módulo
+                    </h4>
+                    <div class="space-y-4" id="dashboard-modulos-progreso">
+                        <!-- Generado dinámicamente por JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. SECCIÓN: CONTENIDO TEÓRICO -->
+            <section id="section-study" class="hidden space-y-6">
+                <div class="flex flex-wrap gap-2 pb-4 border-b border-slate-800" id="study-tabs">
+                    <!-- Generado dinámicamente -->
+                </div>
+                <div id="study-content-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Contenido teórico dinámico a la izquierda y glosario express a la derecha -->
+                </div>
+            </section>
+
+            <!-- 3. SECCIÓN: BANCO DE PREGUNTAS (PRÁCTICA) -->
+            <section id="section-quiz" class="hidden space-y-6">
+                <!-- Selector de Módulo para Práctica -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800">
+                    <div class="space-y-1">
+                        <span class="text-xs text-slate-400 font-medium">Filtrar por bloque temático</span>
+                        <select id="quiz-module-filter" onchange="loadQuizModuleQuestions()" class="bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 w-full sm:w-72">
+                            <option value="all">Todos los Módulos (42 preguntas)</option>
+                            <option value="1">Módulo I: Fundamentos Estratégicos</option>
+                            <option value="2">Módulo II: Análisis de Entorno</option>
+                            <option value="3">Módulo III: Formulación de Estrategias</option>
+                            <option value="4">Módulo IV: Diseño y Ejecución</option>
+                            <option value="5">Módulo V: Modelos de Negocio</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="quizPrevQuestion()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Atrás
+                        </button>
+                        <span id="quiz-question-counter" class="px-4 py-2 bg-slate-950 text-slate-400 border border-slate-800 rounded-xl text-xs font-semibold flex items-center justify-center min-w-[70px]">
+                            1/42
+                        </span>
+                        <button onclick="quizNextQuestion()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold flex items-center gap-1">
+                            Siguiente <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PREGUNTA ACTIVA CARD -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Card de Pregunta -->
+                    <div class="lg:col-span-8 bg-slate-900/30 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-6">
+                        <div class="flex items-center justify-between">
+                            <span id="quiz-question-module" class="px-3 py-1 bg-indigo-500/10 text-indigo-400 text-xs font-bold rounded-full border border-indigo-500/20">
+                                Módulo I
+                            </span>
+                            <span id="quiz-question-status" class="text-xs text-slate-500 font-medium">No respondida</span>
+                        </div>
+                        <h3 id="quiz-question-text" class="text-lg md:text-xl font-bold text-slate-100 leading-relaxed">
+                            Cargando pregunta...
+                        </h3>
+                        <!-- Opciones de Respuesta -->
+                        <div id="quiz-options-container" class="space-y-3">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Sidebar de Razón / Detalle Ampliado -->
+                    <div class="lg:col-span-4 bg-slate-900/60 border border-slate-800/80 p-6 rounded-3xl flex flex-col justify-between space-y-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-2 text-indigo-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <h4 class="font-bold text-sm">Feedback de Negocios</h4>
+                            </div>
+                            <div id="quiz-feedback-box" class="text-slate-400 text-xs leading-relaxed space-y-3">
+                                Selecciona una opción para desplegar el análisis estratégico de esta pregunta.
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex justify-between items-center text-xs text-slate-500">
+                            <span>¿Duda teórica?</span>
+                            <button onclick="switchTab('study')" class="text-indigo-400 hover:underline font-bold">Ver Contenido de Módulo</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. SECCIÓN: SIMULADOR DE EXAMEN -->
+            <section id="section-simulator" class="hidden space-y-6">
+                <!-- Estado Inicial del Simulador -->
+                <div id="sim-start-card" class="bg-slate-900/30 border border-slate-800 p-8 rounded-3xl text-center max-w-2xl mx-auto space-y-6">
+                    <div class="w-16 h-16 bg-indigo-500/10 text-indigo-400 rounded-full flex items-center justify-center mx-auto">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-extrabold text-white">Simulador de Examen de Beca</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Ponte a prueba con una simulación del examen oficial. Responderás un test estructurado compuesto por preguntas aleatorias de todos los módulos con límite de tiempo.</p>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 py-2 border-y border-slate-800 text-left">
+                        <div class="p-3">
+                            <span class="block text-xs text-slate-500">Preguntas</span>
+                            <span class="text-lg font-bold text-slate-200">20 Reactivos</span>
+                        </div>
+                        <div class="p-3">
+                            <span class="block text-xs text-slate-500">Tiempo Límite</span>
+                            <span class="text-lg font-bold text-slate-200">20 Minutos</span>
+                        </div>
+                        <div class="p-3">
+                            <span class="block text-xs text-slate-500">Dificultad</span>
+                            <span class="text-lg font-bold text-emerald-400 font-medium">Real</span>
+                        </div>
+                    </div>
+                    <button onclick="startSimulator()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
+                        Iniciar Prueba Diagnóstica
+                    </button>
+                </div>
+
+                <!-- Simulación Activa -->
+                <div id="sim-active-card" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-8 bg-slate-900/30 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-6">
+                        <div class="flex items-center justify-between">
+                            <span id="sim-question-module" class="px-3 py-1 bg-indigo-500/10 text-indigo-400 text-xs font-bold rounded-full">Módulo I</span>
+                            <div class="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 text-red-400 rounded-xl border border-red-500/20 text-xs font-mono font-bold">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span id="sim-timer">20:00</span>
+                            </div>
+                        </div>
+                        <h3 id="sim-question-text" class="text-lg md:text-xl font-bold text-slate-100 leading-relaxed">Pregunta...</h3>
+                        <div id="sim-options-container" class="space-y-3">
+                            <!-- Opciones -->
+                        </div>
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-800">
+                            <span id="sim-progress-counter" class="text-xs text-slate-500 font-medium">Pregunta 1 de 20</span>
+                            <button onclick="simNextQuestion()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs transition-all">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Panel Lateral de Navegación del Examen -->
+                    <div class="lg:col-span-4 bg-slate-900/60 border border-slate-800 p-6 rounded-3xl space-y-6">
+                        <h4 class="font-bold text-slate-300 text-sm">Mapa de Respuestas</h4>
+                        <div class="grid grid-cols-5 gap-2" id="sim-map-container">
+                            <!-- Botonera de navegación -->
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 space-y-2">
+                            <button onclick="finishSimulatorPrompt()" class="w-full py-2.5 bg-slate-800 hover:bg-red-950 hover:text-red-300 hover:border-red-900/50 text-slate-300 text-xs font-bold rounded-xl border border-slate-700 transition-all">
+                                Entregar Examen Ahora
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados del Simulador -->
+                <div id="sim-result-card" class="hidden bg-slate-900/30 border border-slate-800 p-8 rounded-3xl max-w-3xl mx-auto space-y-6">
+                    <div class="text-center space-y-2">
+                        <span class="text-xs text-indigo-400 uppercase tracking-wider font-extrabold">Examen Finalizado</span>
+                        <h3 class="text-2xl font-black text-white">Tu Reporte de Desempeño</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div class="p-5 bg-slate-950 rounded-2xl border border-slate-800/80">
+                            <span class="block text-xs text-slate-400 mb-1">Puntuación de Beca</span>
+                            <span id="sim-res-score" class="text-3xl font-black text-indigo-400">0%</span>
+                        </div>
+                        <div class="p-5 bg-slate-950 rounded-2xl border border-slate-800/80">
+                            <span class="block text-xs text-slate-400 mb-1">Aciertos</span>
+                            <span id="sim-res-correctas" class="text-3xl font-black text-emerald-400">0/20</span>
+                        </div>
+                        <div class="p-5 bg-slate-950 rounded-2xl border border-slate-800/80">
+                            <span class="block text-xs text-slate-400 mb-1">Tiempo Utilizado</span>
+                            <span id="sim-res-time" class="text-3xl font-black text-amber-400">00:00</span>
+                        </div>
+                    </div>
+
+                    <div id="sim-res-diagnostic" class="p-5 rounded-2xl border bg-slate-900/80 text-sm leading-relaxed text-slate-300">
+                        <!-- Diagnóstico específico por JS -->
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="resetSimulator()" class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg transition-all text-sm">
+                            Intentar de Nuevo
+                        </button>
+                        <button onclick="switchTab('quiz')" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl border border-slate-700 transition-all text-sm">
+                            Repasar Banco Completo
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. SECCIÓN: TARJETAS DE MEMORIA -->
+            <section id="section-flashcards" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800">
+                    <div class="space-y-1">
+                        <h3 class="text-sm font-bold text-slate-200">Tarjetas de Memorización Rápida</h3>
+                        <p class="text-xs text-slate-400">Excelente técnica de recordación activa (Active Recall)</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="prevFlashcard()" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <span id="flashcard-counter" class="text-xs text-slate-400 font-semibold min-w-[50px] text-center">1/10</span>
+                        <button onclick="nextFlashcard()" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Rotativa -->
+                <div class="max-w-xl mx-auto h-80 flip-card cursor-pointer" id="flashcard-wrapper" onclick="toggleFlashcard()">
+                    <div class="flip-card-inner h-full shadow-2xl">
+                        <!-- Frente -->
+                        <div class="flip-card-front bg-slate-900 border border-slate-800 p-8 flex flex-col justify-between items-center text-center">
+                            <span class="text-[10px] font-bold tracking-widest text-indigo-400 uppercase">Concepto Clave</span>
+                            <h2 id="flashcard-term" class="text-2xl md:text-3xl font-black text-white leading-tight">Cargando...</h2>
+                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89H18"/></svg> Haz clic para voltear la tarjeta
+                            </span>
+                        </div>
+                        <!-- Reverso -->
+                        <div class="flip-card-back bg-gradient-to-br from-indigo-950 to-slate-900 border border-indigo-500/30 p-8 flex flex-col justify-between items-center text-center">
+                            <span class="text-[10px] font-bold tracking-widest text-emerald-400 uppercase">Definición Estratégica</span>
+                            <p id="flashcard-definition" class="text-sm md:text-base text-slate-200 leading-relaxed font-medium">Cargando definición...</p>
+                            <span class="text-xs text-indigo-300 font-bold">Concepto Esencial</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- NOTIFICACIÓN TIPO TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 px-5 py-3 rounded-2xl bg-indigo-600 text-white shadow-xl shadow-indigo-500/20 text-xs font-bold flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span id="toast-text">Notificación exitosa!</span>
+    </div>
+
+    <!-- CODIGO DEL CORE: DATA + LOGIC -->
+    <script>
+        // BASE DE PREGUNTAS (Banco oficial parseado y enriquecido con retroalimentación estratégica a detalle)
+        const questionsDB = [
+            // Módulo I
+            {
+                id: 1,
+                module: 1,
+                q: "¿Cuál es el objetivo principal de la gestión estratégica?",
+                options: {
+                    A: "Controlar las operaciones diarias de la empresa",
+                    B: "Generar de forma única cultura organizacional",
+                    C: "Obtener ventajas competitivas sostenibles en el tiempo",
+                    D: "Establecer presupuestos contables anuales"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El fin último de la dirección o gestión estratégica es posicionar de forma única a la organización dentro de su entorno para capturar una ventaja que no pueda ser fácilmente erosionada por la competencia.<br><br><em>¿Por qué las demás no?</em> El control del día a día (A) es planeación operativa. La cultura (B) es un pilar que apoya a la estrategia, pero no el fin de negocio por sí solo. Los presupuestos (D) son herramientas tácticas de control financiero."
+            },
+            {
+                id: 2,
+                module: 1,
+                q: "¿Qué elemento forma parte clave del proceso estratégico?",
+                options: {
+                    A: "La auditoría externa formal de cuentas anuales",
+                    B: "La definición de la visión estratégica corporativa",
+                    C: "El control diario de inventario físico en almacén",
+                    D: "El cálculo exacto del margen de contribución por lote"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> El proceso estratégico inicia y se guía por el rumbo definido en la visión y misión de la empresa.<br><br><em>¿Por qué las demás no?</em> La auditoría contable (A), el inventario (C) y el cálculo de márgenes operativos (D) son labores de cumplimiento, control físico y contabilidad analítica, respectivamente."
+            },
+            {
+                id: 3,
+                module: 1,
+                q: "¿Qué autor propuso el modelo de las 5 fuerzas competitivas?",
+                options: {
+                    A: "Henry Mintzberg",
+                    B: "Michael Porter",
+                    C: "Igor Ansoff",
+                    D: "Philip Kotler"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Michael Porter introdujo el análisis de las 5 Fuerzas (rivalidad del sector, poder de clientes, proveedores, amenaza de sustitutos y nuevos participantes) en la Harvard Business School para mapear el atractivo estructural de una industria.<br><br><em>¿Por qué los demás no?</em> Mintzberg (A) destaca por tipologías y el enfoque emergente. Ansoff (C) por su matriz de crecimiento producto-mercado. Kotler (D) es el padre del marketing moderno."
+            },
+            {
+                id: 4,
+                module: 1,
+                q: "¿Qué diferencia fundamental existe entre la misión y la visión corporativa?",
+                options: {
+                    A: "La misión es netamente de carácter aspiracional, mientras la visión es netamente operativa",
+                    B: "La misión es el propósito presente de la empresa; la visión proyecta el futuro a mediano y largo plazo",
+                    C: "Ambas persiguen exactamente el mismo fin directivo bajo un mismo horizonte de planeación",
+                    D: "La visión trata estrictamente la optimización y control de los procesos internos"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> La misión responde al '¿Quiénes somos hoy y qué hacemos?', definiendo la razón de ser en el presente. La visión responde al '¿Qué queremos llegar a ser?' en un horizonte futuro estructurado.<br><br><em>¿Por qué las demás no?</em> La opción A invierte los conceptos. La C ignora el factor tiempo. La D confunde la visión con metodologías de optimización como Six Sigma o Lean."
+            },
+            {
+                id: 5,
+                module: 1,
+                q: "¿Qué caracteriza formalmente a un objetivo estratégico bien definido?",
+                options: {
+                    A: "Ser lo más amplio e indefinido posible para ganar flexibilidad",
+                    B: "Enfocarse meramente en tareas de soporte operativo del día a día",
+                    C: "Cumplir la regla SMART: Específico, medible, alcanzable, relevante y temporal",
+                    D: "Ser puramente intuitivo y basarse en corazonadas del gerente"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Los objetivos estratégicos deben poder ser medidos y cuantificados de manera clara en un marco temporal establecido (SMART) para su ejecución efectiva.<br><br><em>¿Por qué las demás no?</em> Objetivos indefinidos (A) dispersan los esfuerzos del equipo. Objetivos puramente operativos (B) carecen de visión estratégica. Confiar únicamente en corazonadas (D) eleva drásticamente el riesgo de quiebra empresarial."
+            },
+            {
+                id: 6,
+                module: 1,
+                q: "¿Cuál de las siguientes alternativas representa una ventaja competitiva sostenible?",
+                options: {
+                    A: "Una promoción agresiva y temporal de precios con pérdida margen",
+                    B: "Una ubicación física privilegiada protegida por altas barreras de entrada legales o de capital",
+                    C: "Un incremento generalizado de los salarios fijos a todos los empleados del corporativo",
+                    D: "Contar simplemente con un mayor número absoluto de empleados en nómina"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Una barrera de entrada geográfica, de infraestructura o legal es un activo muy costoso de replicar por los competidores, dotando de ventaja permanente al operador.<br><br><em>¿Por qué las demás no?</em> Los descuentos temporales (A) se copian de inmediato y erosionan utilidades. Los incrementos salariales (C) suben los costos fijos sin asegurar de forma directa eficiencia o ventaja competitiva. El número de personal (D) no es sinónimo de eficiencia ni diferenciación en valor."
+            },
+            {
+                id: 7,
+                module: 1,
+                q: "¿Qué elemento impulsa de manera más sólida la ventaja competitiva desde la teoría basada en recursos (RBV)?",
+                options: {
+                    A: "Mantener un alto endeudamiento financiero",
+                    B: "Contar con una extrema eficiencia fiscal",
+                    C: "Poseer capacidades distintivas que sean muy difíciles de imitar o sustituir por terceros",
+                    D: "Tener una alta tasa de rotación de personal calificado"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La teoría basada en recursos estipula que la ventaja competitiva se crea a través de recursos internos raros, valiosos, inimitables y organizados (VRIN).<br><br><em>¿Por qué las demás no?</em> El endeudamiento excesivo (A) limita la flexibilidad y eleva el riesgo de quiebra. La planificación fiscal (B) es necesaria pero almacenable e imitable. La alta rotación (D) destruye el conocimiento acumulado en el capital humano."
+            },
+            {
+                id: 8,
+                module: 1,
+                q: "¿Qué enfoque de la estrategia teórica la reconoce como un 'patrón emergente' en vez de una planeación estática?",
+                options: {
+                    A: "La estrategia puramente deliberada de Porter",
+                    B: "La estrategia adaptativa y de guerrilla basada en marketing",
+                    C: "La estrategia emergente teorizada por Henry Mintzberg",
+                    D: "La estrategia contable estandarizada"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Mintzberg demostró que la estrategia no es siempre un proceso jerárquico y lineal de planificación. Sostiene que las decisiones más exitosas de una empresa a menudo surgen orgánicamente ('emergen') de la interacción cotidiana con los retos del mercado.<br><br><em>¿Por qué las demás no?</em> Porter (A) aboga más por el diseño formal deliberado de posicionamiento. Los enfoques puramente de marketing (B) y contables (D) se enfocan en tácticas concretas o el registro de hechos pasados."
+            },
+            {
+                id: 9,
+                module: 1,
+                q: "¿Qué describe mejor la perspectiva clásica o de diseño de la estrategia?",
+                options: {
+                    A: "El caos sistémico del mercado libre",
+                    B: "La ausencia total de planeación a largo plazo",
+                    C: "Un plan racional formulado por la dirección para alcanzar una meta definida",
+                    D: "La política puramente administrativa de reclutamiento de personal"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La escuela clásica de estrategia asume que los gerentes analizan racionalmente los datos del mercado para construir una hoja de ruta estructurada y lógica que guiará el negocio.<br><br><em>¿Por qué las demás no?</em> El caos (A) o no planear (B) contradicen el enfoque clásico. La política de personal (D) es un subproceso funcional, no una estrategia corporativa global."
+            },
+            {
+                id: 10,
+                module: 1,
+                q: "¿Qué concepto integra formalmente el pensamiento estratégico de largo plazo con su ejecución y control?",
+                options: {
+                    A: "La matriz de crecimiento BCG",
+                    B: "La planeación puramente táctica trimestral",
+                    C: "El Balanced Scorecard o Cuadro de Mando Integral",
+                    D: "El Estado de resultados contable"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El Balanced Scorecard traduce la visión estratégica en metas operativas balanceadas, vinculando la estrategia directamente con la ejecución del día a día por parte del equipo.<br><br><em>¿Por qué las demás no?</em> La BCG (A) clasifica productos por cuota de mercado. La planificación táctica (B) es de corto alcance. El estado de resultados (D) es una foto contable del pasado."
+            },
+
+            // Módulo II
+            {
+                id: 11,
+                module: 2,
+                q: "¿Qué herramienta permite identificar tendencias externas macroambientales clave (Políticas, Económicas, Sociales, etc.)?",
+                options: {
+                    A: "Análisis FODA",
+                    B: "Análisis PESTEL",
+                    C: "Matriz BCG",
+                    D: "Presupuesto operativo anual"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> PESTEL es el acrónimo de Político, Económico, Social, Tecnológico, Ecológico y Legal, ideal para evaluar el macroentorno ajeno al control de la empresa.<br><br><em>¿Por qué las demás no?</em> El FODA (A) incluye análisis interno de debilidades y fortalezas. La BCG (C) analiza el portafolio interno de negocios. El presupuesto (D) detalla la asignación interna de dinero."
+            },
+            {
+                id: 12,
+                module: 2,
+                q: "¿Cuál de los siguientes es un factor típico y directo del entorno macroeconómico?",
+                options: {
+                    A: "La cultura organizacional de la empresa",
+                    B: "El clima de comunicación interna laboral",
+                    C: "La política fiscal decretada por el gobierno nacional",
+                    D: "La participación de mercado que tiene el líder actual"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La política fiscal influye en los impuestos a las empresas y el gasto general de los consumidores, operando a nivel macroeconómico.<br><br><em>¿Por qué las demás no?</em> La cultura (A) y el clima (B) son dinámicas estrictamente internas de la firma. La participación de mercado (D) es un factor microambiental o sectorial."
+            },
+            {
+                id: 13,
+                module: 2,
+                q: "¿Qué representa principalmente el análisis de las cinco fuerzas de Porter?",
+                options: {
+                    A: "Análisis de la cultura e integración interna de los empleados",
+                    B: "Evaluación de razones de liquidez financiera",
+                    C: "Diagnóstico del nivel de competencia y atractivo estructural del sector",
+                    D: "Planificación de las políticas de incentivo en recursos humanos"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El análisis de Porter determina el atractivo y la rentabilidad esperable del sector competitivo de interés.<br><br><em>¿Por qué las demás no?</em> La cultura organizacional (A), los coeficientes financieros (B) y los incentivos (D) son internos y no abordan el entorno competitivo directo."
+            },
+            {
+                id: 14,
+                module: 2,
+                q: "¿Qué representa una amenaza externa clásica para cualquier organización de consumo masivo?",
+                options: {
+                    A: "Tener baja rotación de personal operativo en tienda",
+                    B: "Alta dependencia en una tecnología de propiedad exclusiva",
+                    C: "La inminente entrada de nuevos competidores extranjeros al mercado local",
+                    D: "Un excelente nivel de posicionamiento de marca en el público"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La entrada de nuevos competidores representa una fuerza externa que puede erosionar la cuota de mercado actual, siendo una clara amenaza.<br><br><em>¿Por qué las demás no?</em> La baja rotación (A) e intangibles de marca (D) son fortalezas internas. La dependencia interna de tecnología (B) suele ser clasificada como una debilidad."
+            },
+            {
+                id: 15,
+                module: 2,
+                q: "¿Qué recurso interno puede considerarse de manera genuina como una fortaleza de valor?",
+                options: {
+                    A: "El incremento sostenido de la presión tributaria nacional",
+                    B: "Sólidas relaciones de alianza estratégica con proveedores exclusivos",
+                    C: "Las fuertes restricciones regulatorias estatales del sector",
+                    D: "Un mercado de materias primas altamente volátil"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Las alianzas operativas duraderas y exclusivas con los proveedores son recursos internos de alta imitación que blindan la cadena de valor corporativa.<br><br><em>¿Por qué las demás no?</em> La carga fiscal (A), las regulaciones estatales (C) y la volatilidad (D) son factores ambientales externos y perjudiciales (amenazas)."
+            },
+            {
+                id: 16,
+                module: 2,
+                q: "¿Cuál es un ejemplo evidente de debilidad estructural interna?",
+                options: {
+                    A: "Una inflación de dos dígitos a nivel nacional",
+                    B: "Tener un alto endeudamiento financiero sin una planeación de caja correlativa",
+                    C: "Contar con un abanico diversificado de proveedores sustitutos de insumo",
+                    D: "Llevar a cabo un proceso exitoso de integración vertical"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> La deuda sin planificación financiera es un talón de Aquiles interno que frena la maniobrabilidad de la empresa ante retos competitivos.<br><br><em>¿Por qué las demás no?</em> La inflación (A) es macroeconómica (externa). Diversificar proveedores (C) e integrarse (D) son fortalezas del negocio."
+            },
+            {
+                id: 17,
+                module: 2,
+                q: "¿Qué técnica analítica cruza sistemáticamente oportunidades externas con fortalezas internas?",
+                options: {
+                    A: "El análisis contable horizontal de balances",
+                    B: "La matriz DOFA cruzada (estrategias FO)",
+                    C: "El control centralizado de gestión",
+                    D: "El análisis de riesgo operacional básico"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> La matriz FODA Cruzada genera estrategias ofensivas (FO) al buscar usar las fortalezas propias de la empresa para explotar al máximo las oportunidades externas de mercado.<br><br><em>¿Por qué las demás no?</em> El análisis de estados financieros (A), control centralizado (C) y el mapa de riesgo puro (D) no combinan internamente fortalezas con fuerzas externas de mercado de forma integrada."
+            },
+            {
+                id: 18,
+                module: 2,
+                q: "¿Qué variables del mercado indican directamente un entorno altamente competitivo?",
+                options: {
+                    A: "Altas barreras de entrada para nuevos jugadores",
+                    B: "Bajas barreras de entrada, alta rivalidad del sector y productos poco diferenciados",
+                    C: "Costos fijos extremadamente bajos en la industria",
+                    D: "Presencia de un monopolio natural con alta diferenciación"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> La falta de barreras de entrada facilita la llegada de competidores, y la ausencia de diferenciación desata batallas de precios erosivas.<br><br><em>¿Por qué las demás no?</em> Altas barreras (A) reducen la competencia potencial. Costos fijos bajos (C) reducen el apalancamiento operativo de quiebra. Los monopolios (D) carecen de rivalidad."
+            },
+
+            // Módulo III
+            {
+                id: 19,
+                module: 3,
+                q: "¿Cuál de las siguientes es una de las tres estrategias genéricas propuestas por Michael Porter?",
+                options: {
+                    A: "Expansión horizontal agresiva",
+                    B: "Diversificación concéntrica de mercado",
+                    C: "Liderazgo absoluto en costos",
+                    D: "Reestructuración financiera y de capital"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Porter propuso tres estrategias genéricas para lograr un rendimiento superior al promedio de la industria: Liderazgo en costos, Diferenciación y Enfoque o Segmentación.<br><br><em>¿Por qué las demás no?</em> La expansión horizontal (A) y diversificación (B) son estrategias de crecimiento (Ansoff). La reestructuración (D) es corporativa/financiera."
+            },
+            {
+                id: 20,
+                module: 3,
+                q: "¿Qué implica de manera principal implementar la estrategia genérica de diferenciación?",
+                options: {
+                    A: "Minimizar los costos de producción por debajo de todos los rivales",
+                    B: "Imitar con precisión los empaques y marketing de los líderes",
+                    C: "Ofrecer una propuesta de valor única por la cual el cliente esté dispuesto a pagar un sobreprecio",
+                    D: "Penetrar de manera exclusiva en mercados geográficos del extranjero"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La diferenciación consiste en dotar al producto o servicio de atributos valorados por los clientes, lo que justifica fijar un precio premium.<br><br><em>¿Por qué las demás no?</em> Minimizar costos (A) es el liderazgo en costos. Copiar marcas (B) carece de valor único. Entrar al extranjero (D) es desarrollo de mercado geográfico."
+            },
+            {
+                id: 21,
+                module: 3,
+                q: "¿Qué describe mejor la estrategia de enfoque o segmentación?",
+                options: {
+                    A: "Atender de manera masiva a todos los grupos de la industria",
+                    B: "Diversificar el portafolio de inversión hacia otros sectores de la economía",
+                    C: "Concentrar las capacidades de la organización en un nicho de mercado específico con necesidades especiales",
+                    D: "Ofrecer bienes genéricos comoditizados en un canal masivo"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El enfoque consiste en competir en un segmento estrecho del mercado donde las capacidades de la empresa se adaptan mejor que los competidores generales.<br><br><em>¿Por qué las demás no?</em> Atender masivamente (A) y productos genéricos (D) son tácticas de amplio espectro. Diversificar hacia otros sectores (B) no es enfocarse en un nicho."
+            },
+            {
+                id: 22,
+                module: 3,
+                q: "¿Cuál de las siguientes opciones NO forma parte de las estrategias de crecimiento intensivo propuestas en la matriz de Ansoff?",
+                options: {
+                    A: "Penetración de mercado",
+                    B: "Desarrollo de mercado",
+                    C: "Integración horizontal",
+                    D: "Desarrollo de producto"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La integración horizontal es una estrategia de crecimiento de integración (adquisición de competidores), no un vector de crecimiento intensivo de la clásica matriz de Ansoff.<br><br><em>¿Por qué las demás no?</em> Penetración (A), Desarrollo de mercado (B) y Desarrollo de producto (D) sí forman parte de los cuatro cuadrantes de crecimiento de Ansoff."
+            },
+            {
+                id: 23,
+                module: 3,
+                q: "¿Qué herramienta es el marco clásico para consolidar la información interna de la firma con el ambiente exterior?",
+                options: {
+                    A: "El análisis horizontal de balances",
+                    B: "La matriz FODA",
+                    C: "El ciclo de vida del producto",
+                    D: "El estado de flujos de efectivo proyectado"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> FODA es el eje unificador estándar: consolida la información del entorno interno (Fortalezas y Debilidades) con la del exterior (Oportunidades y Amenazas).<br><br><em>¿Por qué las demás no?</em> El análisis horizontal (A) e informes de caja (D) son financieros. El ciclo del producto (C) rastrea la evolución de las ventas de una línea, no del negocio general."
+            },
+            {
+                id: 24,
+                module: 3,
+                q: "¿Qué tipo de estrategia según la matriz de Ansoff representa ingresar a un nuevo mercado con un producto o servicio totalmente nuevo?",
+                options: {
+                    A: "Integración vertical hacia adelante",
+                    B: "Diversificación",
+                    C: "Consolidación de nicho",
+                    D: "Reestructuración y ajuste de costos"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Diversificación consiste en introducir productos nuevos en mercados nuevos, siendo el cuadrante más arriesgado pero de mayor crecimiento potencial en la matriz de Ansoff.<br><br><em>¿Por qué las demás no?</em> La integración (A) involucra controlar canales de distribución. Consolidación (C) y reestructuración (D) no son vectores de crecimiento intensivo."
+            },
+            {
+                id: 25,
+                module: 3,
+                q: "¿Qué variables evalúa la matriz BCG para calificar las unidades estratégicas de negocio?",
+                options: {
+                    A: "La tasa de endeudamiento financiero y la liquidez ácida",
+                    B: "La madurez de las capacidades del talento humano",
+                    C: "La participación relativa de mercado y la tasa de crecimiento de la industria",
+                    D: "El margen de utilidad neto y los costos fijos indirectos"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La matriz del Boston Consulting Group (BCG) posiciona los negocios de una empresa en función del crecimiento de su mercado y su participación en este.<br><br><em>¿Por qué las demás no?</em> Las demás opciones (A, B, D) evalúan parámetros de estructura de balance, gestión humana o contabilidad de costos internos, ajenos al modelo de análisis de cartera BCG."
+            },
+            {
+                id: 26,
+                module: 3,
+                q: "¿Qué representa una unidad de negocio tipo 'Vaca Lechera' en la matriz BCG?",
+                options: {
+                    A: "Alta participación relativa de mercado en una industria de bajo crecimiento",
+                    B: "Baja participación de mercado en una industria de bajo crecimiento",
+                    C: "Alta participación de mercado en una industria de alto crecimiento",
+                    D: "Una unidad de negocio con alta rotación pero pérdidas netas"
+                },
+                correct: "A",
+                explanation: "<strong>Opción A es la correcta.</strong> Las 'Vacas' generan más efectivo del que necesitan para reinvertir en su propio crecimiento, financiando a otras unidades como las 'Estrellas' o 'Interrogantes'.<br><br><em>¿Por qué las demás no?</em> Baja cuota y bajo crecimiento (B) define a los productos 'Perro'. Alta cuota y alto crecimiento (C) son productos 'Estrella'. El cuadrante D no pertenece a la clasificación BCG."
+            },
+            {
+                id: 27,
+                module: 3,
+                q: "¿Qué es una estrategia de océano azul de acuerdo con Kim y Mauborgne?",
+                options: {
+                    A: "Competencia agresiva y frontal basada en la guerra de precios",
+                    B: "Lograr una diferenciación mínima en mercados hipercompetitivos",
+                    C: "Crear un espacio de mercado libre de competencia y capturar una nueva demanda",
+                    D: "La optimización del volumen de ventas a través de subsidios estatales"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La estrategia del océano azul busca volver irrelevante a la competencia a través de la innovación en valor, creando espacios libres de rivalidad en vez de desgastarse en los 'océanos rojos'.<br><br><em>¿Por qué las demás no?</em> La competencia en precios (A) e imitación de bajo margen (B) son dinámicas desgastantes típicas del océano rojo. Los subsidios (D) son políticos e insostenibles."
+            },
+
+            // Módulo IV
+            {
+                id: 28,
+                module: 4,
+                q: "¿Qué herramienta directiva permite integrar y balancear indicadores financieros con no financieros?",
+                options: {
+                    A: "La matriz BCG ampliada",
+                    B: "El Cuadro de Mando Integral (Balanced Scorecard)",
+                    C: "El análisis FODA clásico",
+                    D: "La tasa de retorno de la inversión (ROI)"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> El Balanced Scorecard ayuda a que los líderes no evalúen el negocio únicamente con datos financieros del pasado, incorporando métricas de procesos, clientes y aprendizaje.<br><br><em>¿Por qué las demás no?</em> BCG (A) clasifica productos. FODA (C) es de análisis y diagnóstico, no de control e indicadores integrados. El ROI (D) es un indicador estrictamente financiero."
+            },
+            {
+                id: 29,
+                module: 4,
+                q: "¿Qué perspectiva NO forma parte del diseño del Balanced Scorecard clásico de Kaplan y Norton?",
+                options: {
+                    A: "La perspectiva financiera",
+                    B: "La perspectiva de procesos y clientes",
+                    C: "La perspectiva ecológica y de biodiversidad",
+                    D: "La perspectiva de aprendizaje y desarrollo de capacidades"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Aunque la ecología es vital para la sostenibilidad moderna, no es una de las cuatro perspectivas clásicas de diseño que componen el BSC tradicional.<br><br><em>¿Por qué las demás no?</em> La perspectiva Financiera (A), Clientes (B), Procesos Internos y Aprendizaje/Crecimiento (D) son los cuatro pilares obligatorios de la estructura del BSC."
+            },
+            {
+                id: 30,
+                module: 4,
+                q: "¿Qué rol clave cumple el diseño de la estructura organizacional en la gestión estratégica?",
+                options: {
+                    A: "Definir los indicadores tributarios corporativos anuales",
+                    B: "Facilitar la coordinación operativa y la asignación clara de responsabilidades",
+                    C: "Maximizar automáticamente las ventas directas por canal de distribución",
+                    D: "Controlar el valor exacto de las horas de nómina del área contable"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Alfred Chandler postuló que 'la estructura sigue a la estrategia'. El diseño organizativo es el andamiaje operativo para que la estrategia se pueda ejecutar y controlar de forma eficiente.<br><br><em>¿Por qué las demás no?</em> Los impuestos (A), ventas inmediatas (C) y el cálculo de la nómina (D) son procesos de cumplimiento técnico y no la misión clave del diseño organizativo."
+            },
+            {
+                id: 31,
+                module: 4,
+                q: "¿Qué caracteriza esencialmente a una estructura organizacional de tipo matricial?",
+                options: {
+                    A: "Un enfoque rígido en una única línea jerárquica vertical sin excepciones",
+                    B: "La duplicación innecesaria de todas las funciones directivas del negocio",
+                    C: "La combinación coordinada de funciones departamentales con proyectos transversales",
+                    D: "La eliminación sistemática de todos los mandos medios e inspectores"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La estructura matricial rompe la rigidez clásica al cruzar la especialización funcional (p. ej., Ingeniería) con el enfoque por productos o proyectos específicos.<br><br><em>¿Por qué las demás no?</em> La rigidez (A) es propia de la estructura militar funcional tradicional. Duplicar funciones (B) es un error de ineficiencia. Eliminar mandos (D) es un proceso de aplanamiento organizativo, mas no matricial."
+            },
+            {
+                id: 32,
+                module: 4,
+                q: "¿Qué obstáculo organizacional suele impedir una correcta ejecución de los planes estratégicos?",
+                options: {
+                    A: "El establecimiento de indicadores medibles",
+                    B: "Una comunicación deficiente y poco fluida entre departamentos",
+                    C: "Contar con una visión compartida en toda la organización",
+                    D: "La formación continua de los colaboradores"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> El aislamiento de los departamentos ('silos organizacionales') y la mala comunicación de la estrategia impiden que el personal actúe alineado con las metas globales.<br><br><em>¿Por qué las demás no?</em> Disponer de metas SMART (A), una visión unificada (C) y capacitación continua (D) son impulsores de la estrategia, no barreras de ejecución."
+            },
+            {
+                id: 33,
+                module: 4,
+                q: "¿Qué describe mejor el comportamiento de una organización inteligente (learning organization) según Peter Senge?",
+                options: {
+                    A: "Aquella que prioriza de manera exclusiva los beneficios económicos del trimestre",
+                    B: "Minimizar la capacitación del personal para reducir gastos operacionales",
+                    C: "Aprender y adaptarse de manera continua para mejorar sus capacidades internas en el tiempo",
+                    D: "Mantener una estructura rígidamente fija y centralizada ante cualquier entorno"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Las organizaciones inteligentes fomentan el aprendizaje continuo en equipo y el pensamiento sistémico para adaptarse de manera ágil ante la inestabilidad de los mercados.<br><br><em>¿Por qué las demás no?</em> El enfoque meramente financiero (A), reducir la formación del talento (B) y mantener estructuras de comando rígidas (D) limitan e impiden el desarrollo de una cultura de aprendizaje adaptativo."
+            },
+            {
+                id: 34,
+                module: 4,
+                q: "¿Qué herramienta analítica permite mapear de forma secuencial la alineación entre actividades internas y estrategia?",
+                options: {
+                    A: "La cadena de valor propuesta por Michael Porter",
+                    B: "El organigrama departamental tradicional",
+                    C: "El cuadro consolidado de gastos operativos",
+                    D: "El modelo del ciclo de vida de un producto"
+                },
+                correct: "A",
+                explanation: "<strong>Opción A es la correcta.</strong> La cadena de valor desagrega a la empresa en sus actividades primarias y de apoyo para identificar de dónde proceden las ventajas en costo o diferenciación frente a los rivales.<br><br><em>¿Por qué las demás no?</em> El organigrama (B) muestra jerarquías estáticas. El control de gastos (C) es financiero operativo. El ciclo de vida (D) rastrea etapas del mercado de un bien."
+            },
+            {
+                id: 35,
+                module: 4,
+                q: "¿Qué define técnicamente a un Indicador Clave de Rendimiento (KPI)?",
+                options: {
+                    A: "Un formato de balance presupuestario anual",
+                    B: "Una métrica seleccionada para evaluar el desempeño de la organización en sus objetivos críticos",
+                    C: "Un reporte legal de cumplimiento regulatorio gubernamental",
+                    D: "Una cuenta bancaria internacional de reserva de caja"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Un KPI (Key Performance Indicator) mide el progreso hacia metas estratégicas u operativas clave del modelo de negocio.<br><br><em>¿Por qué las demás no?</em> El presupuesto (A) es de planificación de egresos. Los reportes regulatorios (C) son exigencias fiscales y legales. La cuenta bancaria (D) es un activo de balance."
+            },
+
+            // Módulo V
+            {
+                id: 36,
+                module: 5,
+                q: "¿Qué define conceptualmente a un Modelo de Negocio?",
+                options: {
+                    A: "La estrategia de precios del catálogo de productos",
+                    B: "Un documento netamente contable e impositivo",
+                    C: "La lógica que describe cómo una organización crea, entrega y captura valor en el mercado",
+                    D: "Un esquema simplificado de costos fijos y variables"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Según Alexander Osterwalder, el modelo de negocio explica las interacciones internas y externas necesarias para producir valor para los clientes y rentabilidad para la empresa.<br><br><em>¿Por qué las demás no?</em> Los precios (A) y el desglose de costos (D) son solo partes componentes menores del modelo general. Los documentos impositivos (B) son de cumplimiento legal administrativo."
+            },
+            {
+                id: 37,
+                module: 5,
+                q: "¿Qué herramienta es el marco visual estándar para mapear modelos de negocio en una sola plana?",
+                options: {
+                    A: "La matriz de crecimiento del BCG",
+                    B: "El Business Model Canvas",
+                    C: "El análisis FODA de doble entrada",
+                    D: "La técnica de benchmarking sectorial"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> El Business Model Canvas divide el diseño del negocio en 9 bloques fundamentales interactivos que caben en un lienzo visual de una sola página.<br><br><em>¿Por qué las demás no?</em> La BCG (A) evalúa productos. El FODA (C) diagnostica variables estratégicas internas y externas. El benchmarking (D) evalúa el rendimiento operativo frente a líderes del sector."
+            },
+            {
+                id: 38,
+                module: 5,
+                q: "¿Qué componente del Business Model Canvas describe formalmente de dónde provienen los ingresos de la empresa?",
+                options: {
+                    A: "La estructura general de costos operativos",
+                    B: "Las relaciones estratégicas de valor con el cliente",
+                    C: "El flujo o fuentes de ingresos de la firma",
+                    D: "El bloque de segmentación de clientes potenciales"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El bloque de flujos de ingresos detalla las formas y métodos en que la organización monetiza su propuesta de valor para cada segmento del mercado.<br><br><em>¿Por qué las demás no?</em> La estructura de costos (A) representa egresos. Las relaciones con clientes (B) e identificación de nichos (D) estructuran la demanda, pero no capturan la transacción financiera directa."
+            },
+            {
+                id: 39,
+                module: 5,
+                q: "¿Cuál es el objetivo principal y de fondo al estructurar una propuesta de valor?",
+                options: {
+                    A: "Maximizar a toda costa el margen bruto del canal",
+                    B: "Ofrecer al segmento de clientes un beneficio único y diferenciador que resuelva sus problemas reales",
+                    C: "Reducir los precios finales del sector para romper la industria",
+                    D: "Minimizar los egresos de marketing y publicidad del año"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> La propuesta de valor responde al por qué un cliente elegirá a esta empresa en lugar de a sus competidores, resolviendo un problema de forma única.<br><br><em>¿Por qué las demás no?</em> Optimizar márgenes (A), guerras de precios (C) y recortar presupuesto publicitario (D) son decisiones financieras y de promoción operacional, pero no constituyen la esencia de la entrega de valor único."
+            },
+            {
+                id: 40,
+                module: 5,
+                q: "¿A qué se refiere formalmente el término innovación estratégica?",
+                options: {
+                    A: "A la sustitución rutinaria del personal de mandos operativos",
+                    B: "A imitar con precisión las tecnologías de las empresas líderes del mercado",
+                    C: "A rediseñar de forma radical la manera de competir y entregar valor dentro de un sector",
+                    D: "A acelerar la tasa de rotación física de inventarios de la empresa"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Innovación estratégica ocurre cuando una empresa altera sustancialmente las reglas de juego tradicionales de una industria para crear ventajas competitivas revolucionarias.<br><br><em>¿Por qué las demás no?</em> El cambio de operarios (A) e incrementar la rotación (D) son mejoras operativas rutinarias. Copiar tecnologías líderes (B) es seguidismo impositivo mas no innovación."
+            },
+            {
+                id: 41,
+                module: 5,
+                q: "¿Qué representa la ejecución de un 'pivot' dentro de la metodología de modelos de negocio innovadores?",
+                options: {
+                    A: "Hacer un recorte masivo de trabajadores en nómina fija",
+                    B: "Un cambio estructurado en la hipótesis principal del modelo de negocio para adaptarse mejor al feedback de clientes",
+                    C: "Desarrollar una nueva patente tecnológica interna de forma aislada",
+                    D: "Incrementar temporalmente el capital de trabajo de la firma"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Dentro de la metodología Lean Startup, un 'pivot' es un cambio estratégico en un bloque clave del Canvas (por ejemplo, de segmento de clientes o canal) al descubrir que la hipótesis original falló ante la realidad del mercado.<br><br><em>¿Por qué las demás no?</em> Los despidos (A), patentes cerradas (C) y créditos de caja (D) son respuestas operativas, corporativas o financieras de emergencia, ajenas a la flexibilidad ágil del proceso de 'pivot'."
+            },
+            {
+                id: 42,
+                module: 5,
+                q: "¿Qué enfoque metodológico prioriza la iteración ágil y la validación rápida de hipótesis sobre la marcha?",
+                options: {
+                    A: "La metodología del análisis del caso tradicional",
+                    B: "La teoría de juegos económicos estáticos",
+                    C: "El marco ágil de Lean Startup de Eric Ries",
+                    D: "El Balanced Scorecard clásico de metas anuales"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El método Lean Startup aboga por construir, medir y aprender rápido mediante MVP (Productos Mínimos Viables) para fallar rápido e iterar sin dilapidar valiosos recursos de capital.<br><br><em>¿Por qué las demás no?</em> Los casos de estudio (A) son educativos. La teoría de juegos (B) modela interacciones racionales matemáticas. El BSC (D) es un marco estratégico de implementación corporativa de mediano/largo plazo."
+            }
+        ];
+
+        // CONTENIDOS TEÓRICOS POR MÓDULO
+        const modulesTheory = {
+            1: {
+                title: "Módulo I: Fundamentos Estratégicos",
+                summary: "La gestión estratégica se centra en la formulación, ejecución y evaluación de acciones que conducen a ventajas competitivas duraderas. Se diferencia de la administración operativa porque no maneja el día a día, sino el horizonte futuro del negocio. El proceso clásico abarca la definición de Misión (propósito presente), Visión (destino futuro) y Objetivos que deben cumplir estrictamente la regla SMART. Michael Porter define el posicionamiento formal deliberado, mientras que Henry Mintzberg demuestra que la estrategia real a menudo brota de manera adaptativa frente a los cambios dinámicos del mercado (estrategias emergentes).",
+                concepts: [
+                    { t: "Ventaja Competitiva", d: "Atributo o recurso único y valioso de la empresa que no puede ser imitado fácilmente por rivales de la industria, asegurando mayor rentabilidad." },
+                    { t: "Estrategia Emergente", d: "Patrón de decisiones coherentes que surgen de forma espontánea desde los niveles operativos de una empresa en respuesta al mercado real." },
+                    { t: "Objetivos SMART", d: "Criterios que aseguran que las metas directivas sean de alta calidad ejecutiva: Específicos, medibles, alcanzables, relevantes y con plazo establecido." }
+                ]
+            },
+            2: {
+                title: "Módulo II: Análisis de Entorno",
+                summary: "Una organización no opera de manera aislada. El éxito estratégico exige evaluar de forma rigurosa dos variables: el Macroentorno externo (PESTEL: Político, Económico, Social, Tecnológico, Ecológico, Legal) y el Microentorno del sector (Las 5 Fuerzas de Porter). La interacción de estas fuerzas dictamina la rentabilidad potencial del mercado. Por su parte, el análisis interno destapa los activos inimitables y las capacidades de soporte de valor (Análisis de Recursos). El FODA Cruzado unifica ambas variables en estrategias accionables de crecimiento y contingencia.",
+                concepts: [
+                    { t: "Análisis PESTEL", d: "Filtro que evalúa variables estructurales ajenas a la firma: Políticas, Económicas, Sociales, Tecnológicas, Ecológicas y Legales." },
+                    { t: "Fuerzas de Porter", d: "Modelo que evalúa el poder de negociación de clientes y proveedores, nuevos rivales, sustitutos y competencia del sector." },
+                    { t: "Matriz FODA Cruzada", d: "Cruce estructurado para generar planes ofensivos (FO), defensivos (FA), de reordenamiento (DO) o supervivencia (DA)." }
+                ]
+            },
+            3: {
+                title: "Módulo III: Formulación de Estrategias",
+                summary: "Consiste en definir el 'cómo competir'. Porter establece tres estrategias genéricas claras: Liderazgo en costos (producir de la forma más barata), Diferenciación (ofrecer valor único y premium) y Enfoque (capturar un nicho). La Matriz de Ansoff ofrece alternativas de crecimiento intensivo uniendo mercados y productos. Para gestionar carteras de productos, la Matriz BCG clasifica las unidades de negocio en cuatro categorías según crecimiento y participación de mercado: Estrella, Interrogante, Vaca Lechera y Perro. La Estrategia de Océano Azul rompe estos paradigmas invitando a crear espacios de mercado libres de rivalidad destructiva.",
+                concepts: [
+                    { t: "Diferenciación", d: "Estrategia genérica orientada a crear una oferta valorada por el mercado por la que el cliente acepta pagar un precio superior al promedio." },
+                    { t: "Matriz BCG", d: "Herramienta que ayuda a corporaciones multi-negocio a asignar capital según cuota relativa y crecimiento del sector." },
+                    { t: "Océano Azul", d: "Innovación en valor diseñada para dejar obsoleto al competidor tradicional abriendo espacios de mercado totalmente inexplorados." }
+                ]
+            },
+            4: {
+                title: "Módulo IV: Diseño y Ejecución",
+                summary: "Suele afirmarse que 'una estrategia promedio de excelente ejecución vence a una gran estrategia con pésima implementación'. El diseño de la estructura organizacional sirve de andamiaje para la ejecución. La estructura matricial entrelaza funciones técnicas con objetivos de proyecto transversales, eliminando cuellos de botella. El Cuadro de Mando Integral (Balanced Scorecard) es el modelo estelar para estructurar el control de gestión mediante cuatro perspectivas críticas conectadas con mapas causa-efecto. La cadena de valor de Porter analiza de forma interna el margen generado por cada subproceso empresarial.",
+                concepts: [
+                    { t: "Balanced Scorecard", d: "Tablero integrado de gestión balanceada que traduce la estrategia corporativa en objetivos operativos vinculados con metas de desempeño." },
+                    { t: "Cadena de Valor", d: "Desglose secuencial de actividades internas (primarias y soporte) para identificar fuentes reales de ventajas competitivas de costo o diferenciación." },
+                    { t: "KPI", d: "Métrica crítica e indispensable utilizada por los líderes para evaluar el nivel de alcance de los objetivos clave del plan de negocio." }
+                ]
+            },
+            5: {
+                title: "Módulo V: Modelos de Negocio",
+                summary: "Los modelos de negocio describen la lógica con la que una corporación produce y captura ingresos. El Business Model Canvas (Osterwalder) popularizó la creación ágil de modelos dividiendo la organización en 9 bloques interactivos de valor. El método Lean Startup impulsa la creación de empresas y productos mediante iteraciones rápidas, experimentación empírica y aprendizaje validado (MVP). Ante el feedback del cliente, la empresa ágil debe ejecutar un 'pivot' (un cambio sustancial en la hipótesis básica) antes de gastar recursos valiosos en escalar un modelo inviable.",
+                concepts: [
+                    { t: "Business Model Canvas", d: "Plantilla visual que conecta la propuesta de valor con clientes, infraestructura y viabilidad financiera para validar la lógica del negocio." },
+                    { t: "Pivot", d: "Giro estratégico deliberado en las hipótesis base de un Canvas para adaptarse mejor al feedback empírico obtenido de los usuarios." },
+                    { t: "Lean Startup", d: "Enfoque metodológico de negocios ágiles enfocado en reducir ciclos de desarrollo validando hipótesis rápido en el mercado real." }
+                ]
+            }
+        };
+
+        // CONCEPTOS PARA LAS TARJETAS DE ESTUDIO (Flashcards)
+        const flashcardsData = [
+            { term: "Ventaja Competitiva Sostenible", def: "Cualidad, activo o habilidad que posee una empresa y que le permite obtener utilidades superiores de manera duradera frente a competidores, debido a su extrema dificultad de imitación." },
+            { term: "Estrategia Emergente", def: "Conjunto coherente de acciones que brotan espontáneamente del día a día de la operación como respuesta práctica a imprevistos, consolidándose como estrategia sin planeación previa." },
+            { term: "Las 5 Fuerzas de Porter", def: "Modelo de análisis industrial que mide el poder de clientes, de proveedores, la amenaza de productos sustitutos, nuevos ingresantes y la rivalidad competitiva de un sector." },
+            { term: "Criterios SMART", def: "Regla mnemotécnica para estructurar metas claras que eviten la confusión: Específico (S), Medible (M), Alcanzable (A), Relevante (R) y Temporalizado (T)." },
+            { term: "Vaca Lechera (Matriz BCG)", def: "Línea de negocio con una altísima participación relativa de mercado dentro de una industria ya madura o de bajo crecimiento, convirtiéndose en un gran generador neto de efectivo." },
+            { term: "Balanced Scorecard (BSC)", def: "Herramienta de control estratégico que traduce la visión a largo plazo en metas de desempeño conectadas mediante perspectivas financiera, clientes, procesos y aprendizaje." },
+            { term: "Océano Azul", def: "Metodología para romper la competencia sangrienta de mercados maduros (océanos rojos) mediante la innovación en valor, capturando nichos y demandas totalmente vírgenes." },
+            { term: "Cadena de Valor", def: "Modelo de Porter que desglosa a la empresa en procesos primarios (logística, marketing, operaciones) y de soporte (tecnología, compras, RRHH) para detectar fuentes directas de diferenciación o ahorro." },
+            { term: "Business Model Canvas", def: "Esquema visual de nueve bloques diseñado por Alexander Osterwalder que sintetiza cómo la empresa interactúa, opera, vende y captura valor comercial." },
+            { term: "Pivot (Lean Startup)", def: "Modificación planificada y sustancial de uno de los bloques del modelo Canvas (ej: cambiar el canal de distribución o de segmento) tras descubrir empíricamente que la propuesta inicial no calzó con la necesidad del cliente." }
+        ];
+
+        // --- SISTEMA DE ESTADO ---
+        let currentTab = "dashboard";
+        
+        // Estado de Práctica
+        let filteredQuestions = [...questionsDB];
+        let quizIndex = 0;
+        let userQuizAnswers = {}; // { questionId: 'A' }
+        
+        // Estado de Simulador
+        let simQuestions = [];
+        let simAnswers = {}; // { index: 'A' }
+        let simActiveIndex = 0;
+        let simTimerInterval = null;
+        let simSecondsLeft = 1200; // 20 minutos
+        let simStartTime = 0;
+
+        // Estado de Flashcards
+        let flashcardIndex = 0;
+
+        // --- INICIALIZACIÓN DE LA APLICACIÓN ---
+        window.onload = function() {
+            // Cargar progreso previo de localStorage si existe
+            loadSavedProgress();
+            
+            // Renderizar vistas dinámicas
+            renderDashboardModulos();
+            renderStudySections();
+            loadQuizModuleQuestions(); // Cargar preguntas en Práctica
+            updateFlashcard();
+            updateProgressStats();
+        };
+
+        // Cambiar entre pestañas
+        function switchTab(tabId) {
+            currentTab = tabId;
+            
+            // Ocultar todas las secciones
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            // Mostrar sección activa
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+
+            // Actualizar estilo botones sidebar
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50";
+            });
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.className = "nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all bg-indigo-600/10 text-indigo-400 border border-indigo-500/20";
+            }
+
+            // Actualizar título de cabecera
+            const titles = {
+                dashboard: "Panel de Control",
+                study: "Módulos de Contenido Teórico",
+                quiz: "Banco de Preguntas Interactivo",
+                simulator: "Simulador de Examen Diagnóstico",
+                flashcards: "Tarjetas de Memorización Rápida"
+            };
+            document.getElementById('current-section-title').textContent = titles[tabId];
+
+            // Detener el simulador si el usuario navega fuera
+            if (tabId !== 'simulator' && simTimerInterval) {
+                clearInterval(simTimerInterval);
+                simTimerInterval = null;
+            }
+        }
+
+        // --- LOGICA DE PROGRESO DE LOCALSTORAGE ---
+        function saveProgress() {
+            localStorage.setItem('gs_userQuizAnswers', JSON.stringify(userQuizAnswers));
+            updateProgressStats();
+        }
+
+        function loadSavedProgress() {
+            const savedAnswers = localStorage.getItem('gs_userQuizAnswers');
+            if (savedAnswers) {
+                userQuizAnswers = JSON.parse(savedAnswers);
+            }
+        }
+
+        function resetAllProgress() {
+            if (confirm("¿Estás seguro de que deseas reiniciar todo tu progreso de estudio actual?")) {
+                userQuizAnswers = {};
+                localStorage.removeItem('gs_userQuizAnswers');
+                showToast("Progreso reiniciado con éxito.");
+                updateProgressStats();
+                loadQuizModuleQuestions();
+                renderDashboardModulos();
+            }
+        }
+
+        function updateProgressStats() {
+            const totalQuestions = questionsDB.length;
+            const answeredCount = Object.keys(userQuizAnswers).length;
+            const progressPercentage = Math.round((answeredCount / totalQuestions) * 100);
+
+            // Actualizar barra de progreso global
+            document.getElementById('progreso-porcentaje').textContent = `${progressPercentage}%`;
+            document.getElementById('progreso-barra').style.width = `${progressPercentage}%`;
+            document.getElementById('resueltas-contador').textContent = answeredCount;
+
+            // Calcular aciertos y fallos para stats del dashboard
+            let correctas = 0;
+            let incorrectas = 0;
+            Object.keys(userQuizAnswers).forEach(qId => {
+                const q = questionsDB.find(item => item.id == qId);
+                if (q) {
+                    if (userQuizAnswers[qId] === q.correct) {
+                        correctas++;
+                    } else {
+                        incorrectas++;
+                    }
+                }
+            });
+
+            document.getElementById('stats-correctas').textContent = correctas;
+            document.getElementById('stats-incorrectas').textContent = incorrectas;
+            
+            const precision = answeredCount > 0 ? Math.round((correctas / answeredCount) * 100) : 0;
+            document.getElementById('stats-precision').textContent = `${precision}%`;
+        }
+
+        // Mostrar Toast interactivo
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').innerHTML = text;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // --- RENDER DEL DASHBOARD ---
+        function renderDashboardModulos() {
+            const container = document.getElementById('dashboard-modulos-progreso');
+            container.innerHTML = "";
+
+            for (let mId = 1; mId <= 5; mId++) {
+                const theory = modulesTheory[mId];
+                const modQuestions = questionsDB.filter(q => q.module === mId);
+                const totalMod = modQuestions.length;
+                
+                // Calcular resueltas de este módulo
+                let solvedMod = 0;
+                let correctMod = 0;
+                modQuestions.forEach(q => {
+                    if (userQuizAnswers[q.id]) {
+                        solvedMod++;
+                        if (userQuizAnswers[q.id] === q.correct) correctMod++;
+                    }
+                });
+
+                const pct = totalMod > 0 ? Math.round((solvedMod / totalMod) * 100) : 0;
+                const scorePct = solvedMod > 0 ? Math.round((correctMod / solvedMod) * 100) : 0;
+
+                const cardHTML = `
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800/80 hover:border-indigo-500/30 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="space-y-1 md:max-w-md">
+                            <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Módulo 0${mId}</span>
+                            <h5 class="text-sm font-bold text-slate-200">${theory.title}</h5>
+                            <p class="text-[11px] text-slate-400 line-clamp-1">${theory.summary}</p>
+                        </div>
+                        <div class="flex items-center gap-6 self-end md:self-center">
+                            <div class="text-right">
+                                <span class="block text-xs text-slate-400 font-medium">Estudiado</span>
+                                <span class="text-xs font-bold text-slate-200">${solvedMod}/${totalMod} (${pct}%)</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-xs text-slate-400 font-medium">Aciertos</span>
+                                <span class="text-xs font-bold ${scorePct >= 70 ? 'text-emerald-400' : 'text-amber-400'}">${scorePct}%</span>
+                            </div>
+                            <button onclick="filterPracticeModule(${mId})" class="px-3.5 py-1.5 bg-indigo-600/10 hover:bg-indigo-600 text-indigo-400 hover:text-white text-xs font-bold rounded-lg transition-colors border border-indigo-500/20 hover:border-indigo-500">
+                                Practicar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            }
+        }
+
+        function filterPracticeModule(mId) {
+            document.getElementById('quiz-module-filter').value = mId;
+            loadQuizModuleQuestions();
+            switchTab('quiz');
+        }
+
+        // --- RENDER DEL CONTENIDO TEÓRICO ---
+        let currentStudyModule = 1;
+
+        function renderStudySections() {
+            const tabsContainer = document.getElementById('study-tabs');
+            tabsContainer.innerHTML = "";
+
+            // Botonera de pestañas de estudio
+            for (let mId = 1; mId <= 5; mId++) {
+                const activeClass = mId === currentStudyModule ? 'bg-indigo-600 text-white' : 'bg-slate-900/40 text-slate-400 hover:text-slate-200 hover:bg-slate-800';
+                tabsContainer.innerHTML += `
+                    <button onclick="setStudyModule(${mId})" class="px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeClass}">
+                        Módulo 0${mId}
+                    </button>
+                `;
+            }
+
+            // Renderizar contenido del módulo activo
+            const contentContainer = document.getElementById('study-content-container');
+            const data = modulesTheory[currentStudyModule];
+
+            let conceptsHTML = "";
+            data.concepts.forEach(c => {
+                conceptsHTML += `
+                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <span class="block text-xs font-bold text-indigo-400 mb-1">${c.t}</span>
+                        <p class="text-[11px] text-slate-300 leading-relaxed">${c.d}</p>
+                    </div>
+                `;
+            });
+
+            // Buscar todas las preguntas asociadas a este módulo para mostrarlas en la biblioteca teórica
+            const modQuestions = questionsDB.filter(q => q.module === currentStudyModule);
+            let questionsListHTML = "";
+            modQuestions.forEach((q, idx) => {
+                questionsListHTML += `
+                    <div class="p-4 bg-slate-950/40 rounded-xl border border-slate-900/80 space-y-2">
+                        <span class="text-[10px] font-extrabold text-indigo-400">REACTIVO 0${idx+1}</span>
+                        <h6 class="text-xs font-bold text-slate-200 leading-relaxed">${q.q}</h6>
+                        <p class="text-xs text-slate-400"><strong class="text-emerald-400">Respuesta Correcta:</strong> ${q.options[q.correct]}</p>
+                    </div>
+                `;
+            });
+
+            contentContainer.innerHTML = `
+                <!-- Columna Izquierda: Teoría del módulo -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-slate-900/30 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-4">
+                        <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Resumen Ejecutivo del Módulo</span>
+                        <h3 class="text-xl font-bold text-slate-100">${data.title}</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed">${data.summary}</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-bold text-slate-300 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                            Banco de Preguntas Oficial en este Módulo
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${questionsListHTML}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Glosario de términos clave -->
+                <div class="bg-slate-900/60 border border-slate-800/80 p-6 rounded-3xl h-fit space-y-4">
+                    <h4 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                        Conceptos Clave del Módulo
+                    </h4>
+                    <p class="text-xs text-slate-400">Definiciones teóricas obligatorias evaluadas en el banco de preguntas 2026.</p>
+                    <div class="space-y-3">
+                        ${conceptsHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        function setStudyModule(mId) {
+            currentStudyModule = mId;
+            renderStudySections();
+        }
+
+
+        // --- LOGICA DEL BANCO DE PREGUNTAS (PRÁCTICA) ---
+        function loadQuizModuleQuestions() {
+            const filterValue = document.getElementById('quiz-module-filter').value;
+            if (filterValue === 'all') {
+                filteredQuestions = [...questionsDB];
+            } else {
+                filteredQuestions = questionsDB.filter(q => q.module == filterValue);
+            }
+            quizIndex = 0;
+            updateQuizView();
+        }
+
+        function updateQuizView() {
+            if (filteredQuestions.length === 0) return;
+
+            const q = filteredQuestions[quizIndex];
+            
+            // Actualizar numeración
+            document.getElementById('quiz-question-counter').textContent = `${quizIndex + 1}/${filteredQuestions.length}`;
+            
+            // Módulo y Estado
+            document.getElementById('quiz-question-module').textContent = `Módulo 0${q.module}`;
+            
+            const stateBox = document.getElementById('quiz-question-status');
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            
+            if (userQuizAnswers[q.id]) {
+                const isCorrect = userQuizAnswers[q.id] === q.correct;
+                stateBox.innerHTML = isCorrect 
+                    ? `<span class="text-emerald-400 font-bold">✓ Respondida correctamente</span>`
+                    : `<span class="text-red-400 font-bold">✗ Respondida incorrectamente</span>`;
+                feedbackBox.innerHTML = q.explanation;
+            } else {
+                stateBox.innerHTML = `<span class="text-slate-500 font-semibold">Pendiente de responder</span>`;
+                feedbackBox.innerHTML = "Selecciona una de las opciones para validar tu respuesta y desbloquear el análisis estratégico detallado de este caso corporativo.";
+            }
+
+            // Texto de la pregunta
+            document.getElementById('quiz-question-text').innerHTML = q.q;
+
+            // Renderizar opciones
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = "";
+
+            Object.keys(q.options).forEach(key => {
+                const optText = q.options[key];
+                const answeredOpt = userQuizAnswers[q.id];
+                
+                let optStyles = "bg-slate-950/40 border-slate-800 text-slate-300 hover:border-slate-700 hover:bg-slate-900/60";
+                let badgeStyles = "bg-slate-900 border-slate-800 text-slate-400";
+                
+                if (answeredOpt) {
+                    if (key === q.correct) {
+                        // Resaltar siempre la correcta en verde si ya se respondió
+                        optStyles = "bg-emerald-500/10 border-emerald-500/30 text-emerald-300 pointer-events-none";
+                        badgeStyles = "bg-emerald-500 text-white";
+                    } else if (answeredOpt === key) {
+                        // Si el usuario eligió esta opción y es incorrecta, marcar en rojo
+                        optStyles = "bg-red-500/10 border-red-500/30 text-red-300 pointer-events-none";
+                        badgeStyles = "bg-red-500 text-white";
+                    } else {
+                        // Apagar las demás opciones
+                        optStyles = "bg-slate-950/20 border-slate-900 text-slate-500 opacity-60 pointer-events-none";
+                        badgeStyles = "bg-slate-950 text-slate-600 border-slate-900";
+                    }
+                }
+
+                optionsContainer.innerHTML += `
+                    <button onclick="submitQuizAnswer('${key}')" class="w-full text-left p-4 rounded-xl border flex items-center gap-4 transition-all ${optStyles}">
+                        <span class="w-6 h-6 rounded-lg text-xs font-bold border flex items-center justify-center shrink-0 ${badgeStyles}">
+                            ${key}
+                        </span>
+                        <span class="text-xs md:text-sm font-medium leading-relaxed">${optText}</span>
+                    </button>
+                `;
+            });
+        }
+
+        function submitQuizAnswer(selectedOption) {
+            const q = filteredQuestions[quizIndex];
+            if (userQuizAnswers[q.id]) return; // Evitar re-enviar si ya se contestó
+
+            userQuizAnswers[q.id] = selectedOption;
+            saveProgress();
+            updateQuizView();
+            renderDashboardModulos(); // Actualizar dashboard
+
+            if (selectedOption === q.correct) {
+                showToast("¡Correcto! Has interpretado muy bien el concepto estratégico.");
+            } else {
+                showToast("Opción incorrecta. Revisa el análisis lateral para entender el error.");
+            }
+        }
+
+        function quizNextQuestion() {
+            if (quizIndex < filteredQuestions.length - 1) {
+                quizIndex++;
+                updateQuizView();
+            } else {
+                showToast("Estás en la última pregunta de este bloque.");
+            }
+        }
+
+        function quizPrevQuestion() {
+            if (quizIndex > 0) {
+                quizIndex--;
+                updateQuizView();
+            } else {
+                showToast("Estás en la primera pregunta de este bloque.");
+            }
+        }
+
+
+        // --- LOGICA DEL SIMULADOR DE EXAMEN ---
+        function startSimulator() {
+            // Generar 20 preguntas aleatorias transversales
+            const shuffled = [...questionsDB].sort(() => 0.5 - Math.random());
+            simQuestions = shuffled.slice(0, 20);
+            simAnswers = {};
+            simActiveIndex = 0;
+            simSecondsLeft = 1200; // 20 minutos
+            simStartTime = Date.now();
+
+            document.getElementById('sim-start-card').classList.add('hidden');
+            document.getElementById('sim-result-card').classList.add('hidden');
+            document.getElementById('sim-active-card').classList.remove('hidden');
+
+            renderSimQuestion();
+            renderSimMap();
+
+            // Iniciar Timer
+            if (simTimerInterval) clearInterval(simTimerInterval);
+            simTimerInterval = setInterval(() => {
+                simSecondsLeft--;
+                updateSimTimerDisplay();
+                
+                if (simSecondsLeft <= 0) {
+                    clearInterval(simTimerInterval);
+                    finishSimulator();
+                }
+            }, 1000);
+        }
+
+        function updateSimTimerDisplay() {
+            const minutes = Math.floor(simSecondsLeft / 60);
+            const seconds = simSecondsLeft % 60;
+            document.getElementById('sim-timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function renderSimQuestion() {
+            if (simQuestions.length === 0) return;
+            const q = simQuestions[simActiveIndex];
+
+            document.getElementById('sim-question-module').textContent = `Módulo 0${q.module}`;
+            document.getElementById('sim-progress-counter').textContent = `Pregunta ${simActiveIndex + 1} de 20`;
+            document.getElementById('sim-question-text').textContent = q.q;
+
+            const optionsContainer = document.getElementById('sim-options-container');
+            optionsContainer.innerHTML = "";
+
+            Object.keys(q.options).forEach(key => {
+                const optText = q.options[key];
+                const isSelected = simAnswers[simActiveIndex] === key;
+
+                const borderClass = isSelected ? 'border-indigo-500 bg-indigo-600/10 text-indigo-300' : 'border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700';
+                const badgeClass = isSelected ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-slate-900 text-slate-400 border-slate-800';
+
+                optionsContainer.innerHTML += `
+                    <button onclick="submitSimAnswer('${key}')" class="w-full text-left p-4 rounded-xl border flex items-center gap-4 transition-all ${borderClass}">
+                        <span class="w-6 h-6 rounded-lg text-xs font-bold border flex items-center justify-center shrink-0 ${badgeClass}">
+                            ${key}
+                        </span>
+                        <span class="text-xs md:text-sm font-medium leading-relaxed">${optText}</span>
+                    </button>
+                `;
+            });
+        }
+
+        function renderSimMap() {
+            const container = document.getElementById('sim-map-container');
+            container.innerHTML = "";
+
+            simQuestions.forEach((q, idx) => {
+                const hasAnswer = simAnswers[idx] !== undefined;
+                const isCurrent = simActiveIndex === idx;
+
+                let btnClass = "bg-slate-900 text-slate-500 border-slate-800 hover:border-slate-700";
+                if (hasAnswer) btnClass = "bg-indigo-600/20 text-indigo-400 border-indigo-500/40";
+                if (isCurrent) btnClass = "bg-indigo-600 text-white border-indigo-500 font-bold shadow-lg shadow-indigo-500/20";
+
+                container.innerHTML += `
+                    <button onclick="goToSimQuestion(${idx})" class="h-10 rounded-xl text-xs border transition-all flex items-center justify-center ${btnClass}">
+                        ${idx + 1}
+                    </button>
+                `;
+            });
+        }
+
+        function submitSimAnswer(key) {
+            simAnswers[simActiveIndex] = key;
+            renderSimQuestion();
+            renderSimMap();
+        }
+
+        function goToSimQuestion(idx) {
+            simActiveIndex = idx;
+            renderSimQuestion();
+            renderSimMap();
+        }
+
+        function simNextQuestion() {
+            if (simActiveIndex < simQuestions.length - 1) {
+                simActiveIndex++;
+                renderSimQuestion();
+                renderSimMap();
+            } else {
+                finishSimulatorPrompt();
+            }
+        }
+
+        function finishSimulatorPrompt() {
+            const answeredCount = Object.keys(simAnswers).length;
+            if (answeredCount < 20) {
+                if (confirm(`Aún tienes ${20 - answeredCount} preguntas sin responder en tu examen. ¿Deseas entregar el simulacro de todos modos?`)) {
+                    finishSimulator();
+                }
+            } else {
+                if (confirm("¿Estás seguro de que deseas finalizar y calificar tu simulacro de examen?")) {
+                    finishSimulator();
+                }
+            }
+        }
+
+        function finishSimulator() {
+            if (simTimerInterval) {
+                clearInterval(simTimerInterval);
+                simTimerInterval = null;
+            }
+
+            // Calcular Resultados
+            let correctas = 0;
+            simQuestions.forEach((q, idx) => {
+                if (simAnswers[idx] === q.correct) correctas++;
+            });
+
+            const scorePct = Math.round((correctas / 20) * 100);
+            const timeUsedSeconds = 1200 - simSecondsLeft;
+            const minutes = Math.floor(timeUsedSeconds / 60);
+            const seconds = timeUsedSeconds % 60;
+
+            // Actualizar interfaz resultados
+            document.getElementById('sim-res-score').textContent = `${scorePct}%`;
+            document.getElementById('sim-res-correctas').textContent = `${correctas}/20`;
+            document.getElementById('sim-res-time').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // Guardar estadística de simulacro cursado
+            let simCount = parseInt(localStorage.getItem('gs_simCount') || "0");
+            simCount++;
+            localStorage.setItem('gs_simCount', simCount.toString());
+            document.getElementById('stats-simulacros').textContent = simCount;
+
+            // Diagnóstico estratégico dinámico
+            const diagBox = document.getElementById('sim-res-diagnostic');
+            let diagHTML = "";
+            if (scorePct >= 90) {
+                diagHTML = `
+                    <div class="space-y-2">
+                        <span class="text-emerald-400 font-bold uppercase tracking-wider block">¡Desempeño Sobresaliente! 🏆</span>
+                        <p>Tienes un entendimiento conceptual robusto y maduro de la gestión de negocios. Has logrado simular con éxito las condiciones reales del examen de becas con una nota aprobatoria directa. Continúa manteniendo frescos tus conceptos mediante el repaso de las Flashcards.</p>
+                    </div>
+                `;
+            } else if (scorePct >= 70) {
+                diagHTML = `
+                    <div class="space-y-2">
+                        <span class="text-indigo-400 font-bold uppercase tracking-wider block">¡Buen Trabajo de Preparación! 📈</span>
+                        <p>Estás muy cerca del nivel óptimo requerido para asegurar la postulación. Identifica las preguntas que erraste y utilízalas como mapa de estudio para revisar la teoría en nuestra sección de **Contenido Teórico**. ¡Estás a un paso!</p>
+                    </div>
+                `;
+            } else {
+                diagHTML = `
+                    <div class="space-y-2">
+                        <span class="text-amber-400 font-bold uppercase tracking-wider block">Nivel de Estudio: En Desarrollo ⏳</span>
+                        <p>Tu puntaje actual requiere un repaso prioritario de las bases. Te sugerimos revisar con mucha atención el Módulo I (Fundamentos) y Módulo III (Formulación), ya que concentran los pilares analíticos de la prueba. El fracaso no es más que una retroalimentación valiosa, ¡inténtalo de nuevo!</p>
+                    </div>
+                `;
+            }
+            diagBox.innerHTML = diagHTML;
+
+            // Switch de vistas
+            document.getElementById('sim-active-card').classList.add('hidden');
+            document.getElementById('sim-result-card').classList.remove('hidden');
+        }
+
+        function resetSimulator() {
+            document.getElementById('sim-result-card').classList.add('hidden');
+            document.getElementById('sim-start-card').classList.remove('hidden');
+        }
+
+
+        // --- LOGICA DE TARJETAS DE MEMORIA ---
+        function updateFlashcard() {
+            const card = flashcardsData[flashcardIndex];
+            document.getElementById('flashcard-term').textContent = card.term;
+            document.getElementById('flashcard-definition').innerHTML = card.def;
+            document.getElementById('flashcard-counter').textContent = `${flashcardIndex + 1}/${flashcardsData.length}`;
+            
+            // Forzar a regresar al frente al cambiar de tarjeta
+            document.getElementById('flashcard-wrapper').classList.remove('flipped');
+        }
+
+        function toggleFlashcard() {
+            document.getElementById('flashcard-wrapper').classList.toggle('flipped');
+        }
+
+        function nextFlashcard() {
+            flashcardIndex = (flashcardIndex + 1) % flashcardsData.length;
+            updateFlashcard();
+        }
+
+        function prevFlashcard() {
+            flashcardIndex = (flashcardIndex - 1 + flashcardsData.length) % flashcardsData.length;
+            updateFlashcard();
+        }
+    </script>
+</body>
+</html>
