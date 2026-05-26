@@ -107,7 +107,7 @@
                 <div id="progreso-barra" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full transition-all duration-500" style="width: 0%"></div>
             </div>
             <div class="flex justify-between items-center mt-3 text-[10px] text-slate-500 font-semibold uppercase">
-                <span>Resueltas: <span id="resueltas-contador" class="text-slate-300">0</span>/42</span>
+                <span>Resueltas: <span id="resueltas-contador" class="text-slate-300">0</span>/<span id="total-preguntas-badge">90</span></span>
                 <button onclick="resetAllProgress()" class="hover:text-red-400 transition-colors">Reiniciar</button>
             </div>
         </div>
@@ -136,7 +136,7 @@
                     <div class="relative z-10 max-w-xl space-y-3">
                         <span class="px-2.5 py-1 text-[11px] font-bold tracking-wider uppercase bg-indigo-500 text-white rounded-md">PREPARACIÓN ELITE</span>
                         <h3 class="text-3xl font-extrabold text-white">Domina la Gestión Estratégica</h3>
-                        <p class="text-slate-300 text-sm leading-relaxed">Bienvenido a tu plataforma interactiva de entrenamiento para la beca CREcé con Nosotros. Aquí podrás ensayar con el banco oficial de preguntas, analizar la teoría de fondo y evaluar tu desempeño para asegurar tu ingreso al diplomado.</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">Bienvenido a tu plataforma interactiva de entrenamiento para la beca CREcé con Nosotros. Aquí podrás ensayar con el banco oficial de preguntas estructurado por módulos, analizar la teoría de fondo, aprender con analogías y evaluar tu desempeño.</p>
                         <div class="pt-2 flex gap-3">
                             <button onclick="switchTab('quiz')" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">Comenzar Práctica</button>
                             <button onclick="switchTab('simulator')" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition-all">Iniciar Simulacro</button>
@@ -213,12 +213,12 @@
                     <div class="space-y-1">
                         <span class="text-xs text-slate-400 font-medium">Filtrar por bloque temático</span>
                         <select id="quiz-module-filter" onchange="loadQuizModuleQuestions()" class="bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 w-full sm:w-72">
-                            <option value="all">Todos los Módulos (42 preguntas)</option>
-                            <option value="1">Módulo I: Fundamentos Estratégicos</option>
-                            <option value="2">Módulo II: Análisis de Entorno</option>
-                            <option value="3">Módulo III: Formulación de Estrategias</option>
-                            <option value="4">Módulo IV: Diseño y Ejecución</option>
-                            <option value="5">Módulo V: Modelos de Negocio</option>
+                            <option value="all">Todos los Módulos (<span id="count-all-questions">0</span> preguntas)</option>
+                            <option value="1">Módulo I: Fundamentos Estratégicos (1-20)</option>
+                            <option value="2">Módulo II: Análisis de Entorno (21-30)</option>
+                            <option value="3">Módulo III: Formulación de Estrategias (31-50)</option>
+                            <option value="4">Módulo IV: Diseño y Ejecución (51-70)</option>
+                            <option value="5">Módulo V: Modelos de Negocio e Innovación (71-90)</option>
                         </select>
                     </div>
                     <div class="flex gap-2">
@@ -226,7 +226,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Atrás
                         </button>
                         <span id="quiz-question-counter" class="px-4 py-2 bg-slate-950 text-slate-400 border border-slate-800 rounded-xl text-xs font-semibold flex items-center justify-center min-w-[70px]">
-                            1/42
+                            1/90
                         </span>
                         <button onclick="quizNextQuestion()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold flex items-center gap-1">
                             Siguiente <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -286,11 +286,11 @@
                     <div class="grid grid-cols-3 gap-4 py-2 border-y border-slate-800 text-left">
                         <div class="p-3">
                             <span class="block text-xs text-slate-500">Preguntas</span>
-                            <span class="text-lg font-bold text-slate-200">20 Reactivos</span>
+                            <span class="text-lg font-bold text-slate-200">25 Reactivos</span>
                         </div>
                         <div class="p-3">
                             <span class="block text-xs text-slate-500">Tiempo Límite</span>
-                            <span class="text-lg font-bold text-slate-200">20 Minutos</span>
+                            <span class="text-lg font-bold text-slate-200">25 Minutos</span>
                         </div>
                         <div class="p-3">
                             <span class="block text-xs text-slate-500">Dificultad</span>
@@ -309,7 +309,7 @@
                             <span id="sim-question-module" class="px-3 py-1 bg-indigo-500/10 text-indigo-400 text-xs font-bold rounded-full">Módulo I</span>
                             <div class="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 text-red-400 rounded-xl border border-red-500/20 text-xs font-mono font-bold">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span id="sim-timer">20:00</span>
+                                <span id="sim-timer">25:00</span>
                             </div>
                         </div>
                         <h3 id="sim-question-text" class="text-lg md:text-xl font-bold text-slate-100 leading-relaxed">Pregunta...</h3>
@@ -317,7 +317,7 @@
                             <!-- Opciones -->
                         </div>
                         <div class="flex justify-between items-center pt-4 border-t border-slate-800">
-                            <span id="sim-progress-counter" class="text-xs text-slate-500 font-medium">Pregunta 1 de 20</span>
+                            <span id="sim-progress-counter" class="text-xs text-slate-500 font-medium">Pregunta 1 de 25</span>
                             <button onclick="simNextQuestion()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs transition-all">
                                 Siguiente
                             </button>
@@ -352,7 +352,7 @@
                         </div>
                         <div class="p-5 bg-slate-950 rounded-2xl border border-slate-800/80">
                             <span class="block text-xs text-slate-400 mb-1">Aciertos</span>
-                            <span id="sim-res-correctas" class="text-3xl font-black text-emerald-400">0/20</span>
+                            <span id="sim-res-correctas" class="text-3xl font-black text-emerald-400">0/25</span>
                         </div>
                         <div class="p-5 bg-slate-950 rounded-2xl border border-slate-800/80">
                             <span class="block text-xs text-slate-400 mb-1">Tiempo Utilizado</span>
@@ -425,42 +425,39 @@
 
     <!-- CODIGO DEL CORE: DATA + LOGIC -->
     <script>
-        // BASE DE PREGUNTAS (Banco oficial parseado y enriquecido con retroalimentación teórica y analogía explicativa)
+        // BASE DE PREGUNTAS COMPLETA (Mapeo absoluto y ordenado de los reactivos oficiales de la beca)
         const questionsDB = [
-            // Módulo I
+            // --- MÓDULO I: FUNDAMENTOS DE LA GESTIÓN ESTRATÉGICA (1-20) ---
             {
-                id: 1,
-                module: 1,
+                id: 1, module: 1,
                 q: "¿Cuál es el objetivo principal de la gestión estratégica?",
                 options: {
-                    A: "Controlar las operaciones diarias de la empresa",
-                    B: "Generar de forma única cultura organizacional",
-                    C: "Obtener ventajas competitivas sostenibles en el tiempo",
-                    D: "Establecer presupuestos contables anuales"
+                    A: "Controlar las operaciones diarias",
+                    B: "Generar cultura organizacional",
+                    C: "Obtener ventajas competitivas sostenibles",
+                    D: "Establecer presupuestos contables"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> El fin último de la dirección o gestión estratégica es posicionar de forma única a la organización dentro de su entorno para capturar una ventaja que no pueda ser fácilmente erosionada por la competencia.<br><br><em>¿Por qué las demás no?</em> El control del día a día (A) es planeación operativa. La cultura (B) es un pilar que apoya a la estrategia, pero no el fin de negocio por sí solo. Los presupuestos (D) son herramientas tácticas de control financiero.",
-                theory: "La dirección estratégica asume que el rendimiento empresarial superior se logra a través del posicionamiento externo defendible y del desarrollo de recursos internos únicos. El objetivo es estructurar una ventaja competitiva sostenible que resista los embates de los competidores y los cambios del mercado en el mediano y largo plazo.",
-                analogy: "Es como construir una fortaleza medieval en la cima de una colina rocosa con cimientos de piedra tallada (ventaja sostenible), en lugar de armar una carpa de lona en el valle (operación del día a día) que puede ser arrastrada por la primera tormenta."
+                explanation: "<strong>Opción C es la correcta.</strong> El propósito del proceso estratégico es posicionar a la empresa para que rinda por encima de la media de su sector mediante una ventaja difícil de neutralizar.",
+                theory: "La dirección estratégica aborda la supervivencia del negocio y su éxito competitivo a largo plazo. Se apoya en recursos inimitables, posicionamiento defendible y diseño de valor.",
+                analogy: "Construir un canal comercial exclusivo y blindado de distribución en lugar de estar rematando inventario en la plaza pública junto a todos tus rivales."
             },
             {
-                id: 2,
-                module: 1,
-                q: "¿Qué elemento forma parte clave del proceso estratégico?",
+                id: 2, module: 1,
+                q: "¿Qué elemento forma parte del proceso estratégico?",
                 options: {
-                    A: "La auditoría externa formal de cuentas anuales",
-                    B: "La definición de la visión estratégica corporativa",
-                    C: "El control diario de inventario físico en almacén",
-                    D: "El cálculo exacto del margen de contribución por lote"
+                    A: "Auditoría externa",
+                    B: "Visión estratégica",
+                    C: "Inventario físico",
+                    D: "Margen de contribución"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> El proceso estratégico inicia y se guía por el rumbo definido en la visión y misión de la empresa.<br><br><em>¿Por qué las demás no?</em> La auditoría contable (A), el inventario (C) y el cálculo de márgenes operativos (D) son labores de cumplimiento, control físico y contabilidad analítica, respectivamente.",
-                theory: "La visión estratégica define la aspiración a largo plazo del negocio: '¿qué queremos llegar a ser?'. Al fijar esta meta, se genera la tensión creativa necesaria para movilizar recursos, reorganizar procesos y canalizar los esfuerzos de todo el personal en la misma dirección.",
-                analogy: "Es como fijar las coordenadas de la Isla del Tesoro en el mapa del barco (visión). Aunque el capitán deba modificar la trayectoria por tormentas inesperadas (gestión de imprevistos), toda la tripulación sabe exactamente a qué puerto deben llegar."
+                explanation: "<strong>Opción B es la correcta.</strong> La visión de largo plazo es la guía de rumbo de todo el proceso estratégico formal.",
+                theory: "El proceso estratégico formal inicia estructurando la intención directiva y horizonte a través de la Visión y Misión corporativas.",
+                analogy: "Fijar un faro de iluminación de largo alcance en el mar en lugar de navegar vigilando solamente si hay agua en la bodega del navío."
             },
             {
-                id: 3,
-                module: 1,
+                id: 3, module: 1,
                 q: "¿Qué autor propuso el modelo de las 5 fuerzas competitivas?",
                 options: {
                     A: "Henry Mintzberg",
@@ -469,288 +466,437 @@
                     D: "Philip Kotler"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> Michael Porter introdujo el análisis de las 5 Fuerzas (rivalidad del sector, poder de clientes, proveedores, amenaza de sustitutos y nuevos participantes) en la Harvard Business School para mapear el atractivo estructural de una industria.<br><br><em>¿Por qué los demás no?</em> Mintzberg (A) destaca por tipologías y el enfoque emergente. Ansoff (C) por su matriz de crecimiento producto-mercado. Kotler (D) es el padre del marketing moderno.",
-                theory: "Michael Porter revolucionó la estrategia al importar conceptos de economía industrial. Su modelo de las 5 Fuerzas estipula que la rentabilidad de una empresa no depende solo de lo bien que trabaje de forma interna, sino de la fuerza colectiva de los actores de su ecosistema sectorial.",
-                analogy: "Es como estudiar a fondo el oleaje, los tiburones, los arrecifes de coral ocultos y las corrientes de agua fría de una bahía antes de decidir lanzar tu barco de pesca a competir con las flotas locales."
+                explanation: "<strong>Opción B es la correcta.</strong> El economista Michael Porter formalizó esta herramienta analítica de la estructura industrial.",
+                theory: "El marco de las 5 fuerzas evalúa la rivalidad, poder de clientes, de proveedores, barreras a nuevos entrantes y la presión de sustitutos.",
+                analogy: "Mapear a los tiburones, el oleaje y los arrecifes de un archipiélago antes de lanzar tu bote pesquero a la competencia."
             },
             {
-                id: 4,
-                module: 1,
-                q: "¿Qué diferencia fundamental existe entre la misión y la visión corporativa?",
+                id: 4, module: 1,
+                q: "¿Qué diferencia existe entre misión y visión?",
                 options: {
-                    A: "La misión es netamente de carácter aspiracional, mientras la visión es netamente operativa",
-                    B: "La misión es el propósito presente de la empresa; la visión proyecta el futuro a mediano y largo plazo",
-                    C: "Ambas persiguen exactamente el mismo fin directivo bajo un mismo horizonte de planeación",
-                    D: "La visión trata estrictamente la optimización y control de los procesos internos"
+                    A: "La misión es aspiracional, la visión es operativa",
+                    B: "La misión es el propósito presente, la visión proyecta el futuro",
+                    C: "Ambas son iguales",
+                    D: "La visión trata los procesos internos"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> La misión responde al '¿Quiénes somos hoy y qué hacemos?', definiendo la razón de ser en el presente. La visión responde al '¿Qué queremos llegar a ser?' en un horizonte futuro estructurado.<br><br><em>¿Por qué las demás no?</em> La opción A invierte los conceptos. La C ignora el factor tiempo. La D confunde la visión con metodologías de optimización como Six Sigma o Lean.",
-                theory: "La misión ancla la identidad del negocio, delimita la frontera del mercado en el que compite actualmente y define su propuesta de valor presente. La visión proyecta la meta inspiracional futura, guiando el crecimiento de largo plazo.",
-                analogy: "La misión son las turbinas y las alas del avión funcionando de forma estable en pleno vuelo hoy. La visión es el aeropuerto de destino al que la tripulación busca llegar tras completar el trayecto."
+                explanation: "<strong>Opción B es la correcta.</strong> La misión responde al '¿quiénes somos hoy?' y la visión al '¿qué queremos llegar a ser?'.",
+                theory: "La misión establece el propósito nuclear y mercado actual. La visión proyecta un estado futuro inspiracional y desafiante.",
+                analogy: "La misión es el combustible y motor del cohete operando hoy. La visión es el planeta Marte al que se busca llegar tras el viaje."
             },
             {
-                id: 5,
-                module: 1,
-                q: "¿Qué caracteriza formalmente a un objetivo estratégico bien definido?",
+                id: 5, module: 1,
+                q: "¿Qué caracteriza a un objetivo estratégico bien definido?",
                 options: {
-                    A: "Ser lo más amplio e indefinido posible para ganar flexibilidad",
-                    B: "Enfocarse meramente en tareas de soporte operativo del día a día",
-                    C: "Cumplir la regla SMART: Específico, medible, alcanzable, relevante y temporal",
-                    D: "Ser puramente intuitivo y basarse en corazonadas del gerente"
+                    A: "Ser amplio e indefinido",
+                    B: "Enfocado en tareas operativas",
+                    C: "Específico, medible, alcanzable, relevante y temporal (SMART)",
+                    D: "Intuitivo"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> Los objetivos estratégicos deben poder ser medidos y cuantificados de manera clara en un marco temporal establecido (SMART) para su ejecución efectiva.<br><br><em>¿Por qué las demás no?</em> Objetivos indefinidos (A) dispersan los esfuerzos del equipo. Objetivos puramente operativos (B) carecen de visión estratégica. Confiar únicamente en corazonadas (D) eleva drásticamente el riesgo de quiebra empresarial.",
-                theory: "Los objetivos SMART traducen los sueños abstractos de la visión corporativa en metas concretas de ingeniería de negocios. Esto permite auditar el progreso, asignar responsabilidades inequívocas y evaluar con rigor si el plan está teniendo éxito.",
-                analogy: "En lugar de decir vagamente 'quiero ponerme en forma' (objetivo ambiguo), estableces que vas a 'correr 10 km (Específico y Medible) en menos de 50 minutos (Alcanzable y Relevante) para el 31 de diciembre de este año (Temporal)'."
+                explanation: "<strong>Opción C es la correcta.</strong> El marco SMART dota a las metas corporativas de claridad analítica y temporalidad controlable.",
+                theory: "La ingeniería de objetivos estratégicos requiere parámetros cuantificables y plazos límite obligatorios para evaluar desviaciones.",
+                analogy: "En lugar de decir 'quiero vender mucho' dices 'incrementar un 12% la facturación en Bolivia para el cuarto trimestre'."
             },
             {
-                id: 6,
-                module: 1,
-                q: "¿Cuál de las siguientes alternativas representa una ventaja competitiva sostenible?",
+                id: 6, module: 1,
+                q: "¿Cuál de estas opciones representa una ventaja competitiva sostenible?",
                 options: {
-                    A: "Una promoción agresiva y temporal de precios con pérdida margen",
-                    B: "Una ubicación física privilegiada protegida por altas barreras de entrada legales o de capital",
-                    C: "Un incremento generalizado de los salarios fijos a todos los empleados del corporativo",
-                    D: "Contar simplemente con un mayor número absoluto de empleados en nómina"
+                    A: "Promoción temporal de precios",
+                    B: "Ubicación estratégica con barreras de entrada",
+                    C: "Incremento de salarios",
+                    D: "Mayor número de empleados"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> Una barrera de entrada geográfica, de infraestructura o legal es un activo muy costoso de replicar por los competidores, dotando de ventaja permanente al operador.<br><br><em>¿Por qué las demás no?</em> Los descuentos temporales (A) se copian de inmediato y erosionan utilidades. Los incrementos salariales (C) suben los costos fijos sin asegurar de forma directa eficiencia o ventaja competitiva. El número de personal (D) no es sinónimo de eficiencia ni diferenciación en valor.",
-                theory: "Una ventaja competitiva sostenible se basa en activos imposibles o extremadamente caros de duplicar. Las patentes, los monopolios geográficos naturales o las redes de distribución exclusivas construyen barreras de entrada infranqueables para la competencia.",
-                analogy: "Es el equivalente a cavar un foso gigante con agua y cocodrilos alrededor de tu castillo. Un descuento en precios es solo levantar escudos temporales de madera que se rompen rápido si el enemigo te ataca con fuego."
+                explanation: "<strong>Opción B es la correcta.</strong> Las barreras de entrada físicas o legales blindan el negocio de ataques e imitación.",
+                theory: "La ventaja competitiva requiere de activos o capacidades difíciles de replicar por los competidores establecidos y nuevos.",
+                analogy: "Erigir tu fortaleza en la cima de un cañón estrecho y de paso forzoso custodiado por barreras geográficas naturales."
             },
             {
-                id: 7,
-                module: 1,
-                q: "¿Qué elemento impulsa de manera más sólida la ventaja competitiva desde la teoría basada en recursos (RBV)?",
+                id: 7, module: 1,
+                q: "¿Qué elemento impulsa la ventaja competitiva desde los recursos?",
                 options: {
-                    A: "Mantener un alto endeudamiento financiero",
-                    B: "Contar con una extrema eficiencia fiscal",
-                    C: "Poseer capacidades distintivas que sean muy difíciles de imitar o sustituir por terceros",
-                    D: "Tener una alta tasa de rotación de personal calificado"
+                    A: "Alto endeudamiento",
+                    B: "Eficiencia fiscal",
+                    C: "Capacidades distintivas y difíciles de imitar",
+                    D: "Alta rotación de personal"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La teoría basada en recursos estipula que la ventaja competitiva se crea a través de recursos internos raros, valiosos, inimitables y organizados (VRIN).<br><br><em>¿Por qué las demás no?</em> El endeudamiento excesivo (A) limita la flexibilidad y eleva el riesgo de quiebra. La planificación fiscal (B) es necesaria pero almacenable e imitable. La alta rotación (D) destruye el conocimiento acumulado en el capital humano.",
-                theory: "El enfoque de recursos y capacidades (Resource-Based View) postula que los mercados externos son inestables, por lo que la verdadera fuente de la ventaja competitiva reside en la combinación única de recursos intangibles de la propia empresa (como patentes, cultura y procesos exclusivos).",
-                analogy: "La receta ultra-secreta de postres de tu abuela que ha pasado de generación en generación y que ningún otro pastelero en la ciudad puede igualar, garantizando clientes leales de por vida."
+                explanation: "<strong>Opción C es la correcta.</strong> El enfoque RBV (Resource-Based View) asigna la ventaja a recursos raros, valiosos e inimitables.",
+                theory: "Las capacidades distintivas combinan de forma única habilidades intangibles y rutinas operativas complejas difíciles de copiar.",
+                analogy: "La receta de postres ultra secreta que pasa de generación en generación en tu familia y que ningún competidor de la ciudad puede descifrar."
             },
             {
-                id: 8,
-                module: 1,
-                q: "¿Qué enfoque de la estrategia teórica la reconoce como un 'patrón emergente' en vez de una planeación estática?",
+                id: 8, module: 1,
+                q: "¿Qué enfoque reconoce a la estrategia como patrón emergente?",
                 options: {
-                    A: "La estrategia puramente deliberada de Porter",
-                    B: "La estrategia adaptativa y de guerrilla basada en marketing",
-                    C: "La estrategia emergente teorizada por Henry Mintzberg",
-                    D: "La estrategia contable estandarizada"
+                    A: "Estrategia deliberada de Porter",
+                    B: "Estrategia basada en marketing",
+                    C: "Estrategia emergente de Mintzberg",
+                    D: "Estrategia contable"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> Mintzberg demostró que la estrategia no es siempre un proceso jerárquico y lineal de planificación. Sostiene que las decisiones más exitosas de una empresa a menudo surgen orgánicamente ('emergen') de la interacción cotidiana con los retos del mercado.<br><br><em>¿Por qué las demás no?</em> Porter (A) aboga más por el diseño formal deliberado de posicionamiento. Los enfoques puramente de marketing (B) y contables (D) se enfocan en tácticas concretas o el registro de hechos pasados.",
-                theory: "Henry Mintzberg propuso que la estrategia real ejecutada por una empresa es la suma de la estrategia deliberada (lo planificado formalmente) más la estrategia emergente (las ideas y respuestas no planificadas que surgieron ante los imprevistos del mercado real).",
-                analogy: "Un río caudaloso fluyendo hacia el mar. Cuando choca contra una roca gigante, no se detiene a rediseñar sus planos durante meses; simplemente se desvía y encuentra un nuevo cauce natural para seguir avanzando."
+                explanation: "<strong>Opción C es la correcta.</strong> Henry Mintzberg demostró que la estrategia de éxito brota muchas veces de adaptaciones no planificadas.",
+                theory: "Mintzberg diferencia la estrategia deliberada (intenciones iniciales) de la emergente (acciones que surgen orgánicamente).",
+                analogy: "Un río que esquiva de inmediato una gran roca caída para seguir fluyendo hacia el mar, adaptándose en el acto."
             },
             {
-                id: 9,
-                module: 1,
-                q: "¿Qué describe mejor la perspectiva clásica o de diseño de la estrategia?",
+                id: 9, module: 1,
+                q: "¿Qué describe mejor la perspectiva clásica de la estrategia?",
                 options: {
-                    A: "El caos sistémico del mercado libre",
-                    B: "La ausencia total de planeación a largo plazo",
-                    C: "Un plan racional formulado por la dirección para alcanzar una meta definida",
-                    D: "La política puramente administrativa de reclutamiento de personal"
+                    A: "El caos organizacional",
+                    B: "La falta de planificación",
+                    C: "Un plan racional para alcanzar una meta",
+                    D: "La política de personal"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La escuela clásica de estrategia asume que los gerentes analizan racionalmente los datos del mercado para construir una hoja de ruta estructurada y lógica que guiará el negocio.<br><br><em>¿Por qué las demás no?</em> El caos (A) o no planear (B) contradicen el enfoque clásico. La política de personal (D) es un subproceso funcional, no una estrategia corporativa global.",
-                theory: "La perspectiva clásica es prescriptiva. Concibe la formulación estratégica como un ejercicio analítico y estructurado llevado a cabo por los altos directivos, donde se asume que el entorno de negocios es predecible y puede ser conquistado mediante planes de acción estáticos.",
-                analogy: "Un arquitecto detallista que dibuja con lápiz azul los planos estructurales de un enorme rascacielos. Cada viga, cable y ladrillo se coloca exactamente de la manera diseñada antes de iniciar la obra."
+                explanation: "<strong>Opción C es la correcta.</strong> La escuela clásica de diseño y planificación asume un análisis racional y secuencial corporativo.",
+                theory: "Asume que el entorno es predecible y los directivos diseñan un plan exhaustivo lineal para ser ejecutado con precisión.",
+                analogy: "Un arquitecto que dibuja al milímetro cada pilar y cable de un rascacielos antes de cavar los cimientos de la obra."
             },
             {
-                id: 10,
-                module: 1,
-                q: "¿Qué concepto integra formalmente el pensamiento estratégico de largo plazo con su ejecución y control?",
+                id: 10, module: 1,
+                q: "¿Qué concepto integra el pensamiento estratégico con la ejecución?",
                 options: {
-                    A: "La matriz de crecimiento BCG",
-                    B: "La planeación puramente táctica trimestral",
-                    C: "El Balanced Scorecard o Cuadro de Mando Integral",
-                    D: "El Estado de resultados contable"
+                    A: "Matriz BCG",
+                    B: "Planeación táctica",
+                    C: "Cuadro de Mando Integral",
+                    D: "Estado de resultados"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> El Balanced Scorecard traduce la visión estratégica en metas operativas balanceadas, vinculando la estrategia directamente con la ejecución del día a día por parte del equipo.<br><br><em>¿Por qué las demás no?</em> La BCG (A) clasifica productos por cuota de mercado. La planificación táctica (B) es de corto alcance. El estado de resultados (D) es una foto contable del pasado.",
-                theory: "Creado por Kaplan y Norton, el Balanced Scorecard asume que medir el éxito solo con dinero es insuficiente. Por ello, traduce la visión de largo plazo en indicadores tangibles en cuatro dimensiones críticas: Financiera, Clientes, Procesos Internos y Aprendizaje/Crecimiento.",
-                analogy: "El tablero de mandos de una aeronave moderna. El piloto necesita ver el indicador de combustible (dinero), pero también la altitud, el radar de tormentas y el estado mecánico de los motores para aterrizar a salvo."
+                explanation: "<strong>Opción C es la correcta.</strong> El Balanced Scorecard unifica metas operativas con la visión, controlando la ejecución.",
+                theory: "El Cuadro de Mando Integral equilibra perspectivas financieras e inductores de valor futuros como aprendizaje y procesos.",
+                analogy: "El panel de control de un transatlántico que mide combustible, velocidad, viento y clima de ruta de forma integrada."
+            },
+            {
+                id: 11, module: 1,
+                q: "¿Cuál es el punto de partida del proceso de formulación estratégica?",
+                options: {
+                    A: "Evaluación financiera",
+                    B: "Diagnóstico contable",
+                    C: "Definición de misión y visión",
+                    D: "Control presupuestario"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La declaración de identidad (misión) y aspiración futura (visión) definen la brújula inicial.",
+                theory: "Antes de auditar recursos o entornos, la organización debe tener clara su razón de ser y meta de largo alcance.",
+                analogy: "Fijar el destino de navegación del navío en las cartas geográficas antes de decidir cuántas provisiones cargar."
+            },
+            {
+                id: 12, module: 1,
+                q: "¿Qué se entiende por pensamiento estratégico?",
+                options: {
+                    A: "Análisis operativo rutinario",
+                    B: "Enfoque en resultados inmediatos",
+                    C: "Capacidad de anticipar y diseñar futuros posibles",
+                    D: "Aplicación de técnicas contables"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Es un enfoque proactivo de anticipación de escenarios externos para preparar respuestas.",
+                theory: "El pensamiento estratégico conecta el análisis sistémico de largo alcance con la preparación adaptativa competitiva.",
+                analogy: "Un gran maestro de ajedrez que analiza los próximos 5 movimientos posibles del rival antes de desplazar su peón."
+            },
+            {
+                id: 13, module: 1,
+                q: "¿Qué factor NO es parte de una visión estratégica efectiva?",
+                options: {
+                    A: "Claridad",
+                    B: "Inspiración",
+                    C: "Medición financiera exacta",
+                    D: "Orientación de largo plazo"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La visión es una meta inspiradora y directiva de rumbo, no una hoja de cálculo contable.",
+                theory: "Una visión efectiva debe guiar y motivar; no se limita a ser un indicador financiero específico de balance.",
+                analogy: "Inspirar a la tripulación con llegar a descubrir el Nuevo Mundo en lugar de darles una lista fría de los barriles de tocino en bodega."
+            },
+            {
+                id: 14, module: 1,
+                q: "¿Cuál es el rol del liderazgo en la estrategia?",
+                options: {
+                    A: "Establecer nóminas",
+                    B: "Coordinar exclusivamente tareas técnicas",
+                    C: "Impulsar la visión, movilizar recursos y alinear al equipo",
+                    D: "Controlar la ejecución contable"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El líder estratégico moviliza el capital humano y coordina recursos hacia la meta común.",
+                theory: "El liderazgo estratégico integra la visión teórica con la articulación humana, reduciendo barreras al cambio e impulsando la ejecución.",
+                analogy: "Un director de orquesta que inspira, marca el tempo y alinea los vientos con las cuerdas para ejecutar una gran obra."
+            },
+            {
+                id: 15, module: 1,
+                q: "¿Cuál de los siguientes representa una desventaja competitiva?",
+                options: {
+                    A: "Recursos únicos",
+                    B: "Alta innovación",
+                    C: "Dependencia de un solo cliente",
+                    D: "Cultura de mejora continua"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La concentración de ingresos en un único comprador deja desprotegida a la empresa.",
+                theory: "Una desventaja expone a la firma ante el entorno de forma directa, elevando el riesgo y reduciendo la flexibilidad de negociación.",
+                analogy: "Tener un puente levadizo que se controla de forma exclusiva desde el interior del castillo del rey enemigo."
+            },
+            {
+                id: 16, module: 1,
+                q: "¿Qué es una estrategia funcional?",
+                options: {
+                    A: "Una estrategia aplicada por directores generales",
+                    B: "Una estrategia sin ejecución",
+                    C: "Una táctica de marketing sin plan",
+                    D: "Estrategia aplicada en áreas específicas como finanzas o RRHH"
+                },
+                correct: "D",
+                explanation: "<strong>Opción D es la correcta.</strong> Las estrategias funcionales soportan a la estrategia general desde las áreas de especialización.",
+                theory: "Son planes operativos especializados que alinean las actividades de cada departamento con la estrategia de negocio global.",
+                analogy: "El plan del equipo médico deportivo para mantener nutridos e hidratados a los jugadores durante todo el campeonato de liga."
+            },
+            {
+                id: 17, module: 1,
+                q: "¿Cuál es un riesgo de no tener estrategia clara?",
+                options: {
+                    A: "Alta productividad",
+                    B: "Dispersión de esfuerzos y falta de dirección",
+                    C: "Reducción de gastos",
+                    D: "Mejora de indicadores"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Sin rumbo definido, cada departamento prioriza sus propias metas, duplicando costos y esfuerzos.",
+                theory: "La ausencia de estrategia provoca que la empresa se mueva por inercia reactiva operativa, incapaz de defender su cuota de mercado.",
+                analogy: "Un barco donde la mitad de los marineros rema a babor y la otra a estribor, dando vueltas en círculo en medio de la niebla."
+            },
+            {
+                id: 18, module: 1,
+                q: "¿Qué es una meta estratégica?",
+                options: {
+                    A: "Un resultado específico, alineado con la visión, a alcanzar en un plazo definido",
+                    B: "Una tarea operativa",
+                    C: "Una técnica de ventas",
+                    D: "Un KPI sin contexto"
+                },
+                correct: "A",
+                explanation: "<strong>Opción A es la correcta.</strong> Las metas estratégicas definen hitos de impacto competitivo con un tiempo límite establecido.",
+                theory: "Son objetivos corporativos de mediano y largo alcance que operacionalizan la visión, coordinando los planes tácticos del negocio.",
+                analogy: "Establecer que tu expedición debe cruzar el desierto montañoso para el final del invierno si quiere asegurar el control de la ruta."
+            },
+            {
+                id: 19, module: 1,
+                q: "¿Qué se considera como competencia central?",
+                options: {
+                    A: "Un software contable",
+                    B: "Una habilidad organizacional que provee ventaja competitiva",
+                    C: "Un salario competitivo",
+                    D: "Una matriz de costos"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Son capacidades de valor arraigadas en procesos e imposibles de imitar fácilmente por rivales.",
+                theory: "Son conjuntos de destrezas colectivas transversales que abren el acceso a mercados diversos, añadiendo valor distintivo percibido.",
+                analogy: "La maestría de Disney para narrar historias conmovedoras, adaptables a parques de diversiones, películas, ropa o cruceros."
+            },
+            {
+                id: 20, module: 1,
+                q: "¿Qué rol cumple el análisis estratégico en la formulación?",
+                options: {
+                    A: "Sustituir el presupuesto",
+                    B: "Diagnosticar entornos internos y externos para tomar decisiones",
+                    C: "Implementar control de calidad",
+                    D: "Elaborar manuales administrativos"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> El análisis provee los datos de base reales para estructurar la planeación sin basarse en suposiciones.",
+                theory: "Asegura que el diseño del plan estratégico se ancle de forma sólida en las capacidades del negocio y tendencias externas reales.",
+                analogy: "Un explorador que regresa con informes cartográficos y mapas del territorio antes de decidir por dónde avanzará el ejército."
             },
 
-            // Módulo II
+            // --- MÓDULO II: ANÁLISIS DEL ENTORNO Y DIAGNÓSTICO ESTRATÉGICO (21-30) ---
             {
-                id: 11,
-                module: 2,
-                q: "¿Qué herramienta permite identificar tendencias externas macroambientales clave (Políticas, Económicas, Sociales, etc.)?",
+                id: 21, module: 2,
+                q: "¿Qué herramienta permite identificar tendencias externas clave?",
                 options: {
                     A: "Análisis FODA",
                     B: "Análisis PESTEL",
                     C: "Matriz BCG",
-                    D: "Presupuesto operativo anual"
+                    D: "Presupuesto operativo"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> PESTEL es el acrónimo de Político, Económico, Social, Tecnológico, Ecológico y Legal, ideal para evaluar el macroentorno ajeno al control de la empresa.<br><br><em>¿Por qué las demás no?</em> El FODA (A) incluye análisis interno de debilidades y fortalezas. La BCG (C) analiza el portafolio interno de negocios. El presupuesto (D) detalla la asignación interna de dinero.",
-                theory: "El análisis PESTEL mapea las fuerzas sistémicas externas que moldean las reglas de competencia de toda una industria. Dado que están fuera del control directo de la gerencia, la estrategia debe orientarse a anticipar su impacto para amortiguar amenazas y aprovechar oportunidades.",
-                analogy: "Es como estudiar con detalle el pronóstico meteorológico extendido (temperatura, lluvia, vientos) antes de planificar la siembra de todo un año en tu campo de cultivo agrícola."
+                explanation: "<strong>Opción B es la correcta.</strong> PESTEL evalúa las fuerzas que actúan en el macroentorno y escapan al control directo.",
+                theory: "Evalúa los factores Políticos, Económicos, Sociales, Tecnológicos, Ecológicos y Legales ajenos al control directo de la gerencia.",
+                analogy: "Estudiar a fondo el reporte climatológico extendido y ráfagas de viento antes de organizar un campeonato de vuelo de cometas."
             },
             {
-                id: 12,
-                module: 2,
-                q: "¿Cuál de los siguientes es un factor típico y directo del entorno macroeconómico?",
+                id: 22, module: 2,
+                q: "¿Cuál de los siguientes es un factor del entorno macroeconómico?",
                 options: {
-                    A: "La cultura organizacional de la empresa",
-                    B: "El clima de comunicación interna laboral",
-                    C: "La política fiscal decretada por el gobierno nacional",
-                    D: "La participación de mercado que tiene el líder actual"
+                    A: "Cultura organizacional",
+                    B: "Clima laboral",
+                    C: "Política fiscal",
+                    D: "Participación de mercado"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La política fiscal influye en los impuestos a las empresas y el gasto general de los consumidores, operando a nivel macroeconómico.<br><br><em>¿Por qué las demás no?</em> La cultura (A) y el clima (B) son dinámicas estrictamente internas de la firma. La participación de mercado (D) es un factor microambiental o sectorial.",
-                theory: "Las variables macroeconómicas impactan de forma agregada a todas las empresas del ecosistema nacional. Factores como la devaluación cambiaria, las tasas de interés y los impuestos directos determinan el nivel de renta disponible para el consumo de los usuarios.",
-                analogy: "La presión barométrica o la fuerza de la marea marina. Afecta por igual a todas las embarcaciones de la bahía, sin importar el color, el tamaño o el motor de cada barco."
+                explanation: "<strong>Opción C es la correcta.</strong> La política fiscal y de tasas de interés gubernamentales operan a nivel de macroentorno económico.",
+                theory: "Las variables macroeconómicas impactan la demanda agregada de los consumidores y la carga impositiva operativa de la firma.",
+                analogy: "La marea oceánica que sube y baja. Afecta a todo bote pesquero del mar, sin importar su tripulación."
             },
             {
-                id: 13,
-                module: 2,
-                q: "¿Qué representa principalmente el análisis de las cinco fuerzas de Porter?",
+                id: 23, module: 2,
+                q: "¿Qué representa el análisis de las cinco fuerzas de Porter?",
                 options: {
-                    A: "Análisis de la cultura e integración interna de los empleados",
-                    B: "Evaluación de razones de liquidez financiera",
-                    C: "Diagnóstico del nivel de competencia y atractivo estructural del sector",
-                    D: "Planificación de las políticas de incentivo en recursos humanos"
+                    A: "Análisis del clima interno",
+                    B: "Evaluación de indicadores financieros",
+                    C: "Diagnóstico de la competencia sectorial",
+                    D: "Planificación de recursos humanos"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> El análisis de Porter determina el atractivo y la rentabilidad esperable del sector competitivo de interés.<br><br><em>¿Por qué las demás no?</em> La cultura organizacional (A), los coeficientes financieros (B) y los incentivos (D) son internos y no abordan el entorno competitivo directo.",
-                theory: "El análisis de Porter postula que el atractivo y el margen promedio de una industria vienen predeterminados por el balance de fuerza de cinco actores competitivos. A mayor poder de estas fuerzas, menor es la utilidad de los competidores establecidos.",
-                analogy: "Mapear un tablero de ajedrez analizando el peligro potencial de las torres rivales, la solidez de su defensa de peones y la rapidez de contragolpe de sus alfiles antes de hacer tu primer movimiento."
+                explanation: "<strong>Opción C es la correcta.</strong> Permite diagnosticar las fuerzas de rivalidad y poder competitivo que actúan en una industria.",
+                theory: "Porter mapea la estructura del sector para entender la dinámica de atracción y rentabilidad promedio a la que aspira la firma.",
+                analogy: "Mapear a los competidores, espías, distribuidores de armas y ejércitos fronterizos antes de decidir invadir un territorio."
             },
             {
-                id: 14,
-                module: 2,
-                q: "¿Qué representa una amenaza externa clásica para cualquier organización de consumo masivo?",
+                id: 24, module: 2,
+                q: "¿Qué se considera una amenaza externa?",
                 options: {
-                    A: "Tener baja rotación de personal operativo en tienda",
-                    B: "Alta dependencia en una tecnología de propiedad exclusiva",
-                    C: "La inminente entrada de nuevos competidores extranjeros al mercado local",
-                    D: "Un excelente nivel de posicionamiento de marca en el público"
+                    A: "Baja rotación de personal",
+                    B: "Alta dependencia tecnológica propia",
+                    C: "Entrada de nuevos competidores al mercado",
+                    D: "Buen posicionamiento de marca"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La entrada de nuevos competidores representa una fuerza externa que puede erosionar la cuota de mercado actual, siendo una clara amenaza.<br><br><em>¿Por qué las demás no?</em> La baja rotación (A) e intangibles de marca (D) son fortalezas internas. La dependencia interna de tecnología (B) suele ser clasificada como una debilidad.",
-                theory: "En la estructura FODA, las amenazas son eventos y variables externas del entorno que escapan del control directo de la organización, pero que poseen el potencial de desestabilizar la operación o reducir los márgenes si no se toman medidas oportunas.",
-                analogy: "El anuncio de que un supermercado internacional gigante, con precios de descuento masivo, construirá una sucursal moderna a solo tres cuadras de tu pequeña tienda local de abarrotes."
+                explanation: "<strong>Opción C es la correcta.</strong> La llegada de nuevos jugadores extranjeros o locales puede reducir drásticamente la cuota del negocio.",
+                theory: "En el análisis FODA, las amenazas proceden del ambiente exterior incontrolable, poseyendo capacidad de dañar los márgenes.",
+                analogy: "El anuncio oficial de que un hipermercado de bajo costo abrirá sucursales frente a tu panadería de barrio de toda la vida."
             },
             {
-                id: 15,
-                module: 2,
-                q: "¿Qué recurso interno puede considerarse de manera genuina como una fortaleza de valor?",
+                id: 25, module: 2,
+                q: "¿Qué recurso interno puede considerarse una fortaleza?",
                 options: {
-                    A: "El incremento sostenido de la presión tributaria nacional",
-                    B: "Sólidas relaciones de alianza estratégica con proveedores exclusivos",
-                    C: "Las fuertes restricciones regulatorias estatales del sector",
-                    D: "Un mercado de materias primas altamente volátil"
+                    A: "Alta presión tributaria",
+                    B: "Relaciones estratégicas con proveedores clave",
+                    C: "Restricciones legales del sector",
+                    D: "Mercado volátil"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> Las alianzas operativas duraderas y exclusivas con los proveedores son recursos internos de alta imitación que blindan la cadena de valor corporativa.<br><br><em>¿Por qué las demás no?</em> La carga fiscal (A), las regulaciones estatales (C) y la volatilidad (D) son factores ambientales externos y perjudiciales (amenazas).",
-                theory: "Las fortalezas son factores internos bajo el control de la empresa que añaden valor directo o ventaja frente a rivales. Los contratos exclusivos de provisión garantizan menores costos de materia prima o exclusividad de insumos clave en el mercado.",
-                analogy: "Tener un convenio directo y cerrado con la única mina de diamantes de alta calidad de la región, impidiendo que el resto de las joyerías de la ciudad puedan ofrecer piedras de ese calibre."
+                explanation: "<strong>Opción B es la correcta.</strong> Alianzas sólidas de suministro blindan la cadena de valor y evitan quiebres de inventario.",
+                theory: "Las fortalezas residen bajo el control del negocio. El acceso privilegiado de suministro es un activo de alto impacto operativo.",
+                analogy: "Tener un acuerdo exclusivo con el único yacimiento de agua pura de la región si tienes una fábrica de bebidas embotelladas."
             },
             {
-                id: 16,
-                module: 2,
-                q: "¿Cuál es un ejemplo evidente de debilidad estructural interna?",
+                id: 26, module: 2,
+                q: "¿Cuál es un ejemplo de debilidad?",
                 options: {
-                    A: "Una inflación de dos dígitos a nivel nacional",
-                    B: "Tener un alto endeudamiento financiero sin una planeación de caja correlativa",
-                    C: "Contar con un abanico diversificado de proveedores sustitutos de insumo",
-                    D: "Llevar a cabo un proceso exitoso de integración vertical"
+                    A: "Alta inflación nacional",
+                    B: "Alto endeudamiento sin planificación financiera",
+                    C: "Mayor número de proveedores",
+                    D: "Integración vertical efectiva"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> La deuda sin planificación financiera es un talón de Aquiles interno que frena la maniobrabilidad de la empresa ante retos competitivos.<br><br><em>¿Por qué las demás no?</em> La inflación (A) es macroeconómica (externa). Diversificar proveedores (C) e integrarse (D) son fortalezas del negocio.",
-                theory: "Una debilidad es una carencia o limitación interna controlable por la gerencia que expone a la organización ante la competencia, reduciendo sus capacidades de responder con agilidad a las amenazas del macroentorno.",
-                analogy: "Intentar competir en una carrera de velocidad de automóviles deportivos de alta gama con un carro que tiene una fuga interna de aceite en los pistones del motor y desgaste severo de frenos."
+                explanation: "<strong>Opción B es la correcta.</strong> Los pasivos financieros excesivos sin planeación limitan severamente el flujo de caja del negocio.",
+                theory: "Las debilidades son carencias internas controlables de la organización que reducen la agilidad de maniobra estratégica.",
+                analogy: "Correr una carrera de autos de alta velocidad arrastrando un carro averiado con neumáticos gastados."
             },
             {
-                id: 17,
-                module: 2,
-                q: "¿Qué técnica analítica cruza sistemáticamente oportunidades externas con fortalezas internas?",
+                id: 27, module: 2,
+                q: "¿Qué técnica combina oportunidades externas con fortalezas internas?",
                 options: {
-                    A: "El análisis contable horizontal de balances",
-                    B: "La matriz DOFA cruzada (estrategias FO)",
-                    C: "El control centralizado de gestión",
-                    D: "El análisis de riesgo operacional básico"
+                    A: "Análisis contable",
+                    B: "Matriz DOFA cruzada",
+                    C: "Control de gestión",
+                    D: "Análisis de riesgo"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> La matriz FODA Cruzada genera estrategias ofensivas (FO) al buscar usar las fortalezas propias de la empresa para explotar al máximo las oportunidades externas de mercado.<br><br><em>¿Por qué las demás no?</em> El análisis de estados financieros (A), control centralizado (C) y el mapa de riesgo puro (D) no combinan internamente fortalezas con fuerzas externas de mercado de forma integrada.",
-                theory: "La matriz de doble entrada del FODA cruzado es la herramienta pragmática de la formulación. Cruza el diagnóstico interno con el externo para parir cuatro estrategias tácticas: FO (Ofensiva), FA (Defensiva), DO (Adaptativa) y DA (Supervivencia).",
-                analogy: "Si eres un velero ultra-rápido de fibra de carbono (Fortaleza) y la estación meteorológica reporta ráfagas estables de viento a favor en la ruta norte (Oportunidad), despliegas tus velas principales al máximo para acelerar y liderar la carrera."
+                explanation: "<strong>Opción B es la correcta.</strong> El cruce FO (Fortalezas-Oportunidades) de la matriz cruzada genera planes de crecimiento agresivos.",
+                theory: "La matriz cruzada permite estructurar planes ofensivos, adaptativos, defensivos y de supervivencia según cruces específicos.",
+                analogy: "Tener un velero de fibra de carbono ultra ligero (Fortaleza) y ráfagas estables de viento a favor en popa (Oportunidad)."
             },
             {
-                id: 18,
-                module: 2,
-                q: "¿Qué variables del mercado indican directamente un entorno altamente competitivo?",
+                id: 28, module: 2,
+                q: "¿Qué indica un entorno altamente competitivo?",
                 options: {
-                    A: "Altas barreras de entrada para nuevos jugadores",
-                    B: "Bajas barreras de entrada, alta rivalidad del sector y productos poco diferenciados",
-                    C: "Costos fijos extremadamente bajos en la industria",
-                    D: "Presencia de un monopolio natural con alta diferenciación"
+                    A: "Entrada restringida",
+                    B: "Pocas barreras de entrada, alta rivalidad, productos similares",
+                    C: "Costos fijos bajos",
+                    D: "Alta diferenciación sin sustitutos"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> La falta de barreras de entrada facilita la llegada de competidores, y la ausencia de diferenciación desata batallas de precios erosivas.<br><br><em>¿Por qué las demás no?</em> Altas barreras (A) reducen la competencia potencial. Costos fijos bajos (C) reducen el apalancamiento operativo de quiebra. Los monopolios (D) carecen de rivalidad.",
-                theory: "La rivalidad del sector se intensifica drásticamente cuando los productos ofertados se transforman en 'commodities' (sin diferenciación), obligando a las marcas a iniciar guerras agresivas de precios destructivas para los márgenes de utilidad de la industria.",
-                analogy: "Una avenida céntrica de la ciudad llena de 15 puestos ambulantes que venden exactamente la misma marca y modelo de cargadores para celular, desatando una pelea feroz de centavos por capturar al transeúnte de paso."
+                explanation: "<strong>Opción B es la correcta.</strong> Facilidad de acceso al sector combinada con bienes poco diferenciados provoca feroces guerras de precios.",
+                theory: "La comoditización de los productos combinada con pocas barreras de entrada destruye el margen promedio del sector.",
+                analogy: "Un callejón con 20 vendedores ambulantes ofreciendo exactamente el mismo modelo y marca de cargador de batería para celular."
+            },
+            {
+                id: 29, module: 2,
+                q: "¿Cuál es una ventaja del análisis interno?",
+                options: {
+                    A: "Permite anticipar variables macroeconómicas",
+                    B: "Permite identificar competencias distintivas y capacidades clave",
+                    C: "Establece precios óptimos",
+                    D: "Sustituye la planificación operativa"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> El autoanálisis ayuda a destapar qué procesos internos diferencian de verdad al negocio de los rivales.",
+                theory: "Ayuda a inventariar el portafolio de recursos y destrezas complejas sobre las cuales erigir una ventaja competitiva duradera.",
+                analogy: "Mirar con rigor el estado de tu condición atlética y resistencia física antes de inscribirte en una carrera de maratón."
+            },
+            {
+                id: 30, module: 2,
+                q: "¿Qué factor forma parte del entorno inmediato?",
+                options: {
+                    A: "Normativa cambiaria internacional",
+                    B: "Tecnología emergente global",
+                    C: "Proveedores y clientes de la empresa",
+                    D: "Ciclo económico mundial"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Los proveedores y clientes componen el microentorno del sector con interacción directa y constante.",
+                theory: "El entorno inmediato (microentorno) engloba a los actores con influencia directa en la operación cotidiana de la firma.",
+                analogy: "Los vecinos directos de tu condominio y los tenderos de tu calle con los que intercambias bienes todos los días."
             },
 
-            // Módulo III
+            // --- MÓDULO III: FORMULACIÓN Y EVALUACIÓN DE ESTRATEGIAS (31-50) ---
             {
-                id: 19,
-                module: 3,
-                q: "¿Cuál de las siguientes es una de las tres estrategias genéricas propuestas por Michael Porter?",
+                id: 31, module: 3,
+                q: "¿Cuál de las siguientes es una estrategia genérica de Porter?",
                 options: {
-                    A: "Expansión horizontal agresiva",
-                    B: "Diversificación concéntrica de mercado",
-                    C: "Liderazgo absoluto en costos",
-                    D: "Reestructuración financiera y de capital"
+                    A: "Expansión horizontal",
+                    B: "Diversificación",
+                    C: "Liderazgo en costos",
+                    D: "Reestructuración financiera"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> Porter propuso tres estrategias genéricas para lograr un rendimiento superior al promedio de la industria: Liderazgo en costos, Diferenciación y Enfoque o Segmentación.<br><br><em>¿Por qué las demás no?</em> La expansión horizontal (A) y diversificación (B) son estrategias de crecimiento (Ansoff). La reestructuración (D) es corporativa/financiera.",
-                theory: "Michael Porter postula que una empresa debe elegir una posición estratégica clara para evitar quedar 'atrapada a la mitad' (stuck in the middle). El liderazgo en costos exige exprimir economías de escala y eficiencias de procesos para tener los precios de producción más bajos.",
-                analogy: "Es el modelo operativo de Walmart o aerolíneas de bajo costo (Ryanair). Su enfoque obsesivo no es la comodidad de lujo, sino optimizar cada centavo de costo para ganar por masividad de transacciones."
+                explanation: "<strong>Opción C es la correcta.</strong> Porter definió tres caminos claros de posicionamiento: Liderazgo en Costos, Diferenciación y Enfoque.",
+                theory: "El liderazgo en costos exige optimizar procesos y escalar operaciones para fabricar al costo unitario más bajo del sector.",
+                analogy: "El modelo operativo de Walmart o IKEA, orientados obsesivamente a exprimir centavos de ineficiencia interna."
             },
             {
-                id: 20,
-                module: 3,
-                q: "¿Qué implica de manera principal implementar la estrategia genérica de diferenciación?",
+                id: 32, module: 3,
+                q: "¿Qué implica la estrategia de diferenciación?",
                 options: {
-                    A: "Minimizar los costos de producción por debajo de todos los rivales",
-                    B: "Imitar con precisión los empaques y marketing de los líderes",
-                    C: "Ofrecer una propuesta de valor única por la cual el cliente esté dispuesto a pagar un sobreprecio",
-                    D: "Penetrar de manera exclusiva en mercados geográficos del extranjero"
+                    A: "Producir con los costos más bajos",
+                    B: "Copiar a los líderes del mercado",
+                    C: "Ofrecer productos únicos valorados por el cliente",
+                    D: "Penetrar mercados externos"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La diferenciación consiste en dotar al producto o servicio de atributos valorados por los clientes, lo que justifica fijar un precio premium.<br><br><em>¿Por qué las demás no?</em> Minimizar costos (A) es el liderazgo en costos. Copiar marcas (B) carece de valor único. Entrar al extranjero (D) es desarrollo de mercado geográfico.",
-                theory: "La diferenciación exitosa descansa en la exclusividad percibida por el mercado. Si el cliente considera que la marca, la experiencia de uso o la innovación técnica del bien es inigualable, el factor de sensibilidad al precio pasa a un segundo plano.",
-                analogy: "El ecosistema cerrado de productos Apple. Las personas no compran un iPhone basándose únicamente en el costo de los chips que contiene; pagan un sobreprecio premium por la experiencia, el estatus y el software integrado."
+                explanation: "<strong>Opción C es la correcta.</strong> Consiste en dotar de exclusividad percibida al producto, justificando un precio premium.",
+                theory: "La diferenciación reduce la sensibilidad al precio al sustituirla por lealtad de marca o superioridad de diseño/experiencia.",
+                analogy: "El modelo de Apple. Las personas pagan un sobreprecio por el estatus, el ecosistema integrado y el diseño de la interfaz."
             },
             {
-                id: 21,
-                module: 3,
-                q: "¿Qué describe mejor la estrategia de enfoque o segmentación?",
+                id: 33, module: 3,
+                q: "¿Qué es una estrategia de enfoque?",
                 options: {
-                    A: "Atender de manera masiva a todos los grupos de la industria",
-                    B: "Diversificar el portafolio de inversión hacia otros sectores de la economía",
-                    C: "Concentrar las capacidades de la organización en un nicho de mercado específico con necesidades especiales",
-                    D: "Ofrecer bienes genéricos comoditizados en un canal masivo"
+                    A: "Competir en muchos segmentos del mercado",
+                    B: "Diversificarse hacia otros sectores",
+                    C: "Concentrarse en un nicho de mercado específico",
+                    D: "Vender productos genéricos"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> El enfoque consiste en competir en un segmento estrecho del mercado donde las capacidades de la empresa se adaptan mejor que los competidores generales.<br><br><em>¿Por qué las demás no?</em> Atender masivamente (A) y productos genéricos (D) son tácticas de amplio espectro. Diversificar hacia otros sectores (B) no es enfocarse en un nicho.",
-                theory: "La segmentación extrema (Focus strategy) explota las ineficiencias de los competidores generalistas. En lugar de ofrecer un producto promedio para toda la población, diseña una experiencia quirúrgica adaptada a las necesidades específicas de un nicho muy leal.",
-                analogy: "En vez de fundar una veterinaria general para todo tipo de mascotas, abrir una clínica de alta especialización quirúrgica enfocada exclusivamente en el cuidado y tratamiento de reptiles exóticos."
+                explanation: "<strong>Opción C es la correcta.</strong> Concentra esfuerzos de valor en un público meta delimitado cuyas necesidades especiales son ignoradas.",
+                theory: "La segmentación extrema (Focus) explota las ineficiencias de los competidores generales en un submercado concreto.",
+                analogy: "En lugar de una panadería general, abrir un obrador enfocado exclusivamente en postres artesanales keto y libres de gluten."
             },
             {
-                id: 22,
-                module: 3,
-                q: "¿Cuál de las siguientes opciones NO forma parte de las estrategias de crecimiento intensivo propuestas en la matriz de Ansoff?",
+                id: 34, module: 3,
+                q: "¿Cuál de las siguientes NO es una estrategia de crecimiento intensivo según Ansoff?",
                 options: {
                     A: "Penetración de mercado",
                     B: "Desarrollo de mercado",
@@ -758,317 +904,801 @@
                     D: "Desarrollo de producto"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La integración horizontal es una estrategia de crecimiento de integración (adquisición de competidores), no un vector de crecimiento intensivo de la clásica matriz de Ansoff.<br><br><em>¿Por qué las demás no?</em> Penetración (A), Desarrollo de mercado (B) y Desarrollo de producto (D) sí forman parte de los cuatro cuadrantes de crecimiento de Ansoff.",
-                theory: "La matriz de Ansoff asume que la empresa crece explotando sus productos actuales/nuevos en mercados actuales/nuevos. La integración (adquirir un rival o canal) pertenece a la estrategia corporativa estructural de crecimiento externo, no intensivo.",
-                analogy: "Si vendes café orgánico en tu local de la ciudad, penetras el mercado si vendes más a tus mismos clientes con ofertas; desarrollas mercado si abres un local en otra ciudad; y desarrollas producto si agregas tés exóticos al menú."
+                explanation: "<strong>Opción C es la correcta.</strong> La integración horizontal consiste en comprar competidores directos, perteneciendo al crecimiento externo.",
+                theory: "La matriz de Ansoff modela vectores de crecimiento intensivo puro cruzando productos y mercados existentes con nuevos.",
+                analogy: "Si eres un fabricante de calzado deportivo, adquirir a otra marca local competidora no es un cuadrante intensivo de Ansoff."
             },
             {
-                id: 23,
-                module: 3,
-                q: "¿Qué herramienta es el marco clásico para consolidar la información interna de la firma con el ambiente exterior?",
+                id: 35, module: 3,
+                q: "¿Qué herramienta estratégica combina análisis interno y externo?",
                 options: {
-                    A: "El análisis horizontal de balances",
-                    B: "La matriz FODA",
-                    C: "El ciclo de vida del producto",
-                    D: "El estado de flujos de efectivo proyectado"
+                    A: "Análisis horizontal",
+                    B: "Matriz FODA",
+                    C: "Ciclo de vida del producto",
+                    D: "Estado de flujo de caja"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> FODA es el eje unificador estándar: consolida la información del entorno interno (Fortalezas y Debilidades) con la del exterior (Oportunidades y Amenazas).<br><br><em>¿Por qué las demás no?</em> El análisis horizontal (A) e informes de caja (D) son financieros. El ciclo del producto (C) rastrea la evolución de las ventas de una línea, no del negocio general.",
-                theory: "El análisis FODA (SWOT) sirve de puente de traducción estratégica. Mapea la capacidad interna de la organización frente a la realidad incontrolable del entorno económico, estructurando una base racional de toma de decisiones.",
-                analogy: "Un general del ejército que revisa el estado de salud y munición de sus soldados (Análisis Interno) antes de asomarse a ver el estado pantanoso del terreno de combate y las condiciones del clima (Análisis Externo)."
+                explanation: "<strong>Opción B es la correcta.</strong> La matriz FODA unifica de forma analítica el adentro (F-D) con el afuera (O-A) corporativo.",
+                theory: "Es el marco de diagnóstico estratégico por excelencia que destila bases empíricas para la toma de decisiones.",
+                analogy: "Un explorador de montaña que revisa cuánta agua y comida tiene en su mochila (Interno) antes de asomarse a ver si hay nieve (Externo)."
             },
             {
-                id: 24,
-                module: 3,
-                q: "¿Qué tipo de estrategia según la matriz de Ansoff representa ingresar a un nuevo mercado con un producto o servicio totalmente nuevo?",
+                id: 36, module: 3,
+                q: "¿Qué tipo de estrategia representa entrar a un nuevo mercado con un nuevo producto?",
                 options: {
-                    A: "Integración vertical hacia adelante",
+                    A: "Integración vertical",
                     B: "Diversificación",
-                    C: "Consolidación de nicho",
-                    D: "Reestructuración y ajuste de costos"
+                    C: "Consolidación",
+                    D: "Reestructuración interna"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> Diversificación consiste en introducir productos nuevos en mercados nuevos, siendo el cuadrante más arriesgado pero de mayor crecimiento potencial en la matriz de Ansoff.<br><br><em>¿Por qué las demás no?</em> La integración (A) involucra controlar canales de distribución. Consolidación (C) y reestructuración (D) no son vectores de crecimiento intensivo.",
-                theory: "La diversificación exige que la empresa desarrolle nuevas capacidades organizacionales y comprenda dinámicas de un público meta con el que nunca antes había interactuado, multiplicando el nivel de riesgo de la operación comercial.",
-                analogy: "Es como si una fábrica que produce camiones industriales de carga decidiera abrir de la noche a la mañana una red de boutiques exclusivas de perfumes de lujo en el extranjero."
+                explanation: "<strong>Opción B es la correcta.</strong> Es la opción más audaz de la Matriz de Ansoff al exigir la validación de un canal y bien nuevos.",
+                theory: "La diversificación exige desarrollar nuevas capacidades y comprender dinámicas de audiencias ajenas al historial de la firma.",
+                analogy: "Que una fábrica local de neumáticos industriales abra de pronto una red de tiendas gourmet de quesos en otro país."
             },
             {
-                id: 25,
-                module: 3,
-                q: "¿Qué variables evalúa la matriz BCG para calificar las unidades estratégicas de negocio?",
+                id: 37, module: 3,
+                q: "¿Qué evalúa la matriz BCG?",
                 options: {
-                    A: "La tasa de endeudamiento financiero y la liquidez ácida",
-                    B: "La madurez de las capacidades del talento humano",
-                    C: "La participación relativa de mercado y la tasa de crecimiento de la industria",
-                    D: "El margen de utilidad neto y los costos fijos indirectos"
+                    A: "El grado de apalancamiento",
+                    B: "La madurez del capital humano",
+                    C: "La posición de las unidades de negocio según participación y crecimiento",
+                    D: "Los indicadores contables"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La matriz del Boston Consulting Group (BCG) posiciona los negocios de una empresa en función del crecimiento de su mercado y su participación en este.<br><br><em>¿Por qué las demás no?</em> Las demás opciones (A, B, D) evalúan parámetros de estructura de balance, gestión humana o contabilidad de costos internos, ajenos al modelo de análisis de cartera BCG.",
-                theory: "La matriz BCG cruza dos variables externas de atractivo e internas de fuerza competitiva: la tasa de crecimiento de la industria (indica atractivo del sector) y la participación de mercado relativa (indica dominio o generación de caja).",
-                analogy: "Calificar tu portafolio de inversiones inmobiliarias según qué tan rápido se valoriza la zona (crecimiento del sector) y qué tan grande es el terreno que compraste allí frente a tus vecinos directos (cuota de mercado)."
+                explanation: "<strong>Opción C es la correcta.</strong> El portafolio de negocios se mapea en base al dinamismo de la industria y el dominio relativo de mercado.",
+                theory: "La BCG ayuda a estructurar de forma corporativa la asignación de flujos de capital entre múltiples unidades estratégicas.",
+                analogy: "Organizar tu portafolio de alquileres según qué tan de moda se ha puesto la zona del departamento y qué tan grande es la propiedad."
             },
             {
-                id: 26,
-                module: 3,
-                q: "¿Qué representa una unidad de negocio tipo 'Vaca Lechera' en la matriz BCG?",
+                id: 38, module: 3,
+                q: "What represents a cash cow within the BCG matrix framework?",
                 options: {
-                    A: "Alta participación relativa de mercado en una industria de bajo crecimiento",
-                    B: "Baja participación de mercado en una industria de bajo crecimiento",
-                    C: "Alta participación de mercado en una industria de alto crecimiento",
-                    D: "Una unidad de negocio con alta rotación pero pérdidas netas"
+                    A: "Alta participación, bajo crecimiento",
+                    B: "Baja participación, bajo crecimiento",
+                    C: "Alta participación, alto crecimiento",
+                    D: "Alta rotación de capital"
                 },
                 correct: "A",
-                explanation: "<strong>Opción A es la correcta.</strong> Las 'Vacas' generan más efectivo del que necesitan para reinvertir en su propio crecimiento, financiando a otras unidades como las 'Estrellas' o 'Interrogantes'.<br><br><em>¿Por qué las demás no?</em> Baja cuota y bajo crecimiento (B) define a los productos 'Perro'. Alta cuota y alto crecimiento (C) son productos 'Estrella'. El cuadrante D no pertenece a la clasificación BCG.",
-                theory: "Las unidades de negocio 'Vaca Lechera' (Cash Cow) dominan mercados estables. No requieren gran inversión en desarrollo o publicidad, por lo que su flujo de caja operativo neto se redirige para financiar la innovación en productos 'Estrella' o 'Interrogantes'.",
-                analogy: "Un departamento céntrico ya totalmente pagado y libre de hipotecas que rentas mensualmente. No requiere grandes reparaciones, y el dinero de los alquileres te permite financiar la compra de un nuevo terreno en construcción."
+                explanation: "<strong>Opción A es la correcta.</strong> Domina mercados maduros, exigiendo mínima reinversión y entregando excedentes de caja.",
+                theory: "Las unidades de negocio 'Vaca' (Cash Cow) financian la experimentación o expansión de productos 'Estrella' o 'Interrogante'.",
+                analogy: "Un local comercial céntrico ya totalmente liquidado que te genera rentas fijas mensuales de forma garantizada y sin mantenimiento."
             },
             {
-                id: 27,
-                module: 3,
-                q: "¿Qué es una estrategia de océano azul de acuerdo con Kim y Mauborgne?",
+                id: 39, module: 3,
+                q: "¿El objetivo de evaluar estrategias consiste en?",
                 options: {
-                    A: "Competencia agresiva y frontal basada en la guerra de precios",
-                    B: "Lograr una diferenciación mínima en mercados hipercompetitivos",
-                    C: "Crear un espacio de mercado libre de competencia y capturar una nueva demanda",
-                    D: "La optimización del volumen de ventas a través de subsidios estatales"
+                    A: "Definir indicadores de recursos humanos",
+                    B: "Monitorear cumplimiento tributario",
+                    C: "Asegurar coherencia, factibilidad y alineación con la visión",
+                    D: "Implementar acciones contables"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La estrategia del océano azul busca volver irrelevante a la competencia a través de la innovación en valor, creando espacios libres de rivalidad en vez de desgastarse en los 'océanos rojos'.<br><br><em>¿Por qué las demás no?</em> La competencia en precios (A) e imitación de bajo margen (B) son dinámicas desgastantes típicas del océano rojo. Los subsidios (D) son políticos e insostenibles.",
-                theory: "El océano azul propone la ruptura del trade-off clásico de Porter entre costos y diferenciación. Mediante la matriz RICE (Reducir, Incrementar, Crear, Eliminar), la empresa cambia la curva de valor del sector, abriendo un mercado inexplorado.",
-                analogy: "El Cirque du Soleil reinventó el circo: eliminó el costoso uso de animales (ahorro) e introdujo narrativa teatral de lujo para adultos (diferenciación), cobrando entradas de Broadway sin competir con circos tradicionales."
+                explanation: "<strong>Opción C es la correcta.</strong> Permite comprobar si el plan es realizable con los recursos actuales y si conecta con el faro de largo plazo.",
+                theory: "La evaluación de alternativas estratégicas filtra los planes según criterios de idoneidad, factibilidad operativa y aceptabilidad corporativa.",
+                analogy: "Chequear de forma matemática los caballos de fuerza, carga de combustible y peso de la nave antes de autorizar el despegue."
             },
-
-            // Módulo IV
             {
-                id: 28,
-                module: 4,
-                q: "¿Qué herramienta directiva permite integrar y balancear indicadores financieros con no financieros?",
+                id: 40, module: 3,
+                q: "¿Qué factor se considera en la evaluación de estrategias?",
                 options: {
-                    A: "La matriz BCG ampliada",
-                    B: "El Cuadro de Mando Integral (Balanced Scorecard)",
-                    C: "El análisis FODA clásico",
-                    D: "La tasa de retorno de la inversión (ROI)"
+                    A: "Exclusivamente la rentabilidad",
+                    B: "Capacidad organizacional para ejecutarlas",
+                    C: "Opinión de los accionistas únicamente",
+                    D: "Tasa de cambio"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> El Balanced Scorecard ayuda a que los líderes no evalúen el negocio únicamente con datos financieros del pasado, incorporando métricas de procesos, clientes y aprendizaje.<br><br><em>¿Por qué las demás no?</em> BCG (A) clasifica productos. FODA (C) es de análisis y diagnóstico, no de control e indicadores integrados. El ROI (D) es un indicador estrictamente financiero.",
-                theory: "El Balanced Scorecard trasciende la contabilidad retrospectiva. Enlaza los objetivos financieros con los inductores de valor futuros (satisfacción del cliente, eficiencia interna y desarrollo de competencias en el personal).",
-                analogy: "Evaluar la salud de una persona no solo por su saldo bancario (Financiero), sino también por cómo lo perciben sus seres queridos (Clientes), qué tan sana es su alimentación diaria (Procesos) y cuánto estudia por semana (Aprendizaje)."
+                explanation: "<strong>Opción B es la correcta.</strong> Un plan maravilloso sobre el papel fracasará si la estructura organizativa carece de competencias para correrlo.",
+                theory: "La factibilidad de ejecución interna es un pilar decisivo en la matriz de viabilidad de toda formulación estratégica moderna.",
+                analogy: "Decidir inscribirte en un campeonato de levantamiento de pesas extremo de 200kg sin haber cargado jamás mancuernas."
             },
             {
-                id: 29,
-                module: 4,
-                q: "¿Qué perspectiva NO forma parte del diseño del Balanced Scorecard clásico de Kaplan y Norton?",
+                id: 41, module: 3,
+                q: "¿Qué tipo de estrategia se aplica cuando una empresa integra proveedores?",
                 options: {
-                    A: "La perspectiva financiera",
-                    B: "La perspectiva de procesos y clientes",
-                    C: "La perspectiva ecológica y de biodiversidad",
-                    D: "La perspectiva de aprendizaje y desarrollo de capacidades"
-                },
-                correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> Aunque la ecología es vital para la sostenibilidad moderna, no es una de las cuatro perspectivas clásicas de diseño que componen el BSC tradicional.<br><br><em>¿Por qué las demás no?</em> La perspectiva Financiera (A), Clientes (B), Procesos Internos y Aprendizaje/Crecimiento (D) son los cuatro pilares obligatorios de la estructura del BSC.",
-                theory: "El mapa causa-efecto del BSC clásico asume una jerarquía lógica de aprendizaje que nutre a los procesos, lo que deleita a los clientes y, finalmente, desata la rentabilidad financiera. La dimensión ecológica es un desarrollo posterior y no forma parte del modelo inicial del BSC.",
-                analogy: "Para tocar una gran melodía en un concierto (Éxito Financiero), necesitas deleitar al público (Clientes), afinar los instrumentos a la perfección (Procesos) y practicar todos los días (Aprendizaje y Crecimiento)."
-            },
-            {
-                id: 30,
-                module: 4,
-                q: "¿Qué rol clave cumple el diseño de la estructura organizacional en la gestión estratégica?",
-                options: {
-                    A: "Definir los indicadores tributarios corporativos anuales",
-                    B: "Facilitar la coordinación operativa y la asignación clara de responsabilidades",
-                    C: "Maximizar automáticamente las ventas directas por canal de distribución",
-                    D: "Controlar el valor exacto de las horas de nómina del área contable"
+                    A: "Penetración de mercado",
+                    B: "Integración hacia atrás",
+                    C: "Diversificación horizontal",
+                    D: "Externalización"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> Alfred Chandler postuló que 'la estructura sigue a la estrategia'. El diseño organizativo es el andamiaje operativo para que la estrategia se pueda ejecutar y controlar de forma eficiente.<br><br><em>¿Por qué las demás no?</em> Los impuestos (A), ventas inmediatas (C) y el cálculo de la nómina (D) son procesos de cumplimiento técnico y no la misión clave del diseño organizativo.",
-                theory: "La estructura organizacional define la distribución formal de la autoridad, el flujo de información y los canales de comunicación. Si el organigrama y los incentivos no se alinean a la nueva estrategia de la empresa, el plan fallará irremisiblemente en el campo.",
-                analogy: "El plano óseo de un cuerpo. Si eres un felino diseñado para la velocidad en la selva (estrategia de agilidad), tu esqueleto óseo (estructura) debe ser ligero y flexible, no pesado y rígido como el de un elefante."
+                explanation: "<strong>Opción B es la correcta.</strong> Es un movimiento vertical hacia la cadena de valor de suministro para asegurar calidad y costos.",
+                theory: "La integración vertical hacia atrás reduce los costos de transacción y el poder de negociación de los proveedores claves del negocio.",
+                analogy: "Que una cadena de cafeterías exclusivas compre sus propios cafetales en Colombia para no depender de distribuidores externos."
             },
             {
-                id: 31,
-                module: 4,
-                q: "¿Qué caracteriza esencialmente a una estructura organizacional de tipo matricial?",
+                id: 42, module: 3,
+                q: "¿Qué acción corresponde a una estrategia defensiva?",
                 options: {
-                    A: "Un enfoque rígido en una única línea jerárquica vertical sin excepciones",
-                    B: "La duplicación innecesaria de todas las funciones directivas del negocio",
-                    C: "La combinación coordinada de funciones departamentales con proyectos transversales",
-                    D: "La eliminación sistemática de todos los mandos medios e inspectores"
+                    A: "Fusión por crecimiento",
+                    B: "Alianza estratégica",
+                    C: "Reducción de operaciones para sostener la rentabilidad",
+                    D: "Reorganización de marca"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> La estructura matricial rompe la rigidez clásica al cruzar la especialización funcional (p. ej., Ingeniería) con el enfoque por productos o proyectos específicos.<br><br><em>¿Por qué las demás no?</em> La rigidez (A) es propia de la estructura militar funcional tradicional. Duplicar funciones (B) es un error de ineficiencia. Eliminar mandos (D) es un proceso de aplanamiento organizativo, mas no matricial.",
-                theory: "La estructura matricial soluciona las ineficiencias de las organizaciones rígidamente verticales. Permite que recursos altamente especializados trabajen de forma flexible en múltiples proyectos a la vez, respondiendo directamente a un líder funcional y a un líder de proyecto.",
-                analogy: "Es como el reparto de una película de cine. Los actores pertenecen de planta a un sindicato actoral de expertos (Especialidad Funcional), pero se agrupan en un set bajo la dirección de un cineasta para rodar un filme específico (Proyecto Transversal)."
+                explanation: "<strong>Opción C es la correcta.</strong> Consiste en replegar posiciones (desinversión, liquidación o recorte) para blindar el núcleo rentable de caja.",
+                theory: "Las estrategias defensivas buscan detener la erosión de utilidades de la firma ante crisis estructurales del sector competitivo.",
+                analogy: "Cerrar las 4 sucursales con pérdidas operativas constantes para salvar el negocio principal de la casa matriz céntrica."
             },
             {
-                id: 32,
-                module: 4,
-                q: "¿Qué obstáculo organizacional suele impedir una correcta ejecución de los planes estratégicos?",
+                id: 43, module: 3,
+                q: "¿Qué herramienta analiza el riesgo y la factibilidad de estrategias?",
                 options: {
-                    A: "El establecimiento de indicadores medibles",
-                    B: "Una comunicación deficiente y poco fluida entre departamentos",
-                    C: "Contar con una visión compartida en toda la organización",
-                    D: "La formación continua de los colaboradores"
-                },
-                correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> El aislamiento de los departamentos ('silos organizacionales') y la mala comunicación de la estrategia impiden que el personal actúe alineado con las metas globales.<br><br><em>¿Por qué las demás no?</em> Disponer de metas SMART (A), una visión unificada (C) y capacitación continua (D) son impulsores de la estrategia, no barreras de ejecución.",
-                theory: "El 'gap' estratégico a menudo se ensancha en la implementación por problemas de comunicación. Si los mandos operativos del día a día no entienden con claridad cuál es el rumbo global diseñado por la alta gerencia, seguirán enfocando sus esfuerzos en silos independientes.",
-                analogy: "Un equipo de fútbol americano donde el quarterback diseña la jugada maestra en secreto, pero no le comunica el plan a la línea defensiva antes del saque, provocando que todos corran descoordinados en la cancha."
-            },
-            {
-                id: 33,
-                module: 4,
-                q: "¿Qué describe mejor el comportamiento de una organización inteligente (learning organization) según Peter Senge?",
-                options: {
-                    A: "Aquella que prioriza de manera exclusiva los beneficios económicos del trimestre",
-                    B: "Minimizar la capacitación del personal para reducir gastos operacionales",
-                    C: "Aprender y adaptarse de manera continua para mejorar sus capacidades internas en el tiempo",
-                    D: "Mantener una estructura rígidamente fija y centralizada ante cualquier entorno"
+                    A: "Matriz de Ansoff",
+                    B: "Matriz FODA",
+                    C: "Matriz IE (Internal-External)",
+                    D: "Matriz Boston Consulting Group"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> Las organizaciones inteligentes fomentan el aprendizaje continuo en equipo y el pensamiento sistémico para adaptarse de manera ágil ante la inestabilidad de los mercados.<br><br><em>¿Por qué las demás no?</em> El enfoque meramente financiero (A), reducir la formación del talento (B) y mantener estructuras de comando rígidas (D) limitan e impiden el desarrollo de una cultura de aprendizaje adaptativo.",
-                theory: "Peter Senge, en su libro 'La Quinta Disciplina', establece que las empresas líderes de entornos complejos son aquellas que fomentan modelos mentales de aprendizaje colectivo, descentralizando el conocimiento para innovar más rápido que los rivales.",
-                analogy: "Un organismo vivo complejo en evolución constante, como una colonia de hormigas que reorganiza de forma instantánea sus caminos y roles de búsqueda de comida si una gran roca cae encima de su hormiguero."
+                explanation: "<strong>Opción C es la correcta.</strong> La matriz Interna-Externa (IE) posiciona unidades en base a fortalezas internas y atractivos externos.",
+                theory: "Combina el análisis de factores de auditoría de entorno (EFE) con capacidades internas (EFI) para prescribir tácticas de retención u ofensivas.",
+                analogy: "Un tablero de control que cruza la solidez de blindaje de tu tanque de guerra con el nivel de lodo y baches de la carretera."
             },
             {
-                id: 34,
-                module: 4,
-                q: "¿Qué herramienta analítica permite mapear de forma secuencial la alineación entre actividades internas y estrategia?",
+                id: 44, module: 3,
+                q: "¿Qué es una estrategia de océano azul?",
                 options: {
-                    A: "La cadena de valor propuesta por Michael Porter",
-                    B: "El organigrama departamental tradicional",
-                    C: "El cuadro consolidado de gastos operativos",
-                    D: "El modelo del ciclo de vida de un producto"
+                    A: "Competencia directa basada en precio",
+                    B: "Diferenciación marginal sobre un mercado saturado",
+                    C: "Creación de un espacio de mercado no disputado",
+                    D: "Concentración en volumen"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Busca invalidar la competencia mediante la innovación en valor, construyendo una demanda completamente virgen.",
+                theory: "Kim y Mauborgne abogan por romper el clásico equilibrio de costos-valor reconfigurando los bloques operativos del sector.",
+                analogy: "El Cirque du Soleil eliminó el uso costoso de animales para introducir narrativa dramática teatral, cobrando precios de Broadway a adultos."
+            },
+            {
+                id: 45, module: 3,
+                q: "¿Qué factor afecta negativamente la ejecución de una estrategia?",
+                options: {
+                    A: "Estructura organizacional flexible",
+                    B: "Indicadores estratégicos claros",
+                    C: "Resistencia al cambio",
+                    D: "Comunicación eficaz"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Los hábitos arraigados del personal operando en silos bloquean la adopción de las nuevas directrices.",
+                theory: "La inercia de la cultura organizacional y el miedo a la pérdida de estatus son las mayores barreras de la ejecución.",
+                analogy: "Tratar de dar un viraje de emergencia a babor con un timonel que prefiere seguir amarrado al rumbo anterior."
+            },
+            {
+                id: 46, module: 3,
+                q: "¿Qué tipo de estrategia es vender un producto existente en un mercado nuevo?",
+                options: {
+                    A: "Desarrollo de mercado",
+                    B: "Reestructuración financiera",
+                    C: "Integración vertical",
+                    D: "Análisis marginal"
                 },
                 correct: "A",
-                explanation: "<strong>Opción A es la correcta.</strong> La cadena de valor desagrega a la empresa en sus actividades primarias y de apoyo para identificar de dónde proceden las ventajas en costo o diferenciación frente a los rivales.<br><br><em>¿Por qué las demás no?</em> El organigrama (B) muestra jerarquías estáticas. El control de gastos (C) es financiero operativo. El ciclo de vida (D) rastrea etapas del mercado de un bien.",
-                theory: "La cadena de valor ayuda a deconstruir la caja negra operativa de un negocio. Clasifica las actividades en primarias (logística, operaciones, ventas, servicio de postventa) y de apoyo (infraestructura, tecnología, recursos humanos) para auditar dónde reside la fuga de eficiencia o la joya de la diferenciación.",
-                analogy: "Una banda transportadora de ensamblaje industrial de precisión. Si un eslabón o máquina intermedia trabaja con fallos, toda la calidad y el ritmo final de entrega del producto final de la fábrica se arruinará."
+                explanation: "<strong>Opción A es la correcta.</strong> Es el vector de Ansoff orientado a expandirse geográficamente o capturar nuevos segmentos de usuarios.",
+                theory: "Exige comprender y adaptar canales publicitarios y de distribución a una geografía o demografía inédita para la organización.",
+                analogy: "Llevar la franquicia de hamburguesas de tu ciudad a abrir un nuevo local moderno en una provincia vecina."
             },
             {
-                id: 35,
-                module: 4,
-                q: "¿Qué define técnicamente a un Indicador Clave de Rendimiento (KPI)?",
+                id: 47, module: 3,
+                q: "¿Qué permite una correcta formulación estratégica?",
                 options: {
-                    A: "Un formato de balance presupuestario anual",
-                    B: "Una métrica seleccionada para evaluar el desempeño de la organización en sus objetivos críticos",
-                    C: "Un reporte legal de cumplimiento regulatorio gubernamental",
-                    D: "Una cuenta bancaria internacional de reserva de caja"
+                    A: "Eliminar riesgos completamente",
+                    B: "Alinear capacidades internas con oportunidades externas",
+                    C: "Reducir los costos contables",
+                    D: "Evadir la planificación"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> Un KPI (Key Performance Indicator) mide el progreso hacia metas estratégicas u operativas clave del modelo de negocio.<br><br><em>¿Por qué las demás no?</em> El presupuesto (A) es de planificación de egresos. Los reportes regulatorios (C) son exigencias fiscales y legales. La cuenta bancaria (D) es un activo de balance.",
-                theory: "Un KPI es una herramienta cuantitativa que convierte variables de desempeño cualitativas del negocio en datos duros auditables. Permite evaluar si las actividades de los colaboradores están impactando directamente en las metas del plan maestro.",
-                analogy: "El análisis de sangre anual de una persona que evalúa indicadores numéricos precisos como los niveles de colesterol, glucosa o hemoglobina, confirmando con certeza científica su estado de salud general."
+                explanation: "<strong>Opción B es la correcta.</strong> Su rol es el de acoplar de forma precisa el andamiaje operativo con las oportunidades de facturación exterior.",
+                theory: "La coherencia estratégica busca sincronizar dinámicamente las fortalezas distintivas de la firma con las oportunidades de mercado.",
+                analogy: "Diseñar los engranajes de tu molino de viento de tal forma que giren al máximo con las brisas típicas de esa llanura geográfica."
+            },
+            {
+                id: 48, module: 3,
+                q: "¿Cuál de las siguientes es una ventaja de una estrategia bien definida?",
+                options: {
+                    A: "Crecimiento desorganizado",
+                    B: "Control centralizado excesivo",
+                    C: "Mejora de toma de decisiones y enfoque en objetivos",
+                    D: "Eliminación del presupuesto"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Dota al management de una regla de oro de prioridades, descartando proyectos distractores.",
+                theory: "Establece los límites y focos del negocio, dotando a la organización de coherencia operativa de asignación de recursos.",
+                analogy: "Darle a cada marinero de la nave un mapa de ruta detallado con la ubicación del puerto de llegada."
+            },
+            {
+                id: 49, module: 3,
+                q: "¿Qué estrategia busca evitar la competencia directa?",
+                options: {
+                    A: "Diferenciación",
+                    B: "Costos bajos",
+                    C: "Océano rojo",
+                    D: "Océano azul"
+                },
+                correct: "D",
+                explanation: "<strong>Opción D es la correcta.</strong> Propone esquivar la guerra sangrienta en mercados saturados creando curvas de valor radicalmente disruptivas.",
+                theory: "La estrategia del océano azul redefine fronteras industriales para capturar nuevos segmentos ajenos a la rivalidad de precios.",
+                analogy: "Navegar hacia bahías de pesca profundas y vacías en vez de pelear por los mismos peces en la orilla con otras 50 barcazas."
+            },
+            {
+                id: 50, module: 3,
+                q: "¿Cuál de los siguientes es un indicador clave en la evaluación estratégica?",
+                options: {
+                    A: "Nivel de inventario",
+                    B: "Flujo de caja histórico",
+                    C: "Participación de mercado",
+                    D: "Horas trabajadas"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El dominio relativo de mercado mide de forma directa la fuerza de valor y tracción real del negocio.",
+                theory: "Los KPIs estratégicos se orientan al posicionamiento competitivo y salud a largo plazo de la corporación en su industria.",
+                analogy: "Mide cuántas hectáreas fértiles del territorio de siembra domina tu cooperativa frente a todos los demás granjeros."
             },
 
-            // Módulo V
+            // --- MÓDULO IV: DISEÑO ORGANIZACIONAL Y EJECUCIÓN DE LA ESTRATEGIA (51-70) ---
             {
-                id: 36,
-                module: 5,
-                q: "¿Qué define conceptualmente a un Modelo de Negocio?",
+                id: 51, module: 4,
+                q: "¿Cuál es el objetivo de la ejecución estratégica?",
                 options: {
-                    A: "La estrategia de precios del catálogo de productos",
-                    B: "Un documento netamente contable e impositivo",
-                    C: "La lógica que describe cómo una organización crea, entrega y captura valor en el mercado",
-                    D: "Un esquema simplificado de costos fijos y variables"
+                    A: "Definir objetivos generales",
+                    B: "Controlar el presupuesto contable",
+                    C: "Convertir la estrategia en acciones concretas y resultados",
+                    D: "Elaborar reportes de RRHH"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> Según Alexander Osterwalder, el modelo de negocio explica las interacciones internas y externas necesarias para producir valor para los clientes y rentabilidad para la empresa.<br><br><em>¿Por qué las demás no?</em> Los precios (A) y el desglose de costos (D) son solo partes componentes menores del modelo general. Los documentos impositivos (B) son de cumplimiento legal administrativo.",
-                theory: "Un modelo de negocio describe la arquitectura comercial de la empresa. El modelo responde de forma integrada a: ¿qué ofrecemos?, ¿a quién?, ¿cómo lo hacemos de forma inmitable? y ¿cómo ganamos dinero en el intento de forma estructurada?",
-                analogy: "El plano maestro tridimensional del motor y de la transmisión de un carro de carreras, mostrando cómo interactúa el combustible con los pistones y las ruedas para avanzar a alta velocidad."
+                explanation: "<strong>Opción C es la correcta.</strong> Trasciende el documento abstracto para transformarlo en conductas, asignación de dinero e hitos de facturación.",
+                theory: "La ejecución conecta el diseño estratégico conceptual con el comportamiento real cotidiano y rutinas operativas del personal.",
+                analogy: "Dejar de estudiar el mapa de carreteras y comenzar a conducir de verdad el camión de carga de noche por la autopista."
             },
             {
-                id: 37,
-                module: 5,
-                q: "¿Qué herramienta es el marco visual estándar para mapear modelos de negocio en una sola plana?",
+                id: 52, module: 4,
+                q: "¿Qué herramienta integra indicadores financieros y no financieros?",
                 options: {
-                    A: "La matriz de crecimiento del BCG",
-                    B: "El Business Model Canvas",
-                    C: "El análisis FODA de doble entrada",
-                    D: "La técnica de benchmarking sectorial"
+                    A: "Matriz BCG",
+                    B: "Cuadro de Mando Integral (Balanced Scorecard)",
+                    C: "FODA",
+                    D: "ROI"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> El Business Model Canvas divide el diseño del negocio en 9 bloques fundamentales interactivos que caben en un lienzo visual de una sola página.<br><br><em>¿Por qué las demás no?</em> La BCG (A) evalúa productos. El FODA (C) diagnostica variables estratégicas internas y externas. El benchmarking (D) evalúa el rendimiento operativo frente a límites del sector.",
-                theory: "El Business Model Canvas de Alexander Osterwalder ofrece una vista holística simplificada de la empresa. Ayuda a evitar la redacción de extensos planes de negocio tradicionales obsoletos, priorizando en su lugar la experimentación rápida y la coherencia visual.",
-                analogy: "Un croquis arquitectónico simplificado en una sola hoja donde puedes ver simultáneamente dónde estarán las habitaciones de tu casa, dónde las puertas, el garaje, las tuberías de agua y el costo estimado de los materiales de obra."
+                explanation: "<strong>Opción B es la correcta.</strong> Controla de forma simultánea e interconectada las cuatro perspectivas operativas fundamentales.",
+                theory: "Kaplan y Norton propusieron un panel que equilibra los inductores de rentabilidad futuros con las métricas del pasado.",
+                analogy: "El tablero de mandos de una aeronave comercial que muestra la altitud, velocidad del viento y nivel de aceite de motores."
             },
             {
-                id: 38,
-                module: 5,
-                q: "¿Qué componente del Business Model Canvas describe formalmente de dónde provienen los ingresos de la empresa?",
+                id: 53, module: 4,
+                q: "Which perspective does NOT belong to the classic Balanced Scorecard framework?",
                 options: {
-                    A: "La estructura general de costos operativos",
-                    B: "Las relaciones estratégicas de valor con el cliente",
-                    C: "El flujo o fuentes de ingresos de la firma",
-                    D: "El bloque de segmentación de clientes potenciales"
+                    A: "Financiera",
+                    B: "Clientes",
+                    C: "Ecológica",
+                    D: "Aprendizaje y desarrollo"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> El bloque de flujos de ingresos detalla las formas y métodos en que la organización monetiza su propuesta de valor para cada segmento del mercado.<br><br><em>¿Por qué las demás no?</em> La estructura de costos (A) representa egresos. Las relaciones con clientes (B) e identificación de nichos (D) estructuran la demanda, pero no capturan la transacción financiera directa.",
-                theory: "Las fuentes de ingresos (Revenue Streams) definen el mecanismo de monetización: cobro único por venta directa de bienes, modelo de suscripción periódica recurrente, alquiler de equipos, cobros de corretaje o licenciamiento de propiedad intelectual.",
-                analogy: "Es el diseño de los grifos y de las tuberías de agua limpia de tu casa: define si vas a recibir agua llenando botellas individuales una a una (venta transaccional) o si instalarás una tubería de cobro de flujo mensual constante (suscripción mensual)."
+                explanation: "<strong>Opción C es la correcta.</strong> Las cuatro perspectivas clásicas son: Financiera, Clientes, Procesos Internos e Innovación/Crecimiento.",
+                theory: "La ecología es un desarrollo posterior en tableros de sostenibilidad; no conforma las cuatro dimensiones del BSC tradicional.",
+                analogy: "Para tocar la mejor melodía (Financiero), necesitas contentar al público (Clientes), afinar las guitarras (Procesos) y practicar mucho (Aprendizaje)."
             },
             {
-                id: 39,
-                module: 5,
-                q: "¿Cuál es el objetivo principal y de fondo al estructurar una propuesta de valor?",
+                id: 54, module: 4,
+                q: "¿Qué rol cumple la estructura organizacional en la estrategia?",
                 options: {
-                    A: "Maximizar a toda costa el margen bruto del canal",
-                    B: "Ofrecer al segmento de clientes un beneficio único y diferenciador que resuelva sus problemas reales",
-                    C: "Reducir los precios finales del sector para romper la industria",
-                    D: "Minimizar los egresos de marketing y publicidad del año"
+                    A: "Definir indicadores fiscales",
+                    B: "Facilitar la coordinación y asignación de responsabilidades",
+                    C: "Maximizar ventas",
+                    D: "Controlar la nómina"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> La propuesta de valor responde al por qué un cliente elegirá a esta empresa en lugar de a sus competidores, resolviendo un problema de forma única.<br><br><em>¿Por qué las demás no?</em> Optimizar márgenes (A), guerras de precios (C) y recortar presupuesto publicitario (D) son decisiones financieras y de promoción operacional, pero no constituyen la entrega de valor único.",
-                theory: "La propuesta de valor es el pilar de atracción de un negocio. No consiste solo en describir las especificaciones técnicas frías del bien que fabricas; define de qué manera alivias los miedos, resuelves las frustraciones o multiplicas los beneficios prácticos del cliente final.",
-                analogy: "No es simplemente vender un taladro de acero cromado pesado; es venderle al comprador la seguridad, el estatus y la comodidad de tener un cuadro familiar hermoso y perfectamente nivelado colgado en la pared de su sala."
+                explanation: "<strong>Opción B es la correcta.</strong> Funciona como el andamiaje que permite la coordinación eficiente para canalizar recursos.",
+                theory: "Chandler postuló que 'la estructura sigue a la estrategia'. El organigrama debe soportar la ejecución del plan sin trabas de jerarquía.",
+                analogy: "El esqueleto óseo de un felino diseñado para saltar ágilmente las ramas frente al de un pesado hipopótamo de lodo."
             },
             {
-                id: 40,
-                module: 5,
-                q: "¿A qué se refiere formalmente el término innovación estratégica?",
+                id: 55, module: 4,
+                q: "¿Qué implica una estructura matricial?",
                 options: {
-                    A: "A la sustitución rutinaria del personal de mandos operativos",
-                    B: "A imitar con precisión las tecnologías de las empresas líderes del mercado",
-                    C: "A rediseñar de forma radical la manera de competir y entregar valor dentro de un sector",
-                    D: "A acelerar la tasa de rotación física de inventarios de la empresa"
+                    A: "Un enfoque rígido en línea jerárquica",
+                    B: "Fusión de funciones por duplicación",
+                    C: "Combinación de funciones verticales y proyectos transversales",
+                    D: "Supresión de mandos medios"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> Innovación estratégica ocurre cuando una empresa altera sustancialmente las reglas de juego tradicionales de una industria para crear ventajas competitivas de alta disrupción.<br><br><em>¿Por qué las demás no?</em> El cambio de operarios (A) e incrementar la rotación (D) son mejoras operativas rutinarias. Copiar tecnologías líderes (B) es seguidismo impositivo mas no innovación.",
-                theory: "La innovación estratégica trasciende el cambio tecnológico marginal. Consiste en reinventar la cadena de valor o los bloques comerciales del Canvas de un sector estancado para redefinir por completo las expectativas de la industria y las bases de rentabilidad.",
-                analogy: "El modelo de negocio de Uber o Airbnb. No inventaron mejores carros ni construyeron nuevos edificios; rediseñaron radicalmente las bases del acceso a transporte y hospedaje usando plataformas colaborativas y tecnología de vanguardia."
+                explanation: "<strong>Opción C es la correcta.</strong> Rompe la rigidez clásica al cruzar departamentos especializados con equipos orientados a metas transversales.",
+                theory: "Las estructuras matriciales coordinan recursos dinámicos asignados a proyectos con reporte dual a directores funcionales y de proyecto.",
+                analogy: "Los actores de cine que pertenecen al gremio general (Función) pero se reportan con un director en un set específico de grabación (Proyecto)."
             },
             {
-                id: 41,
-                module: 5,
-                q: "¿Qué representa la ejecución de un 'pivot' dentro de la metodología de modelos de negocio innovadores?",
+                id: 56, module: 4,
+                q: "¿Qué factor es crítico para la ejecución estratégica?",
                 options: {
-                    A: "Hacer un recorte masivo de trabajadores en nómina fija",
-                    B: "Un cambio estructurado en la hipótesis principal del modelo de negocio para adaptarse mejor al feedback de clientes",
-                    C: "Desarrollar una nueva patente tecnológica interna de forma aislada",
-                    D: "Incrementar temporalmente el capital de trabajo de la firma"
+                    A: "Cultura del miedo",
+                    B: "Estilo autocrático",
+                    C: "Liderazgo alineado con la estrategia",
+                    D: "Subcontratación masiva"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Un liderazgo transformador que modela las prioridades de cambio arrastra al resto del personal.",
+                theory: "La alineación del liderazgo dota de coherencia moral y material a las asignaciones presupuestarias y conductas del personal.",
+                analogy: "El capitán del barco de remos que se coloca en la proa para marcar el ritmo con tambores e inspirar a su tripulación."
+            },
+            {
+                id: 57, module: 4,
+                q: "¿Qué obstáculo suele impedir una buena ejecución?",
+                options: {
+                    A: "Indicadores medibles",
+                    B: "Comunicación deficiente",
+                    C: "Visión compartida",
+                    D: "Formación continua"
                 },
                 correct: "B",
-                explanation: "<strong>Opción B es la correcta.</strong> Dentro de la metodología Lean Startup, un 'pivot' es un cambio estratégico en un bloque clave del Canvas (por ejemplo, de segmento de clientes o canal) al descubrir que la hipótesis original falló ante la realidad del mercado.<br><br><em>¿Por qué las demás no?</em> Los despidos (A), patentes cerradas (C) y créditos de caja (D) son respuestas operativas, corporativas o financieras de emergencia, ajenas a la flexibilidad ágil del proceso de 'pivot'.",
-                theory: "La agilidad empresarial exige aprender empíricamente de la retroalimentación del cliente real. Si las métricas muestran que la idea original de negocio no tiene tracción, el 'pivot' permite a los fundadores cambiar el rumbo de uno de los bloques del Canvas sin quebrar la firma por rigidez del plan original.",
-                analogy: "Un basquetbolista que mantiene un pie firmemente clavado en el suelo (misión o visión de fondo del negocio) mientras gira el resto del cuerpo (tácticas, canales o segmentos) en busca de un ángulo despejado para lanzar la canasta."
+                explanation: "<strong>Opción B es la correcta.</strong> Si el personal operativo desconoce las prioridades del plan, seguirá operando bajo inercia rutinaria.",
+                theory: "Los silos departamentales y la mala comunicación de la visión provocan la ineficiente dispersión del esfuerzo directivo.",
+                analogy: "Un mariscal que diseña el asalto táctico pero olvida comunicar las coordenadas específicas a los arqueros y artillería."
             },
             {
-                id: 42,
-                module: 5,
-                q: "¿Qué enfoque metodológico prioriza la iteración ágil y la validación rápida de hipótesis sobre la marcha?",
+                id: 58, module: 4,
+                q: "¿Qué describe mejor a una organización inteligente (learning organization)?",
                 options: {
-                    A: "La metodología del análisis del caso tradicional",
-                    B: "La teoría de juegos económicos estáticos",
-                    C: "El marco ágil de Lean Startup de Eric Ries",
-                    D: "El Balanced Scorecard clásico de metas anuales"
+                    A: "Prioriza solo resultados financieros",
+                    B: "Minimiza el aprendizaje para reducir errores",
+                    C: "Aprende y se adapta continuamente para mejorar su desempeño",
+                    D: "Tiene una estructura jerárquica fija"
                 },
                 correct: "C",
-                explanation: "<strong>Opción C es la correcta.</strong> El método Lean Startup aboga por construir, medir y aprender rápido mediante MVP (Productos Mínimos Viables) para fallar rápido e iterar sin dilapidar valiosos recursos de capital.<br><br><em>¿Por qué las demás no?</em> Los casos de estudio (A) son educativos. La teoría de juegos (B) modela interacciones racionales matemáticas. El BSC (D) es un marco estratégico de implementación corporativa de mediano/largo plazo.",
-                theory: "El método Lean Startup revoluciona el emprendimiento al modelar el lanzamiento de una empresa como un proceso científico de validación empírica. Se centra en el ciclo 'Crear-Medir-Aprender', utilizando prototipos rápidos para validar hipótesis críticas comerciales antes de iniciar gastos millonarios de escala.",
-                analogy: "En lugar de gastar miles de dólares diseñando un recetario gourmet de alta cocina de 500 páginas a puerta cerrada, cocinas una muestra pequeña de dos tipos de galletas y las ofreces a probar en la esquina de tu barrio para ver de forma empírica cuál agrada más."
+                explanation: "<strong>Opción C es la correcta.</strong> Senge demostró que las organizaciones con pensamiento sistémico procesan el feedback para transformarse.",
+                theory: "La organización inteligente fomenta el aprendizaje descentralizado para flexibilizar la adaptabilidad frente al entorno complejo.",
+                analogy: "Una colonia de hormigas que altera de inmediato sus senderos de carga de comida si una gran piedra obstruye su camino."
+            },
+            {
+                id: 59, module: 4,
+                q: "¿Qué herramienta permite mapear la alineación entre procesos y estrategia?",
+                options: {
+                    A: "Cadena de valor",
+                    B: "Organigrama clásico",
+                    C: "Cuadro de gastos",
+                    D: "Ciclo de vida del producto"
+                },
+                correct: "A",
+                explanation: "<strong>Opción A es la correcta.</strong> Desagrega la empresa en procesos primarios y de soporte para verificar de dónde proceden los márgenes.",
+                theory: "La cadena de valor ayuda a auditar la sincronización operativa de los eslabones internos frente a las bases de diferenciación.",
+                analogy: "Una línea automatizada de ensamblaje industrial donde cada eslabón intermedio debe afinar el producto con la misma tolerancia de milímetros."
+            },
+            {
+                id: 60, module: 4,
+                q: "¿Qué función tiene el control estratégico?",
+                options: {
+                    A: "Monitorear el cumplimiento de tareas contables",
+                    B: "Comparar indicadores financieros históricos",
+                    C: "Medir y ajustar el rumbo para cumplir objetivos estratégicos",
+                    D: "Emitir informes regulatorios"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Audita de manera periódica si las hipótesis del plan se sostienen y ajusta el timón directivo.",
+                theory: "Monitorea tanto los resultados operacionales como la validez continuada del plan maestro ante disrupciones imprevistas del mercado.",
+                analogy: "Un timonel que vigila las corrientes de viento y la brújula para ir compensando la deriva del navío de carga."
+            },
+            {
+                id: 61, module: 4,
+                q: "¿Qué es un KPI?",
+                options: {
+                    A: "Un formato de balance presupuestario",
+                    B: "Una métrica clave para evaluar desempeño estratégico",
+                    C: "Un reporte legal",
+                    D: "Una cuenta bancaria internacional"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Un Key Performance Indicator mide el grado de acoplamiento de las metas de la firma.",
+                theory: "Los KPIs destilan datos de operaciones complejas en métricas digeribles para monitorear el pulso de la ejecución.",
+                analogy: "El examen de sangre anual que te confirma con números fríos el porcentaje de colesterol y azúcar de tu cuerpo."
+            },
+            {
+                id: 62, module: 4,
+                q: "¿Qué caracteriza a una estructura descentralizada?",
+                options: {
+                    A: "Concentración de decisiones en la alta gerencia",
+                    B: "Delegación de autoridad en distintos niveles",
+                    C: "Desorganización funcional",
+                    D: "Eliminación de funciones operativas"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Facilita que las unidades al frente del mercado tomen decisiones ágiles sin burocracia de aprobación.",
+                theory: "La descentralización acerca la toma de decisiones al cliente final, potenciando la capacidad de adaptación local rápida.",
+                analogy: "Darle de forma libre autonomía táctica completa a cada comandante de batallón para moverse según el relieve del suelo."
+            },
+            {
+                id: 63, module: 4,
+                q: "¿Qué permite el mapa estratégico en el BSC?",
+                options: {
+                    A: "Ordenar recursos humanos",
+                    B: "Visualizar la relación causa-efecto entre objetivos",
+                    C: "Diseñar el marketing digital",
+                    D: "Elaborar presupuestos"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Ilustra de manera visual la forma en que el aprendizaje nutre los procesos, lo que deleita al cliente e impulsa el dinero.",
+                theory: "El mapa estratégico unifica los objetivos mediante hilos invisibles de causalidad lógica para racionalizar el control de mando.",
+                analogy: "Un circuito electrónico que te detalla cómo presionar un interruptor activa de inmediato las luces de la sala."
+            },
+            {
+                id: 64, module: 4,
+                q: "¿Qué concepto define el 'gap estratégico'?",
+                options: {
+                    A: "Diferencia entre ingresos contables y flujo de caja",
+                    B: "Brecha entre resultados actuales y metas estratégicas",
+                    C: "Déficit fiscal estructural",
+                    D: "Diferencia entre precios esperados y reales"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Mide la brecha existente entre el rendimiento real capturado y el objetivo desafiante de planeación.",
+                theory: "La identificación del 'gap' de ejecución alerta al management sobre deficiencias de alineación operativa o hipótesis erróneas.",
+                analogy: "La distancia que separa la posición actual de tu caravana en el mapa de las coordenadas donde debías acampar para el anochecer."
+            },
+            {
+                id: 65, module: 4,
+                q: "¿Qué factor NO se relaciona directamente con ejecución estratégica?",
+                options: {
+                    A: "Compromiso del equipo",
+                    B: "Indicadores clave",
+                    C: "Actualización contable",
+                    D: "Recursos disponibles"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El registro contable retrospectivo rutinario es operativo-financiero y no interviene en la ejecución de la ventaja competitiva.",
+                theory: "La ejecución requiere de articulación humana, metas analíticas y activos tácticos; la teneduría de libros es puramente administrativa.",
+                analogy: "Dedicarte a archivar con cuidado los recibos de cobro pasados en lugar de entrenar a tus pilotos de carrera en la pista."
+            },
+            {
+                id: 66, module: 4,
+                q: "¿Qué es una ventaja de estructuras flexibles?",
+                options: {
+                    A: "Alta burocracia",
+                    B: "Rapidez para adaptarse al entorno",
+                    C: "Alta rotación de personal",
+                    D: "Poca delegación"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Estructuras menos rígidas se reconfiguran con soltura ante disrupciones drásticas tecnológicas de mercado.",
+                theory: "La adaptabilidad estructural reduce el retardo de respuesta ante amenazas, dinamizando las capacidades del negocio.",
+                analogy: "Un avión planeador ligero de fibra de vidrio que esquiva corrientes de aire frente a un pesado zepelín de lona rígida."
+            },
+            {
+                id: 67, module: 4,
+                q: "¿Qué se busca con los tableros de control?",
+                options: {
+                    A: "Reportar impuestos",
+                    B: "Ajustar precios de venta",
+                    C: "Monitorear indicadores clave en tiempo real",
+                    D: "Controlar inventarios"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Permiten visualizar de manera unificada el desempeño dinámico actual del negocio para decisiones rápidas.",
+                theory: "Los tableros de control concentran las métricas críticas operacionales para dar visibilidad inmediata y sistemática a la gerencia.",
+                analogy: "El panel de instrumentos de un carro de carreras que te marca las revoluciones por minuto del motor y temperatura de frenos."
+            },
+            {
+                id: 68, module: 4,
+                q: "¿Qué tipo de liderazgo es más efectivo en implementación estratégica?",
+                options: {
+                    A: "Autocrático",
+                    B: "Laissez-faire",
+                    C: "Transformacional",
+                    D: "Pasivo"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Los líderes transformadores motivan mediante el propósito, articulando y reduciendo la fricción al cambio.",
+                theory: "El liderazgo transformador fomenta el desarrollo de capacidades colectivas, alineando los objetivos de los colaboradores con el plan maestro.",
+                analogy: "El director de expedición ártica que camina de primero bajo la tormenta de nieve abriendo la senda segura para su equipo."
+            },
+            {
+                id: 69, module: 4,
+                q: "¿Qué componente ayuda a traducir la estrategia en objetivos operativos?",
+                options: {
+                    A: "Matriz PESTEL",
+                    B: "Manual de procedimientos",
+                    C: "Balanced Scorecard",
+                    D: "Diagrama de Gantt"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El BSC dota a la organización de un marco estructurado que canaliza el plan de alto alcance a metas operacionales.",
+                theory: "Traduce de forma integrada las intenciones directivas abstractas en indicadores medibles de procesos y rutinas cotidianas.",
+                analogy: "La máquina de engranajes que toma la fuerza rotativa gigante del motor de vapor y la convierte en giros de manivela pequeños."
+            },
+            {
+                id: 70, module: 4,
+                q: "¿Qué representa el “alineamiento estratégico”?",
+                options: {
+                    A: "Adecuación contable",
+                    B: "Coherencia entre visión, objetivos, estructura y ejecución",
+                    C: "Eliminación de intermediarios",
+                    D: "Sustitución del control interno"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Garantiza que todas las partes constitutivas del negocio (recursos, cultura, incentivos) empujen hacia el mismo faro.",
+                theory: "El alineamiento sistemático asegura que la estructura e incentivos trabajen en total armonía con las directrices estratégicas de la formulación.",
+                analogy: "Sincronizar la dirección del volante, la tracción de los cuatro neumáticos y los pistones del motor del auto en una misma curva cerrada."
+            },
+
+            // --- MÓDULO V: MODELOS DE NEGOCIO E INNOVACIÓN ESTRATÉGICA (71-90) ---
+            {
+                id: 71, module: 5,
+                q: "¿Qué es un modelo de negocio?",
+                options: {
+                    A: "Una política de precios",
+                    B: "Un documento contable",
+                    C: "La forma en que una empresa crea, entrega y captura valor",
+                    D: "Un esquema de costos fijos y variables"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Un modelo de negocio describe la arquitectura integral y lógica mediante la cual opera de forma sostenible en el mercado.",
+                theory: "Según Alexander Osterwalder, el modelo de negocio explica las interacciones internas y externas indispensables para producir valor para los clientes y capturarlo de manera rentable.",
+                analogy: "Es la receta y plano completo de un restaurante: no solo los precios de la carta, sino cómo consigues los insumos únicos, cómo atiendes a los comensales y cómo garantizas flujo rentable."
+            },
+            {
+                id: 72, module: 5,
+                q: "¿Qué herramienta permite diseñar modelos de negocio de forma visual?",
+                options: {
+                    A: "Matriz BCG",
+                    B: "Business Model Canvas",
+                    C: "Análisis FODA",
+                    D: "Benchmarking"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> El Business Model Canvas divide la lógica de la organización en 9 bloques interactivos que caben de forma unificada en un lienzo visual de una sola página.",
+                theory: "El Canvas promueve la iteración y el trabajo colaborativo ágil. Evita la redacción pesada de extensos manuales iniciales en favor del diseño rápido.",
+                analogy: "Un plano conceptual simplificado de una vivienda donde puedes ver simultáneamente dónde estarán las habitaciones, las tomas de agua y la estructura de costos de obra."
+            },
+            {
+                id: 73, module: 5,
+                q: "¿Qué componente del Canvas describe cómo se generan ingresos?",
+                options: {
+                    A: "Estructura de costos",
+                    B: "Relación con clientes",
+                    C: "Flujo de ingresos",
+                    D: "Segmento de mercado"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> El bloque de flujos de ingresos detalla las formas y métodos en que la organización monetiza su propuesta de valor para cada segmento del mercado.",
+                theory: "Las fuentes de ingresos (Revenue Streams) definen el mecanismo de captura: venta directa de bienes, modelo de suscripción periódica recurrente, alquiler de activos o corretajes.",
+                analogy: "El diseño de las llaves de paso de tu casa: define si vas a recibir agua llenando botellas individuales una a una (transaccional) o si instalarás una tubería de flujo mensual constante (suscripción)."
+            },
+            {
+                id: 74, module: 5,
+                q: "¿Cuál es el objetivo principal de una propuesta de valor?",
+                options: {
+                    A: "Maximizar el margen bruto",
+                    B: "Ofrecer al cliente un beneficio único y diferenciador",
+                    C: "Reducir los precios de mercado",
+                    D: "Minimizar el gasto en marketing"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Resuelve un problema real o satisface una necesidad del segmento de clientes de una manera que ningún competidor iguala.",
+                theory: "La propuesta de valor es el corazón del Canvas. No se define por especificaciones técnicas del bien, sino por los dolores de cabeza que alivia y beneficios reales que multiplica.",
+                analogy: "No es simplemente vender un taladro de acero pesado; es venderle al comprador la seguridad y comodidad de tener su cuadro familiar favorito colgado y perfectamente alineado."
+            },
+            {
+                id: 75, module: 5,
+                q: "¿Qué se entiende por innovación estratégica?",
+                options: {
+                    A: "Cambiar el personal operativo",
+                    B: "Copiar a los líderes del mercado",
+                    C: "Rediseñar la forma de competir en el sector",
+                    D: "Ampliar la rotación de inventarios"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Altera de forma radical las reglas del juego de una industria madura o saturada para crear ventajas competitivas revolucionarias.",
+                theory: "La innovación estratégica cambia de forma disruptiva las dinámicas de entrega de valor, transformando la estructura tradicional de frentes de competencia.",
+                analogy: "La llegada del streaming de Netflix en lugar de intentar construir una mejor y más grande sucursal física de alquiler de cintas de video."
+            },
+            {
+                id: 76, module: 5,
+                q: "¿Qué factor impulsa la innovación en el modelo de negocio?",
+                options: {
+                    A: "Resistencia al cambio",
+                    B: "Reducción de costos laborales",
+                    C: "Cambios tecnológicos y nuevas necesidades del cliente",
+                    D: "Acumulación de inventario"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> La disrupción tecnológica y las nuevas conductas y frustraciones de los consumidores desatan oportunidades de rediseño comercial.",
+                theory: "La obsolescencia acelerada de los modelos tradicionales ante nuevas tecnologías exige que la firma reconfigure activamente su Canvas para sobrevivir.",
+                analogy: "El surgimiento de la fotografía digital de alta resolución que forzó a todos los operadores tradicionales de revelado químico a reconvertirse."
+            },
+            {
+                id: 77, module: 5,
+                q: "¿Qué representa el bloque de “Recursos clave” en el Canvas?",
+                options: {
+                    A: "Clientes potenciales",
+                    B: "Ingresos esperados",
+                    C: "Activos estratégicos necesarios para operar",
+                    D: "Factores externos"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Son los recursos indispensables (físicos, intelectuales, humanos o financieros) para que la empresa pueda sostener y entregar su propuesta de valor.",
+                theory: "Sin el aseguramiento de estos activos críticos internos, la propuesta de valor resulta inviable de sostener o duplicar operativamente.",
+                analogy: "Los hornos industriales especiales, los maestros panaderos y la patente de levadura orgánica en una panadería de gran escala."
+            },
+            {
+                id: 78, module: 5,
+                q: "¿Qué bloque del modelo Canvas indica a través de qué medios se entrega la propuesta de valor?",
+                options: {
+                    A: "Canales",
+                    B: "Alianzas clave",
+                    C: "Segmentos de clientes",
+                    D: "Actividades clave"
+                },
+                correct: "A",
+                explanation: "<strong>Opción A es la correcta.</strong> Define la interfaz y los medios de distribución físicos o digitales mediante los cuales la empresa contacta al usuario.",
+                theory: "Los canales cumplen cinco fases indispensables: notoriedad, evaluación, compra, entrega y postventa, conectando el valor con la demanda.",
+                analogy: "La flota de camiones repartidores rápidos de gas a domicilio o la tienda en línea de descargas inmediatas de música."
+            },
+            {
+                id: 79, module: 5,
+                q: "¿Qué describe el bloque “Relación con el cliente”?",
+                options: {
+                    A: "Cómo se establecen y mantienen vínculos con los clientes",
+                    B: "Qué tan rentable es un producto",
+                    C: "Dónde se ubica la empresa",
+                    D: "Cuánto cuesta un canal"
+                },
+                correct: "A",
+                explanation: "<strong>Opción A es la correcta.</strong> Detalla el tipo de conexión que se diseña para cada segmento (asistencia personal, automatizada, autoservicio, co-creación).",
+                theory: "La naturaleza de las relaciones influye directamente en los costos de adquisición del usuario (CAC) y en la lealtad de marca de largo plazo.",
+                analogy: "El trato cercano, personalizado y de asesoría de un sastre a medida en contraste con la fría interfaz automatizada de una máquina expendedora."
+            },
+            {
+                id: 80, module: 5,
+                q: "¿Qué permite identificar el uso del Business Model Canvas?",
+                options: {
+                    A: "El presupuesto operativo anual",
+                    B: "La composición del equipo técnico",
+                    C: "Oportunidades para rediseñar el modelo de negocio",
+                    D: "Niveles de inflación"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Al mapear visualmente todas las interacciones operativas, facilita detectar fugas de valor o inconsistencias lógicas.",
+                theory: "El Canvas actúa como un simulador visual de hipótesis comerciales que los líderes pueden estresar mediante experimentos rápidos.",
+                analogy: "Tener el croquis de instalación de tuberías a la vista para ubicar con rapidez dónde se encuentra el atasco o fuga de presión de agua."
+            },
+            {
+                id: 81, module: 5,
+                q: "¿Qué significa disrupción en modelos de negocio?",
+                options: {
+                    A: "Incremento de inventarios",
+                    B: "Eliminación de marketing",
+                    C: "Cambios radicales que transforman industrias",
+                    D: "Congelamiento de precios"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Ocurre cuando un nuevo entrante introduce una propuesta que vuelve obsoleto el modelo tradicional establecido.",
+                theory: "La disrupción a menudo ataca sirviendo a nichos desatendidos con ofertas más baratas o accesibles, escalando rápido para cambiar las reglas sectoriales.",
+                analogy: "La enciclopedia digital Wikipedia, gratuita y colaborativa en línea, que desplazó por completo a las pesadas y costosas enciclopedias impresas en tomos."
+            },
+            {
+                id: 82, module: 5,
+                q: "¿Qué empresa es un ejemplo clásico de innovación disruptiva?",
+                options: {
+                    A: "Kodak",
+                    B: "Blockbuster",
+                    C: "Uber",
+                    D: "Enron"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Uber reconfiguró de forma radical el transporte urbano sin poseer una flota de vehículos propios.",
+                theory: "Uber es un ejemplo estelar de plataforma de doble lado (multisided platform), conectando oferta de transporte ociosa con demanda de pasaje de forma ágil.",
+                analogy: "Crear el mercado de taxis más grande y seguro del continente utilizando una aplicación móvil interactiva y el vehículo privado de los ciudadanos."
+            },
+            {
+                id: 83, module: 5,
+                q: "¿Qué representa una alianza clave en el Canvas?",
+                options: {
+                    A: "Estrategias de ventas masivas",
+                    B: "Terceros que ayudan a ejecutar el modelo de negocio",
+                    C: "Auditorías externas",
+                    D: "Canales fiscales"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Son convenios de cooperación (socios, proveedores estratégicos, coinversiones) para reducir riesgos o economizar recursos.",
+                theory: "El bloque de alianzas clave (Key Partnerships) valida que una empresa no necesita ser dueña de todos los eslabones operativos para entregar valor.",
+                analogy: "Que tu marca de zapatos deportivos haga un convenio cerrado con el atleta número uno del mundo para diseñar y promover calzado exclusivo."
+            },
+            {
+                id: 84, module: 5,
+                q: "¿Cuál es una ventaja de innovar el modelo de negocio?",
+                options: {
+                    A: "Disminución de participación de mercado",
+                    B: "Pérdida de clientes actuales",
+                    C: "Diferenciación y sostenibilidad en el largo plazo",
+                    D: "Aumento de costos operativos"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Un modelo de negocio innovador genera barreras de imitación más robustas que la simple innovación de un producto.",
+                theory: "La innovación del modelo de negocio entrelaza múltiples bloques del Canvas, lo que resulta sumamente difícil de copiar de forma integral por los rivales.",
+                analogy: "Construir un ecosistema integrado de software, hardware y servicios premium en lugar de competir vendiendo solo un reproductor mp3 común."
+            },
+            {
+                id: 85, module: 5,
+                q: "¿Qué permite el “Customer Development” en modelos innovadores?",
+                options: {
+                    A: "Diseñar procesos logísticos",
+                    B: "Aumentar los costos fijos",
+                    C: "Validar hipótesis de negocio mediante feedback del cliente",
+                    D: "Estimar balances contables"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Marco diseñado por Steve Blank para descubrir y validar que existe un cliente real antes de proceder a fabricar el bien.",
+                theory: "Prioriza el desarrollo externo ('salir a la calle') para contrastar de forma empírica y rápida las hipótesis del Canvas ante los usuarios reales.",
+                analogy: "Hacer entrevistas detalladas y ofrecer prototipos pequeños de cartón de tu app de comida antes de gastar tus ahorros en pagarle a ingenieros de software."
+            },
+            {
+                id: 86, module: 5,
+                q: "¿Qué tipo de innovación implica cambiar la estructura de ingresos?",
+                options: {
+                    A: "Innovación tecnológica",
+                    B: "Innovación de proceso",
+                    C: "Innovación en modelo de negocio",
+                    D: "Innovación en cultura organizacional"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Al cambiar radicalmente el flujo de cobros (monetización), se reconfiguran las relaciones de valor de todo el Canvas.",
+                theory: "La reconfiguración de la estructura de monetización puede alterar las bases de asequibilidad de un sector competitivo saturado.",
+                analogy: "Pasar de vender carros de oficina caros a instalarlos gratis cobrando una renta fija por página real fotocopiada por mes."
+            },
+            {
+                id: 87, module: 5,
+                q: "¿Qué enfoque prioriza el aprendizaje iterativo, especialmente en startups?",
+                options: {
+                    A: "Método de caso",
+                    B: "Teoría de juegos",
+                    C: "Lean Startup",
+                    D: "Balanced Scorecard"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Eric Ries estructuró este método que busca reducir el desperdicio combinando desarrollo ágil con MVP.",
+                theory: "La metodología se fundamenta en el ciclo 'Crear - Medir - Aprender', impulsando la validación sistemática en lugar del diseño estático de planes.",
+                analogy: "Preparar una bandeja pequeña de galletas de muestra gratis y compartirlas en tu vecindario antes de comprar un gran horno industrial y abrir local comercial."
+            },
+            {
+                id: 88, module: 5,
+                q: "¿Cuál es el primer paso para rediseñar un modelo de negocio?",
+                options: {
+                    A: "Comprar nuevos activos",
+                    B: "Hacer benchmarking sin análisis",
+                    C: "Analizar los cambios en el entorno y comportamiento del cliente",
+                    D: "Aumentar el gasto publicitario"
+                },
+                correct: "C",
+                explanation: "<strong>Opción C es la correcta.</strong> Todo rediseño exitoso inicia asomándose afuera para diagnosticar las nuevas dolencias del segmento meta.",
+                theory: "La reformulación de un Canvas requiere comprender empíricamente las transformaciones de comportamiento de la demanda y tendencias macroambientales.",
+                analogy: "Estudiar la trayectoria del oleaje marino y las corrientes de aire antes de decidir rediseñar las velas y el timón de tu barco pesquero."
+            },
+            {
+                id: 89, module: 5,
+                q: "¿Qué es un pivot en un modelo de negocio?",
+                options: {
+                    A: "Un despido masivo",
+                    B: "Un cambio sustancial en la hipótesis del modelo para adaptarse mejor al mercado",
+                    C: "Una innovación tecnológica interna",
+                    D: "Un incremento en el capital de trabajo"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Es una corrección estructurada del rumbo directivo diseñada para poner a prueba una nueva hipótesis del Canvas.",
+                theory: "El 'pivot' preserva el propósito de fondo de la organización pero reconfigura las tácticas, canales o segmentos para calzar con la demanda real.",
+                analogy: "Un jugador de básquetbol que mantiene un pie bien firme y clavado en la cancha mientras rota el resto de su cuerpo en busca de ángulo de tiro."
+            },
+            {
+                id: 90, module: 5,
+                q: "¿Qué permite evaluar la sostenibilidad de un modelo de negocio?",
+                options: {
+                    A: "Su cumplimiento tributario",
+                    B: "Su capacidad para adaptarse, generar valor y escalar en el tiempo",
+                    C: "La existencia de un presupuesto anual",
+                    D: "La eficiencia en recursos contables"
+                },
+                correct: "B",
+                explanation: "<strong>Opción B es la correcta.</strong> Mide la resiliencia estructural de la lógica empresarial para crecer de forma escalable sin colapsar financieramente.",
+                theory: "La sostenibilidad estratégica asocia la adaptabilidad continuada del Canvas al macroentorno con la rentabilidad sostenida en el largo plazo.",
+                analogy: "Un árbol frondoso de raíces elásticas y profundas que resiste vendavales invernales, se nutre del suelo y crece con cada estación de lluvia."
             }
         ];
 
-        // CONTENIDOS TEÓRICOS POR MÓDULO
+        // CONTENIDOS TEÓRICOS POR MÓDULO (Enriquecido y estructurado por bloques)
         const modulesTheory = {
             1: {
                 title: "Módulo I: Fundamentos Estratégicos",
@@ -1120,15 +1750,15 @@
         // CONCEPTOS PARA LAS TARJETAS DE ESTUDIO (Flashcards)
         const flashcardsData = [
             { term: "Ventaja Competitiva Sostenible", def: "Cualidad, activo o habilidad que posee una empresa y que le permite obtener utilidades superiores de manera duradera frente a competidores, debido a su extrema dificultad de imitación." },
-            { term: "Estrategia Emergente", def: "Conjunto coherente de acciones que brotan espontáneamente del día a día de la operación como respuesta práctica a imprevistos, consolidándose como estrategia sin planeación previa." },
-            { term: "Las 5 Fuerzas de Porter", def: "Modelo de análisis industrial que mide el poder de clientes, de proveedores, la amenaza de productos sustitutos, nuevos ingresantes y la rivalidad competitiva de un sector." },
-            { term: "Criterios SMART", def: "Regla mnemotécnica para estructurar metas claras que eviten la confusión: Específico (S), Medible (M), Alcanzable (A), Relevante (R) y Temporalizado (T)." },
-            { term: "Vaca Lechera (Matriz BCG)", def: "Línea de negocio con una altísima participación relativa de mercado dentro de una industria ya madura o de bajo crecimiento, convirtiéndose en un gran generador neto de efectivo." },
-            { term: "Balanced Scorecard (BSC)", def: "Herramienta de control estratégico que traduce la visión a largo plazo en metas de desempeño conectadas mediante perspectivas financiera, clientes, procesos y aprendizaje." },
-            { term: "Océano Azul", def: "Metodología para romper la competencia sangrienta de mercados maduros (océanos rojos) mediante la innovación en valor, capturando nichos y demandas totalmente vírgenes." },
-            { term: "Cadena de Valor", def: "Modelo de Porter que desglosa a la empresa en procesos primarios (logística, marketing, operaciones) y de soporte (tecnología, compras, RRHH) para detectar fuentes directas de diferenciación o ahorro." },
-            { term: "Business Model Canvas", def: "Esquema visual de nueve bloques diseñado por Alexander Osterwalder que sintetiza cómo la empresa interactúa, opera, vende y captura valor comercial." },
-            { term: "Pivot (Lean Startup)", def: "Modificación planificada y sustancial de uno de los bloques del modelo Canvas (ej: cambiar el canal de distribución o de segmento) tras descubrir empíricamente que la propuesta inicial no calzó con la necesidad del cliente." }
+            { term: "Estrategia Emergente", def: "Conjunto de acciones integradas que brotan del día a día de las operaciones para responder de manera ágil a imprevistos del mercado real." },
+            { term: "Las 5 Fuerzas de Porter", def: "Modelo analítico que califica el atractivo y rentabilidad promedio de una industria según la fuerza competitiva combinada de 5 actores sectoriales." },
+            { term: "Balanced Scorecard", def: "Tablero de comando balanceado que traduce la visión y directrices estratégicas de alto alcance en metas de ejecución de base medibles de forma causal." },
+            { term: "Cadena de Valor", def: "Desglose secuencial de actividades de la firma (operaciones, marketing, logística, infraestructura, RRHH) para auditar de forma quirúrgica costos e inductores de diferenciación." },
+            { term: "Estrategia de Enfoque", def: "Camino de posicionamiento propuesto por Porter concentrado en optimizar procesos para deleitar de forma exclusiva a un submercado o nicho con demandas desatendidas." },
+            { term: "Matriz BCG", def: "Portafolio de negocios clasificado en cuadrantes específicos (Estrella, Vaca, Interrogante, Perro) según la cuota relativa de mercado y ritmo de expansión del sector." },
+            { term: "Océano Azul", def: "Estrategia orientada a invalidar a los competidores de industrias maduras y saturadas mediante la innovación sistemática en valor, creando canales y demandas desprovistas de competencia." },
+            { term: "Alineamiento Estratégico", def: "Estado óptimo de coherencia donde los recursos, procesos directivos, incentivos, estructura del organigrama y cultura corporativa trabajan en total armonía con la visión." },
+            { term: "Pivot (Lean Startup)", def: "Modificación controlada y estructurada de uno o varios bloques interactivos del Canvas comercial tras validar empíricamente en el campo real que la suposición inicial falló." }
         ];
 
         // --- SISTEMA DE ESTADO ---
@@ -1144,7 +1774,7 @@
         let simAnswers = {}; // { index: 'A' }
         let simActiveIndex = 0;
         let simTimerInterval = null;
-        let simSecondsLeft = 1200; // 20 minutos
+        let simSecondsLeft = 1500; // 25 minutos para 25 preguntas
         let simStartTime = 0;
 
         // Estado de Flashcards
@@ -1152,6 +1782,10 @@
 
         // --- INICIALIZACIÓN DE LA APLICACIÓN ---
         window.onload = function() {
+            // Cargar total en badges
+            document.getElementById('total-preguntas-badge').textContent = questionsDB.length;
+            document.getElementById('count-all-questions').textContent = questionsDB.length;
+
             // Cargar progreso previo de localStorage si existe
             loadSavedProgress();
             
@@ -1200,22 +1834,22 @@
 
         // --- LOGICA DE PROGRESO DE LOCALSTORAGE ---
         function saveProgress() {
-            localStorage.setItem('gs_userQuizAnswers', JSON.stringify(userQuizAnswers));
+            localStorage.setItem('gs_userQuizAnswers_2026', JSON.stringify(userQuizAnswers));
             updateProgressStats();
         }
 
         function loadSavedProgress() {
-            const savedAnswers = localStorage.getItem('gs_userQuizAnswers');
+            const savedAnswers = localStorage.getItem('gs_userQuizAnswers_2026');
             if (savedAnswers) {
                 userQuizAnswers = JSON.parse(savedAnswers);
             }
         }
 
         function resetAllProgress() {
-            if (confirm("¿Estás seguro de que deseas reiniciar todo tu progreso de estudio actual?")) {
+            if (confirm("¿Estás seguro de que deseas reiniciar todo tu progreso de estudio actual en el banco completo?")) {
                 userQuizAnswers = {};
-                localStorage.removeItem('gs_userQuizAnswers');
-                showToast("Progreso reiniciado con éxito.");
+                localStorage.removeItem('gs_userQuizAnswers_2026');
+                showToast("Progreso de estudio reiniciado.");
                 updateProgressStats();
                 loadQuizModuleQuestions();
                 renderDashboardModulos();
@@ -1292,13 +1926,16 @@
                 const cardHTML = `
                     <div class="p-4 bg-slate-950 rounded-xl border border-slate-800/80 hover:border-indigo-500/30 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div class="space-y-1 md:max-w-md">
-                            <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Módulo 0${mId}</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Módulo 0${mId}</span>
+                                <span class="text-[9px] text-slate-500 font-semibold">• ${totalMod} preguntas oficiales</span>
+                            </div>
                             <h5 class="text-sm font-bold text-slate-200">${theory.title}</h5>
                             <p class="text-[11px] text-slate-400 line-clamp-1">${theory.summary}</p>
                         </div>
                         <div class="flex items-center gap-6 self-end md:self-center">
                             <div class="text-right">
-                                <span class="block text-xs text-slate-400 font-medium">Estudiado</span>
+                                <span class="block text-xs text-slate-400 font-medium">Completado</span>
                                 <span class="text-xs font-bold text-slate-200">${solvedMod}/${totalMod} (${pct}%)</span>
                             </div>
                             <div class="text-right">
@@ -1359,7 +1996,7 @@
                 questionsListHTML += `
                     <div class="p-4 bg-slate-950/40 rounded-xl border border-slate-900/80 space-y-3">
                         <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-extrabold text-indigo-400">REACTIVO 0${idx+1}</span>
+                            <span class="text-[10px] font-extrabold text-indigo-400">REACTIVO OFICIAL #${q.id}</span>
                             <span class="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Clave oficial</span>
                         </div>
                         <h6 class="text-xs font-bold text-slate-200 leading-relaxed">${q.q}</h6>
@@ -1403,7 +2040,7 @@
                         <div class="flex items-center justify-between">
                             <h4 class="text-sm font-bold text-slate-300 flex items-center gap-2">
                                 <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                                Desglose Avanzado de Reactivos Oficiales
+                                Desglose Avanzado de Reactivos Oficiales (${modQuestions.length} Preguntas)
                             </h4>
                             <span class="text-[10px] text-slate-500 font-semibold italic">Haz clic en cada reactivo para estudiar su metáfora</span>
                         </div>
@@ -1468,7 +2105,7 @@
             document.getElementById('quiz-question-counter').textContent = `${quizIndex + 1}/${filteredQuestions.length}`;
             
             // Módulo y Estado
-            document.getElementById('quiz-question-module').textContent = `Módulo 0${q.module}`;
+            document.getElementById('quiz-question-module').textContent = `Módulo 0${q.module} (Reactivo #${q.id})`;
             
             const stateBox = document.getElementById('quiz-question-status');
             const feedbackBox = document.getElementById('quiz-feedback-box');
@@ -1485,9 +2122,9 @@
                         <p>${q.explanation}</p>
                         <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2 mt-2">
                             <span class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest block">💡 Marco Teórico</span>
-                            <p class="text-[11px] text-slate-300 leading-normal">${q.theory}</p>
+                            <p class="text-[11px] text-slate-300 leading-normal">${q.theory || 'Este concepto evalúa tu capacidad de toma de decisiones corporativas basadas en hechos analíticos.'}</p>
                             <span class="text-[9px] font-bold text-amber-400 uppercase tracking-widest block pt-1.5 border-t border-slate-900">⚡ Analogía Didáctica</span>
-                            <p class="text-[11px] text-slate-300 leading-normal italic">${q.analogy}</p>
+                            <p class="text-[11px] text-slate-300 leading-normal italic">${q.analogy || 'No hay analogía específica registrada para este reactivo básico, pero recuerda la regla de oro de la estrategia: consistencia interna y flexibilidad táctica.'}</p>
                         </div>
                     </div>
                 `;
@@ -1575,12 +2212,12 @@
 
         // --- LOGICA DEL SIMULADOR DE EXAMEN ---
         function startSimulator() {
-            // Generar 20 preguntas aleatorias transversales
+            // Generar 25 preguntas aleatorias transversales para simular las 25 del examen
             const shuffled = [...questionsDB].sort(() => 0.5 - Math.random());
-            simQuestions = shuffled.slice(0, 20);
+            simQuestions = shuffled.slice(0, 25);
             simAnswers = {};
             simActiveIndex = 0;
-            simSecondsLeft = 1200; // 20 minutos
+            simSecondsLeft = 1500; // 25 minutos
             simStartTime = Date.now();
 
             document.getElementById('sim-start-card').classList.add('hidden');
@@ -1613,8 +2250,8 @@
             if (simQuestions.length === 0) return;
             const q = simQuestions[simActiveIndex];
 
-            document.getElementById('sim-question-module').textContent = `Módulo 0${q.module}`;
-            document.getElementById('sim-progress-counter').textContent = `Pregunta ${simActiveIndex + 1} de 20`;
+            document.getElementById('sim-question-module').textContent = `Módulo 0${q.module} (Reactivo #${q.id})`;
+            document.getElementById('sim-progress-counter').textContent = `Pregunta ${simActiveIndex + 1} de 25`;
             document.getElementById('sim-question-text').textContent = q.q;
 
             const optionsContainer = document.getElementById('sim-options-container');
@@ -1670,6 +2307,7 @@
             renderSimMap();
         }
 
+        // Navegación del Simulador
         function simNextQuestion() {
             if (simActiveIndex < simQuestions.length - 1) {
                 simActiveIndex++;
@@ -1682,8 +2320,8 @@
 
         function finishSimulatorPrompt() {
             const answeredCount = Object.keys(simAnswers).length;
-            if (answeredCount < 20) {
-                if (confirm(`Aún tienes ${20 - answeredCount} preguntas sin responder en tu examen. ¿Deseas entregar el simulacro de todos modos?`)) {
+            if (answeredCount < 25) {
+                if (confirm(`Aún tienes ${25 - answeredCount} preguntas sin responder en tu examen. ¿Deseas entregar el simulacro de todos modos?`)) {
                     finishSimulator();
                 }
             } else {
@@ -1705,14 +2343,14 @@
                 if (simAnswers[idx] === q.correct) correctas++;
             });
 
-            const scorePct = Math.round((correctas / 20) * 100);
-            const timeUsedSeconds = 1200 - simSecondsLeft;
+            const scorePct = Math.round((correctas / 25) * 100);
+            const timeUsedSeconds = 1500 - simSecondsLeft;
             const minutes = Math.floor(timeUsedSeconds / 60);
             const seconds = timeUsedSeconds % 60;
 
             // Actualizar interfaz resultados
             document.getElementById('sim-res-score').textContent = `${scorePct}%`;
-            document.getElementById('sim-res-correctas').textContent = `${correctas}/20`;
+            document.getElementById('sim-res-correctas').textContent = `${correctas}/25`;
             document.getElementById('sim-res-time').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
             // Guardar estadística de simulacro cursado
